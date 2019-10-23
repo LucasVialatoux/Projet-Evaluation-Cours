@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+	  	<title>Evaluation</title>
+	  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	  	<link rel="stylesheet" href="style/style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="index.js"></script>
+	</head>
+	<body>
+	    <h1 class="text-info text-center">Saisir code</h1>
+	    <div class="text-center">
+	    	<span>Veuillez entrer un code d'une longueur maximum de 5. </span>
+	    </div>
+	    <form id="formCode" action="" method="post" class="form">
+			<div class="form-group" id="divRetour">
+				<input type="text" id="inputID" name="inputID" readonly class="form-control-plaintext form-control-lg text-center" placeholder="_ _ _ _ _">
+			</div>
+			<div class="btn-group-prepend text-center" role="group">
+				<div class="rows">
+				  	<div class="btn-group-default btn-group-lg" role="group">
+			    		<button class="btn btn-default btn-clear" id="btn_1" type="button" onclick="jQ_append('inputID', '1')">1</button>
+			    		<button class="btn btn-default btn-clear" id="btn_2" type="button" onclick="jQ_append('inputID', '2')">2</button>
+			    		<button class="btn btn-default btn-clear" id="btn_3" type="button" onclick="jQ_append('inputID', '3')">3</button>
+			  		</div>
+		  		</div>
+		  		<div class="rows">
+			  		<div class="btn-group-default btn-group-lg" role="group">
+			    		<button class="btn btn-default btn-clear" id="btn_4" type="button" onclick="jQ_append('inputID', '4')">4</button>
+			    		<button class="btn btn-default btn-clear" id="btn_5" type="button" onclick="jQ_append('inputID', '5')">5</button>
+			    		<button class="btn btn-default btn-clear" id="btn_6" type="button" onclick="jQ_append('inputID', '6')">6</button>
+			  		</div>
+			  	</div>
+			  	<div class="rows">
+			  		<div class="btn-group-default btn-group-lg" role="group">
+			    		<button class="btn btn-default btn-clear" id="btn_7" type="button" onclick="jQ_append('inputID', '7')">7</button>
+			    		<button class="btn btn-default btn-clear" id="btn_8" type="button" onclick="jQ_append('inputID', '8')">8</button>
+			    		<button class="btn btn-default btn-clear" id="btn_9" type="button" onclick="jQ_append('inputID', '9')">9</button>
+			  		</div>
+			  	</div>
+			  	<div class="rows">
+			  		<div class="btn-group-default btn-group-lg" role="group">
+			    		<button class="btn btn-default btn-clear" id="btn_A" type="button" onclick="jQ_append('inputID', 'A')">A</button>
+			    		<button class="btn btn-default btn-clear" id="btn_0" type="button" onclick="jQ_append('inputID', '0')">0</button>
+			    		<button class="btn btn-default btn-clear" id="btn_B" type="button" onclick="jQ_append('inputID', 'B')">B</button>
+			  		</div>
+			  	</div>
+		  	</div>
+		  	<div class="wrapper text-center">
+		  		<button class="btn btn-danger text-center" type="button" onclick="jQ_correct('inputID')">Corriger</button>
+				<input class="btn btn-success text-center" type="submit" value="Valider">
+			</div>
+	    </form>
+	    <a href="#" class="btn btn-primary mx-5">Enseignant</a>
+	</body>
+</html>
