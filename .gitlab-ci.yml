@@ -1,23 +1,32 @@
-# Cache downloaded dependencies and plugins between builds.
-# Not strictly necessary, but speeds up the builds.
-cache:
-  key: "$CI_JOB_NAME"
-  paths:
-    # Must be within the repository under test hence we can't use the
-    # default ~/.m2
-    - .m2/repository
-variables:
-  # Use the cached directory above.
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+stages:
+  - build
+  - test
 
-junit:
-  image: maven:3.6.1-jdk-11 # docker image with Maven
-  before_script:
-    # The runners on the forge need a proxy to access the web. mvn
-    # ignores the $http_proxy & friends variable => write a
-    # configuration file that does this for us.
-    - . cv-search/setup-mvn-proxy.sh
-    # Useful only for debugging
-    #- cat ~/.m2/settings.xml
+cache:
+  paths:
+    - .m2/repository
+  key: "$CI_JOB_NAME"
+
+build_job:
+  stage: build
   script:
-    - cd cv-search && mvn test --batch-mode 
+    - ./mvnw compile
+      -Dhttps.protocols=TLSv1.2
+      -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
+      -Dorg.slf4j.simpleLogger.showDateTime=true
+      -Djava.awt.headless=true
+      --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
+  image: openjdk:8-alpine
+
+test_job:
+  stage: test
+  script:
+    - ./mvnw test
+      -Dhttps.protocols=TLSv1.2
+      -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
+      -Dorg.slf4j.simpleLogger.showDateTime=true
+      -Djava.awt.headless=true
+      --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
+  image: openjdk:8-alpine
