@@ -3,7 +3,12 @@ package course_feeling.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="SONDAGES")
 public class Sondage {
+    @Id
     private int id;
     private List<Ressenti> ressentis = new ArrayList<Ressenti>();
     
