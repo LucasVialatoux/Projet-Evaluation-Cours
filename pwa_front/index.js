@@ -26,24 +26,25 @@ $(document).ready(function(){
  
     $('#formCode').submit(function(e){
         e.preventDefault();
-
-        $.get('',
-            {
-                code : $('#inputID').val()
-            },
-            function(){
-            	let reponse = JSON.parse({
-            		"statut":"ok",
-            		"matiere":"unNom"
-            	})
-            	if (reponse.statut!= undefined && reponse.statut == "ok" ){
-            		$( location ).attr("href", "Pages/feelingPage/feeling.html?matiere="+reponse.matiere);
-            	} else {
-            		$('#divRetour').append( '<p class="text-center bg-danger">Code incorrect</p>' );
-            	}
-            }
-         );
-
+        var lg = $('#inputID').val().length
+        if (lg==5) {
+           $.get('',
+                {
+                    code : $('#inputID').val()
+                },
+                function(){
+                    let reponse = JSON.parse('{"statut":"ok","matiere":"unNom"}');
+                    if (reponse.statut!= undefined && reponse.statut == "ok" ){
+                        $( location ).attr("href", "Pages/feelingPage/feeling.html?matiere="+reponse.matiere);
+                    } else {
+                        $('#retour')[0].style="visibility:visible";
+                        alert("Code incorrect ! Veuille vérifier le code.");
+                    }
+                }
+             ); 
+       } else {
+            alert("Merci d'entrer un code plus long.");
+       }
     });
 
 });
