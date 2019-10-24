@@ -10,7 +10,7 @@ stages:
 build_job:
   stage: build
   before_script: 
-    - sudo ./setup-mvn-proxy.sh
+    - ./setup-mvn-proxy.sh
   script:
     - echo "======> Debut script"
     - echo pwd
