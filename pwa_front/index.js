@@ -1,43 +1,46 @@
-var length=1;
+var URL_PAGE_FEELING = "Pages/feelingPage/feeling.html";
+var NAME_SUBJECT = "nameSbj";
+var CODE_SUBJECT = "codeSbj";
+
 //Supprimer text de l'input
-function jQ_append(id_of_input, text) {
-    if(length <=5) {
-    	var input_id = '#'+id_of_input;
-    	$(input_id).val($(input_id).val() + text);
-    	length+=1;
+function jQ_append(text) {
+    if($("#inputID").val().length <5) {
+    	$("#inputID").val($("#inputID").val() + text);
     }
 }
 
-//Supprimer un caractère à l'input
-function jQ_correct(id_input) {
-	var str = $('#'+id_input)[0];
-	var longueur = str.value.length;
-	if(longueur<=1){
-		$(str).val('');
-		length=1;
-	} else {
-		$(str).val(str.value.substr(0, longueur-1));
-		length=length-1;
-	}
-}
+$(function() {
+    $("#inputID").val("");
+    
+    //Supprimer un caractère à l'input
+    $("#correction_button").click( _ => {
+        let str = $("#inputID").val();
+        let longueur = str.length;
+        if(longueur <= 1){
+           $("#inputID").val('');
+        } else {
+           $("#inputID").val(str.substr(0, longueur-1));
+        }
+    });
 
-//Gérer le submit du formulaire
-$(document).ready(function(){
- 
+    //Gérer le submit du formulaire
     $('#formCode').submit(function(e){
         e.preventDefault();
-        var lg = $('#inputID').val().length
-        if (lg==5) {
+        $( location ).attr("href", URL_PAGE_FEELING);
+        if ($('#inputID').val().length == 5) {
            $.get('',
                 {
                     code : $('#inputID').val()
                 },
                 function(){
-                    let reponse = JSON.parse('{"statut":"ok","matiere":"unNom"}');
+                    let reponse = JSON.parse('{"statut":"ok","matiere":"Nom de la matière"}');
                     if (reponse.statut!= undefined && reponse.statut == "ok" ){
-                        $( location ).attr("href", "Pages/feelingPage/feeling.html?matiere="+reponse.matiere);
+                        // localStorage.setItem(NAME_SUBJECT, reponse.matiere);
+                        // localStorage.setItem(CODE_SUBJECT, $('#inputID').val());
+                        // $( location ).attr("href", "Pages/feelingPage/feeling.html?matiere="+reponse.matiere+";code="+$('#inputID').val());
+                        $( location ).attr("href", URL_PAGE_FEELING);
                     } else {
-                        $('#retour')[0].style="visibility:visible";
+                        $('#retour').show();
                         alert("Code incorrect ! Veuille vérifier le code.");
                     }
                 }
