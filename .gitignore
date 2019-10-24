@@ -4,3 +4,14 @@ course_feeling/.settings/org.eclipse.core.resources.prefs
 course_feeling/.settings/org.eclipse.jdt.apt.core.prefs
 course_feeling/.settings/org.eclipse.jdt.core.prefs
 course_feeling/.settings/org.eclipse.m2e.core.prefs
+course_feeling/target/classes/.gitkeep
+course_feeling/target/classes/course_feeling/business/Matiere.class
+course_feeling/target/classes/course_feeling/business/Ressenti.class
+course_feeling/target/classes/course_feeling/business/Sondage.class
+course_feeling/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+course_feeling/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+course_feeling/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+course_feeling/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+course_feeling/target/surefire-reports/course_feeling.business.MatiereTest.txt
+course_feeling/target/surefire-reports/TEST-course_feeling.business.MatiereTest.xml
+course_feeling/target/test-classes/course_feeling/business/MatiereTest.class
