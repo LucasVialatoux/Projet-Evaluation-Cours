@@ -25,7 +25,7 @@ build_job:
 test_job:
   stage: test
   before_script: 
-    - . course_feeling/setup-mvn-proxy.sh
+    - ./setup-mvn-proxy.sh
   script:
     - mvn test
       -Dhttps.protocols=TLSv1.2
