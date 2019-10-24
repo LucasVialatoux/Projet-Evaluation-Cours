@@ -26,9 +26,9 @@ build_job:
 test_job:
   stage: test
   before_script: 
-    - pwd
-    - ./setup-mvn-proxy.sh
+    - . course_feeling/setup-mvn-proxy.sh
   script: 
+    - cd course_feeling
     - mvn test
       -Dhttps.protocols=TLSv1.2
       -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
