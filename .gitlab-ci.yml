@@ -26,6 +26,7 @@ build_job:
 test_job:
   stage: test
   before_script: 
+    - pwd
     - ./setup-mvn-proxy.sh
   script: 
     - mvn test
