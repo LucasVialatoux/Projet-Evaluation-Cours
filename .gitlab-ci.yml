@@ -10,7 +10,7 @@ stages:
 build_job:
   stage: build
   before_script: 
-    - ./setup-mvn-proxy.sh
+    - . course_feeling/setup-mvn-proxy.sh
   script:
     - cd course_feeling
     - mvn compile 
