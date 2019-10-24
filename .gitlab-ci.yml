@@ -10,12 +10,15 @@ stages:
 build_job:
   stage: build
   before_script: 
+    - cd course_feeling
     - echo "on est la"
     - pwd
     - echo "on a ça"
     - ls
-    - . course_feeling/setup-mvn-proxy.sh
+    - ./setup-mvn-proxy.sh
   script:
+    - echo "======> Debut script"
+    - echo pwd
     - cd course_feeling
     - mvn compile 
       -Dhttps.protocols=TLSv1.2
