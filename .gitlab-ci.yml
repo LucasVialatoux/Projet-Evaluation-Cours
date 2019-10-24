@@ -12,8 +12,6 @@ build_job:
   before_script: 
     - . course_feeling/setup-mvn-proxy.sh
   script:
-    - echo "======> Debut script"
-    - echo pwd
     - cd course_feeling
     - mvn compile 
       -Dhttps.protocols=TLSv1.2
@@ -24,14 +22,16 @@ build_job:
       --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
   image: maven:3.6.1-jdk-11
 
-#test_job:
-#  stage: test
-#  script:
-#    - mvn test
-#     -Dhttps.protocols=TLSv1.2
-#      -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
-#      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
-#      -Dorg.slf4j.simpleLogger.showDateTime=true
-#      -Djava.awt.headless=true
-#      --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
-#  image: maven:3.6.1-jdk-11
+test_job:
+  stage: test
+  before_script: 
+    - . course_feeling/setup-mvn-proxy.sh
+  script:
+    - mvn test
+     -Dhttps.protocols=TLSv1.2
+      -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
+      -Dorg.slf4j.simpleLogger.showDateTime=true
+      -Djava.awt.headless=true
+      --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
+  image: maven:3.6.1-jdk-11
