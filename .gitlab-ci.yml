@@ -2,16 +2,20 @@ stages:
   - build
   - test
 
-cache:
-  paths:
-    - .m2/repository
-  key: "$CI_JOB_NAME"
+#cache:
+#  paths:
+#    - .m2/repository
+#  key: "$CI_JOB_NAME"
 
 build_job:
   stage: build
   script:
+    - echo "On est ici : "
+    - pwd
     - cd course_feeling
-    - mvn compile -X
+    - echo "On a fait cd course_feeling, on est là"
+    - pwd
+    - mvn compile 
       #-Dhttps.protocols=TLSv1.2
       #-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
       #-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
