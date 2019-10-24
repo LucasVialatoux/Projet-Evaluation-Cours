@@ -18,7 +18,7 @@ build_job:
       -Dorg.slf4j.simpleLogger.showDateTime=true
       -Djava.awt.headless=true
       --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
-  image: openjdk:11-alpine
+  image: maven:3.6.1-jdk-11
 
 test_job:
   stage: test
@@ -30,4 +30,4 @@ test_job:
       -Dorg.slf4j.simpleLogger.showDateTime=true
       -Djava.awt.headless=true
       --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
-  image: openjdk:11-alpine
+  image: maven:3.6.1-jdk-11
