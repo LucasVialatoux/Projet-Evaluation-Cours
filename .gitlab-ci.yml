@@ -10,6 +10,10 @@ stages:
 build_job:
   stage: build
   before_script: 
+    - echo "on est la"
+    - pwd
+    - echo "on a ça"
+    - pwd
     - . course_feeling/setup-mvn-proxy.sh
   script:
     - cd course_feeling
