@@ -1,4 +1,5 @@
 var URL_PAGE_FEELING = "Pages/feelingPage/feeling.html";
+var URL_SEND_CODE = "http://localhost/sondage/";
 var NAME_SUBJECT = "nameSbj";
 var CODE_SUBJECT = "codeSbj";
 
@@ -26,28 +27,26 @@ $(function() {
     //Gérer le submit du formulaire
     $('#formCode').submit(function(e){
         e.preventDefault();
-        $( location ).attr("href", URL_PAGE_FEELING);
         if ($('#inputID').val().length == 5) {
-           $.get('',
-                {
-                    code : $('#inputID').val()
-                },
-                function(){
-                    let reponse = JSON.parse('{"statut":"ok","matiere":"Nom de la matière"}');
+            $('#retour').hide();
+            $.get(URL_SEND_CODE+$('#inputID').val(),
+                (data) => {
+                    let reponse = JSON.parse(data);
                     if (reponse.statut!= undefined && reponse.statut == "ok" ){
-                        // localStorage.setItem(NAME_SUBJECT, reponse.matiere);
-                        // localStorage.setItem(CODE_SUBJECT, $('#inputID').val());
-                        // $( location ).attr("href", "Pages/feelingPage/feeling.html?matiere="+reponse.matiere+";code="+$('#inputID').val());
+                        localStorage.setItem(NAME_SUBJECT, reponse.matiere);
+                        localStorage.setItem(CODE_SUBJECT, $('#inputID').val());
                         $( location ).attr("href", URL_PAGE_FEELING);
                     } else {
+                        $('#retour').text("Code incorrect, veuillez le vérifier.");
                         $('#retour').show();
-                        alert("Code incorrect ! Veuille vérifier le code.");
                     }
                 }
-             ); 
-       } else {
-            alert("Merci d'entrer un code plus long.");
-       }
+            ); 
+        } else {
+            console.log("code trop petit")
+            $('#retour').text("Code incorrect, veuillez vérifier que le code est de 5 charactères.");
+            $('#retour').show();
+        }
     });
 
 });

@@ -3,13 +3,19 @@ var URL_PAGE_CODE = "../../index.html";
 var URL_PAGE_VALIDATION = "../validationPage/validation.html";
 var NAME_SUBJECT = "nameSbj";
 var CODE_SUBJECT = "codeSbj";
-localStorage.setItem(NAME_SUBJECT, "Nom de la matière"); //TEMPO
-localStorage.setItem(CODE_SUBJECT, "7895A"); //TEMPO
+// localStorage.setItem(NAME_SUBJECT, "Nom de la matière"); //TEMPO
+// localStorage.setItem(CODE_SUBJECT, "7895A"); //TEMPO
 
 $(function() {
     /* Récupération du nom de métier et du code matière depuis le stockage local*/  
     let nameSbj = localStorage.getItem(NAME_SUBJECT);
-    let codeSbj = localStorage.getItem(CODE_SUBJECT);
+    if (nameSbj == null) {
+        nameSbj = "Matière par Défaut";
+    }
+    var codeSbj = localStorage.getItem(CODE_SUBJECT);
+    if (codeSbj == null) {
+        codeSbj = "12345";
+    }
     if (nameSbj != null && codeSbj != null) {
         $("#nav_title").text(nameSbj);
         $("#discipline_title").text(nameSbj); 
@@ -24,7 +30,7 @@ $(function() {
         let value = event.currentTarget.attributes.feeling.value;
         let feeling = Number(value);
         // console.log(feeling);
-        window.location = URL_PAGE_VALIDATION;
+        // window.location = URL_PAGE_VALIDATION;
         $.post(
             URL_SEND_FEELING + codeSbj,
             {

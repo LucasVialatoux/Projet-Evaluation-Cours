@@ -1,14 +1,9 @@
-html {
-    height: 100%;
-}
 body {
-    height: 100%;
-    margin: 0;
     /* background-image: linear-gradient(to right top, #c70039, #e0432e, #f26f1f, #fd9908, #ffc300); */
     /* background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12); */
     background-color: #54405f;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    /* background-repeat: no-repeat;
+    background-attachment: fixed; */
 }
 
 .container_main {
@@ -24,8 +19,8 @@ p {
 
 /* Titre */
 .title_header {
-    margin-top: 18%;
-    margin-bottom: 10%;
+    margin-top: 10%;
+    margin-bottom: 6%;
     color: white;
     font-weight: bold;
     text-align: center;
