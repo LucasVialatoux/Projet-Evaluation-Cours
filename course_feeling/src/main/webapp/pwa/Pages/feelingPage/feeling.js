@@ -1,4 +1,4 @@
-var URL_SEND_FEELING = "http://localhost/sondage/";
+var URL_SEND_FEELING = "http://localhost:8080/sondage/";
 var URL_PAGE_CODE = "../../index.html";
 var URL_PAGE_VALIDATION = "../validationPage/validation.html";
 var NAME_SUBJECT = "nameSbj";

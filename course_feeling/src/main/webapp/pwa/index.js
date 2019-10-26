@@ -1,5 +1,5 @@
 var URL_PAGE_FEELING = "Pages/feelingPage/feeling.html";
-var URL_SEND_CODE = "http://localhost/sondage/";
+var URL_SEND_CODE = "http://localhost:8080/sondage/";
 var NAME_SUBJECT = "nameSbj";
 var CODE_SUBJECT = "codeSbj";
 
