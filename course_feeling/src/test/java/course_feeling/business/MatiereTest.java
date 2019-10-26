@@ -1,6 +1,11 @@
 package course_feeling.business;
 
 import org.junit.Test;
+
+import business.Matiere;
+import business.Ressenti;
+import business.Sondage;
+
 import static org.junit.Assert.assertEquals;
 
 public class MatiereTest {

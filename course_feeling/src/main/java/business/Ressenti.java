@@ -1,4 +1,4 @@
-package course_feeling.business;
+package business;
 
 import javax.persistence.*;
 
