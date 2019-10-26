@@ -70,7 +70,7 @@ public class ResponseServiceTest extends Mockito {
 		PrintWriter out = new PrintWriter(sw);
 		when(req.getPathInfo()).thenReturn("/00000");
 		when(resp.getWriter()).thenReturn(out);
-
+		when(req.getParameter("ressenti")).thenReturn("Accessible");
 		service.doPost(req, resp);
 		String response = sw.getBuffer().toString().trim();
 		
