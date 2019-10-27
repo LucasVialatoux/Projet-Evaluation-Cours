@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS miseadispo (
     code VARCHAR,
     dateCreation DATE,
     FOREIGN KEY (idSondage) REFERENCES sondage(idSondage),
-    PRIMARY KEY (idSondage)
+    PRIMARY KEY (idSondage),
+    UNIQUE (code)
 );
 
 CREATE TYPE ressenti_t as ENUM(

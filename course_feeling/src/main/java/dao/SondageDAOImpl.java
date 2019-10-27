@@ -6,29 +6,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import business.Ressenti;
 
 public class SondageDAOImpl implements SondageDAO {
 
-	private String database = "jdbc:postgresql://localhost:5432/course_feeling";
+	private DataSource ds;
 	private String getMatiere = "SELECT nomMatiere FROM miseadispo Mi "
 			+ "JOIN Sondage S on Mi.idSondage=S.idSondage JOIN Matiere M on S.idMatiere=M.nomMatiere "
 			+ "WHERE Mi.code=?;";
+	private String addRessenti = "INSERT INTO ressentis(idSondage,ress) VALUES ("
+			+ "(SELECT idSondage FROM miseadispo M WHERE code=?)"
+			+ ",CAST(? AS ressenti_t));";
 	
 	@Override
 	public String getMatiereOfSondage(String codeSondage) {
 		String matiere = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			Connection con = DriverManager.getConnection(database,"course_feeling","");
+			Connection con = ds.getConnection();
 			PreparedStatement stat = con.prepareStatement(getMatiere);
 			stat.setString(1, codeSondage);
-			//System.out.println(getMatiere + codeSondage);
 			ResultSet set = stat.executeQuery();
 			if(set.next()) {
 				matiere = set.getString("nomMatiere");
 			}
-		} catch (SQLException | ClassNotFoundException e) { 
+		} catch (SQLException e) { 
 			e.printStackTrace();
 		}
 		return matiere;
@@ -36,7 +39,22 @@ public class SondageDAOImpl implements SondageDAO {
 
 	@Override
 	public boolean ajouterRessenti(String sondage, Ressenti ressenti) {
-		return false;
+		boolean success = false;
+		try {
+			Connection con = ds.getConnection();
+			PreparedStatement stat = con.prepareStatement(addRessenti);
+			stat.setString(1, sondage);
+			stat.setString(2, ressenti.toString());
+			stat.executeUpdate();
+			success = true;
+			
+		} catch (SQLException e) { 
+			e.printStackTrace();
+		}
+		return success;
 	}
 
+	public void setDatasource(DataSource ds) {
+		this.ds = ds;
+	}
 }

@@ -30,7 +30,7 @@ public class ResponseService extends HttpServlet {
 		String codeSondage = req.getPathInfo().split("/")[1];
 		JsonObject jsonResponse = new JsonObject();
 		if(req.getParameter("ressenti") != null && 
-				sondageDao.ajouterRessenti(codeSondage, Ressenti.valueOf(req.getParameter("ressenti")))) {
+				sondageDao.ajouterRessenti(codeSondage, Ressenti.values()[Integer.parseInt(req.getParameter("ressenti"))])) {
 			resp.setStatus(200);
 			jsonResponse.addProperty("statut", "ok");
 			

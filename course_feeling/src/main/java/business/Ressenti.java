@@ -8,7 +8,7 @@ public enum Ressenti {
     Interessant,
     Accessible,
     Complique,
-    Fatiguant,
+    Monotone,
     Confus,
-    Indifferent
+    Effraye
 }
