@@ -45,6 +45,8 @@ code_quality_job:
   allow_failure: true
   services:
     - docker:stable-dind
+  before_script: 
+    - . course_feeling/setup-mvn-proxy.sh
   script:
     - mkdir codequality-results
     - docker run
