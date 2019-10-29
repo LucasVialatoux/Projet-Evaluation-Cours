@@ -68,7 +68,7 @@
   </dependencies>
   <build>
     <finalName>course_feeling</finalName>
-        <plugin>
+    <plugin>
         <!-- https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
