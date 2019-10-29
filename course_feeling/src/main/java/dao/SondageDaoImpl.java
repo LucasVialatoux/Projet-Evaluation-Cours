@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 import business.Ressenti;
 
-public class SondageDAOImpl implements SondageDAO {
+public class SondageDaoImpl implements SondageDao {
 
     private DataSource ds;
     private String getMatiere = "SELECT nomMatiere FROM miseadispo Mi "

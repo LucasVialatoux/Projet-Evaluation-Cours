@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
-import dao.SondageDAOMockImpl;
+import dao.SondageDaoMockImpl;
 
 public class ResponseServiceTest extends Mockito {
 	
@@ -34,7 +34,7 @@ public class ResponseServiceTest extends Mockito {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		service = new ResponseService();
-		service.setSondageDao(new SondageDAOMockImpl());
+		service.setSondageDao(new SondageDaoMockImpl());
 	}
 	
 	@Test

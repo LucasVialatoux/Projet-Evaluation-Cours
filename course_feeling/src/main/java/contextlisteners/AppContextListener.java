@@ -9,15 +9,15 @@ import javax.sql.DataSource;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
-import dao.SondageDAO;
-import dao.SondageDAOImpl;
+import dao.SondageDao;
+import dao.SondageDaoImpl;
 import services.ResponseService;
 
 
 @WebListener
 public class AppContextListener implements ServletContextListener {
 
-    SondageDAO sondageDao;
+    SondageDao sondageDao;
     ResponseService responseService;
     DataSource ds;
 
@@ -25,14 +25,14 @@ public class AppContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContextListener.super.contextInitialized(sce);
         setupDatasource();
-        setupServicesAndDAOs();
+        setupServicesAndDaos();
         ServletContext ctx = sce.getServletContext();
         ServletRegistration regist = ctx.addServlet("Response", responseService);
         regist.addMapping("/sondage/*");
     }
 
-    private void setupServicesAndDAOs() {
-        SondageDAOImpl dao = new SondageDAOImpl();
+    private void setupServicesAndDaos() {
+        SondageDaoImpl dao = new SondageDaoImpl();
         dao.setDatasource(ds);
         sondageDao = dao;
 

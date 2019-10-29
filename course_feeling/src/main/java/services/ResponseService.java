@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.JsonObject;
 
 import business.Ressenti;
-import dao.SondageDAO;
+import dao.SondageDao;
 
 public class ResponseService extends HttpServlet {
 
@@ -20,7 +20,7 @@ public class ResponseService extends HttpServlet {
      */
     private static final long serialVersionUID = 6012769876508579988L;
     
-    private SondageDAO sondageDao;
+    private SondageDao sondageDao;
     
     
     @Override
@@ -66,7 +66,7 @@ public class ResponseService extends HttpServlet {
         resp.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
     }
     
-    public void setSondageDao(SondageDAO sondageDao) {
+    public void setSondageDao(SondageDao sondageDao) {
         this.sondageDao = sondageDao;
     }
 }
