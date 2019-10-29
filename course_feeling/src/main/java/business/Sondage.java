@@ -3,10 +3,13 @@ package business;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 @Entity
-@Table(name="SONDAGES")
+@Table(name = "SONDAGES")
 public class Sondage {
     @Id
     private int id;
