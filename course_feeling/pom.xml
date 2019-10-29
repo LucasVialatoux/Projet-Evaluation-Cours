@@ -79,7 +79,7 @@
                     <id>validate</id>
                     <phase>test</phase>
                     <configuration>
-                        <configLocation>course_feeling/src/main/config/checkstyle.xml</configLocation>
+                        <configLocation>/src/main/config/checkstyle.xml</configLocation>
                         <encoding>UTF-8</encoding>
                         <consoleOutput>true</consoleOutput>
                         <!-- mvn test fails for any warning or error -->
