@@ -68,29 +68,31 @@
   </dependencies>
   <build>
     <finalName>course_feeling</finalName>
-    <plugin>
-        <!-- https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.0.0</version>
-        <executions>
-            <execution>
-                <id>validate</id>
-                <phase>test</phase>
-                <configuration>
-                    <configLocation>course_feeling/src/main/config/checkstyle.xml</configLocation>
-                    <encoding>UTF-8</encoding>
-                    <consoleOutput>true</consoleOutput>
-                    <!-- mvn test fails for any warning or error -->
-                    <failsOnError>true</failsOnError>
-                    <violationSeverity>warning</violationSeverity>
-                    <linkXRef>false</linkXRef>
-                </configuration>
-                <goals>
-                    <goal>check</goal>
-                </goals>
-            </execution>
-        </executions>
-    </plugin>
+    <plugins>
+        <plugin>
+            <!-- https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+                <execution>
+                    <id>validate</id>
+                    <phase>test</phase>
+                    <configuration>
+                        <configLocation>course_feeling/src/main/config/checkstyle.xml</configLocation>
+                        <encoding>UTF-8</encoding>
+                        <consoleOutput>true</consoleOutput>
+                        <!-- mvn test fails for any warning or error -->
+                        <failsOnError>true</failsOnError>
+                        <violationSeverity>warning</violationSeverity>
+                        <linkXRef>false</linkXRef>
+                    </configuration>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
   </build>
 </project>
