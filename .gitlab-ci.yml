@@ -49,6 +49,7 @@ code_quality_job:
     - . course_feeling/setup-mvn-proxy.sh
   script:
     - mkdir codequality-results
+    - docker run --help
     - docker run
         --env CODECLIMATE_CODE="$PWD"
         --volume "$PWD":/code
