@@ -83,7 +83,7 @@
                         <encoding>UTF-8</encoding>
                         <consoleOutput>true</consoleOutput>
                         <!-- mvn test fails for any warning or error -->
-                        <failsOnError>false</failsOnError>
+                        <failsOnError>true</failsOnError>
                         <violationSeverity>warning</violationSeverity>
                         <linkXRef>false</linkXRef>
                     </configuration>
