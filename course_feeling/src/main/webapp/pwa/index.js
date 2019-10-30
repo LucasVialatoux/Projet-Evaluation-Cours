@@ -45,7 +45,7 @@ $(function() {
             ); 
         } else {
             console.log("code trop petit")
-            $('#retour').text("Code incorrect, veuillez vérifier que le code est de 5 charactères.");
+            $('#retour').text("Code incorrect, veuillez vérifier que le code est de 5 caractères.");
             $('#retour').show();
         }
     });
