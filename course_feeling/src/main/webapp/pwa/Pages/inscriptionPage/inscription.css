@@ -1,0 +1,28 @@
+#inputID {
+    color: white;
+    font-weight: 600;
+    font-size: 2.6em;
+    letter-spacing: 5px;
+}
+
+#inputMdp {
+    color: white;
+    font-weight: 600;
+    font-size: 2.6em;
+    letter-spacing: 5px;
+}
+
+.labelInput {
+    color: white;
+    font-weight: 600;
+    font-size: 2.6em;
+    letter-spacing: 5px;
+}
+
+.form-control-plaintext {
+    width: 50%;
+}
+
+.em_button {
+    text-align: center;
+}

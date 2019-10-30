@@ -1,4 +1,5 @@
 var URL_PAGE_FEELING = "Pages/feelingPage/feeling.html";
+var URL_PAGE_CONNEXION = "Pages/connexionPage/connexion.html";
 var URL_SEND_CODE = "http://localhost:8080/sondage/";
 var NAME_SUBJECT = "nameSbj";
 var CODE_SUBJECT = "codeSbj";
@@ -47,6 +48,12 @@ $(function() {
             $('#retour').text("Code incorrect, veuillez vérifier que le code est de 5 charactères.");
             $('#retour').show();
         }
+    });
+    /**
+     * Event du bouton Enseignant
+     */
+    $("#connect_button_code").click(_=> {
+        window.location = URL_PAGE_CONNEXION;
     });
 
 });
