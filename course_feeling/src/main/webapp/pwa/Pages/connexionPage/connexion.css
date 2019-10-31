@@ -1,18 +1,4 @@
-#inputID {
-    color: white;
-    font-weight: 600;
-    font-size: 2.6em;
-    letter-spacing: 5px;
-}
-
-#inputMdp {
-    color: white;
-    font-weight: 600;
-    font-size: 2.6em;
-    letter-spacing: 5px;
-}
-
-.labelInput {
+#inputID, #inputMdp, .labelInput {
     color: white;
     font-weight: 600;
     font-size: 2.6em;

@@ -1,7 +1,7 @@
 var URL_PAGE_CODE = "../../index.html";
 var URL_PAGE_INSC = "../inscriptionPage/inscription.html"
 var URL_SEND_CONNEXION = "http://localhost:8080/signin/";
-var URL_PAGE_VALIDATION = "../validationPage/validation.html";//METTRE ADRESSE DASHBOARD
+var URL_PAGE_VALIDATION = "../validationPage/validation.html";//METTRE ADRESSE DASHBOARD (PIERRE)
 
 $(function() {
     
@@ -18,10 +18,15 @@ $(function() {
             (data) => {
                 let reponse = JSON.parse(data);
                 if (reponse.statut != undefined && reponse.statut == "ok") {
-                    window.location = URL_PAGE_VALIDATION; // Redirection sur le dashboard de l'enseignant
+                	localStorage.setItem('token', reponse.token);
+                    window.location = URL_PAGE_VALIDATION;
                 } else {
                     console.log("Erreur de connexion");
                     window.location.reload();
+                    $('#retourID').text("Veuillez vérifier votre email.");
+                    $('#retourID').show();
+                    $('#retourMdp').text("Veuillez vérifier votre mot de passe.");
+                    $('#retourMdp').show();
                 }
             }
         );
