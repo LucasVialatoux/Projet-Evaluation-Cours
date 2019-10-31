@@ -37,4 +37,3 @@ test_job:
       -Djava.awt.headless=true
       --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
   image: maven:3.6.1-jdk-11
-

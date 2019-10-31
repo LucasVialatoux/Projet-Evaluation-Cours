@@ -1,9 +1,10 @@
 package business;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
-@Table(name="RESSENTIS")
+@Table(name = "RESSENTIS")
 public enum Ressenti {
     Interessant,
     Accessible,

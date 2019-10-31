@@ -2,12 +2,14 @@ package business;
 
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import java.util.ArrayList;
 
 @Entity
-@Table(name="MATIERES")
+@Table(name = "MATIERES")
 public class Matiere {
     
     @Id
@@ -29,7 +31,7 @@ public class Matiere {
     }
     
     /**
-     * Renvoie le nombre de sondage de la matière
+     * Renvoie le nombre de sondage de la matière.
      * @return int
      */
     public int getSondageNumber() {

@@ -2,7 +2,7 @@ package dao;
 
 import business.Ressenti;
 
-public class SondageDAOMockImpl implements SondageDAO {
+public class SondageDaoMockImpl implements SondageDao {
 
 	@Override
 	public String getMatiereOfSondage(String codeSondage) {

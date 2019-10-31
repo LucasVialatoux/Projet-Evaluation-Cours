@@ -9,43 +9,43 @@ import javax.sql.DataSource;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
-import dao.SondageDAO;
-import dao.SondageDAOImpl;
+import dao.SondageDao;
+import dao.SondageDaoImpl;
 import services.ResponseService;
 
 
 @WebListener
 public class AppContextListener implements ServletContextListener {
-	
-	SondageDAO sondageDao;
-	ResponseService responseService;
-	DataSource ds;
-	
-	@Override
-	public void contextInitialized(ServletContextEvent sce) {
-		ServletContextListener.super.contextInitialized(sce);
-		setupDatasource();
-		setupServicesAndDAOs();
-		ServletContext ctx = sce.getServletContext();
-		ServletRegistration regist = ctx.addServlet("Response", responseService);
-		regist.addMapping("/sondage/*");
-	}
-	
-	private void setupServicesAndDAOs() {
-		SondageDAOImpl dao = new SondageDAOImpl();
-		dao.setDatasource(ds);
-		sondageDao = dao;
-		
-		responseService = new ResponseService();
-		responseService.setSondageDao(sondageDao);
-	}
-	
-	private void setupDatasource() {
-		PGSimpleDataSource datasource = new PGSimpleDataSource();
-		datasource.setServerName("localhost");
-		datasource.setDatabaseName("course_feeling");
-		datasource.setUser("course_feeling");
-		datasource.setPassword("");
-		ds = datasource;
-	}
+
+    SondageDao sondageDao;
+    ResponseService responseService;
+    DataSource ds;
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        ServletContextListener.super.contextInitialized(sce);
+        setupDatasource();
+        setupServicesAndDaos();
+        ServletContext ctx = sce.getServletContext();
+        ServletRegistration regist = ctx.addServlet("Response", responseService);
+        regist.addMapping("/sondage/*");
+    }
+
+    private void setupServicesAndDaos() {
+        SondageDaoImpl dao = new SondageDaoImpl();
+        dao.setDatasource(ds);
+        sondageDao = dao;
+
+        responseService = new ResponseService();
+        responseService.setSondageDao(sondageDao);
+    }
+
+    private void setupDatasource() {
+        PGSimpleDataSource datasource = new PGSimpleDataSource();
+        datasource.setServerName("localhost");
+        datasource.setDatabaseName("course_feeling");
+        datasource.setUser("course_feeling");
+        datasource.setPassword("");
+        ds = datasource;
+    }
 }
