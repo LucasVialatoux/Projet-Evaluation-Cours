@@ -47,6 +47,7 @@ code_quality_job:
     - docker:stable-dind
     script:
     - mkdir codequality-results
+    - ps aux
     - docker run
         --env CODECLIMATE_CODE="$PWD"
         --volume "$PWD":/code
