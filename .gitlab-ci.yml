@@ -40,6 +40,8 @@ test_job:
   image: maven:3.6.1-jdk-11
   
 code_quality_job:
+    before_script: 
+      - . course_feeling/setup-mvn-proxy.sh
     stage: quality
     image: docker:stable
     allow_failure: true
