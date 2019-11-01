@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - quality
 
 cache:
   paths:
@@ -37,3 +38,21 @@ test_job:
       -Djava.awt.headless=true
       --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
   image: maven:3.6.1-jdk-11
+  
+  code_quality_job:
+      stage: quality
+      image: docker:stable
+      allow_failure: true
+      services:
+        - docker:stable-dind
+      script:
+        - mkdir codequality-results
+        - docker run
+            --env CODECLIMATE_CODE="$PWD"
+            --volume "$PWD":/code
+            --volume /var/run/docker.sock:/var/run/docker.sock
+            --volume /tmp/cc:/tmp/cc
+            codeclimate/codeclimate analyze -f html > ./codequality-results/index.html
+      artifacts:
+        paths:
+          - codequality-results/
