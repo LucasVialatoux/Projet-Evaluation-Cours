@@ -44,11 +44,11 @@ code_quality_job:
     image: docker:stable
     allow_failure: true
     services:
-    - docker:stable-dind
+      - docker:stable-dind
     script:
-    - mkdir codequality-results
-    - ps aux
-    - docker run
+      - mkdir codequality-results
+      - ps aux
+      - docker run
         --env CODECLIMATE_CODE="$PWD"
         --volume "$PWD":/code
         --volume /var/run/docker.sock:/var/run/docker.sock
