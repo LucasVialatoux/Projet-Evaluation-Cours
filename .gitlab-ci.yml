@@ -54,5 +54,5 @@ code_quality_job:
         --volume /tmp/cc:/tmp/cc
         codeclimate/codeclimate analyze -f html > ./codequality-results/index.html
     artifacts:
-    paths:
-      - codequality-results/
+      paths:
+        - codequality-results/
