@@ -1,21 +1,45 @@
 package dao;
 
+import java.util.Map;
+
 import business.Ressenti;
 
 public class SondageDaoMockImpl implements SondageDao {
 
-	@Override
-	public String getMatiereOfSondage(String codeSondage) {
-		if(codeSondage.contentEquals("00000")) {
-			return "Sciences";
-		} else {
-			return "";
-		}
-	}
+    @Override
+    public String getMatiereOfSondage(String codeSondage) {
+        if (codeSondage.contentEquals("00000")) {
+            return "Sciences";
+        } else {
+            return "";
+        }
+    }
 
-	@Override
-	public boolean ajouterRessenti(String codeSondage, Ressenti ressenti) {
-		return (codeSondage.contentEquals("00000"));
-	}
+    @Override
+    public void ajouterRessenti(String sondage, Ressenti ressenti)
+            throws SondageDaoException {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void ajouterSondage(String idProf, String idMatiere)
+            throws SondageDaoException {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public String getCode(int id) throws SondageDaoException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Map<Ressenti, Integer> getResultat(int id)
+            throws SondageDaoException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

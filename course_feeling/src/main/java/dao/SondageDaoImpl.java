@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,7 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
 
 import business.Ressenti;
@@ -15,24 +19,39 @@ import business.Ressenti;
 public class SondageDaoImpl implements SondageDao {
 
     private DataSource ds;
-    private String getMatiere = "SELECT nomMatiere FROM miseadispo Mi "
-            + "JOIN Sondage S on Mi.idSondage=S.idSondage"
-            + " JOIN Matiere M on S.idMatiere=M.nomMatiere "
-            + "WHERE Mi.code=?;";
-    private String addRessenti = "INSERT INTO ressentis(idSondage,ress) VALUES ("
-            + "(SELECT idSondage FROM miseadispo M WHERE code=?)"
-            + ",CAST(? AS ressenti_t));";
-    private String addSondage = "INSERT INTO sondage(idprof, idmatiere) VALUES (?, ?);";
-    private String getCode = "SELECT code FROM miseadispo M WHERE idSondage=?;";
-    private String getResultat = "SELECT ress, COUNT(*) FROM ressentis "
-                               + " WHERE idsondage = ? GROUP BY ress;";
+    private Properties sqlCodeProp;
+    
+    /**
+     * .
+     * @throws SondageDaoException .
+     */
+    public SondageDaoImpl() {
+        try (InputStream input = 
+                SondageDaoImpl.class.getClassLoader()
+                .getResourceAsStream("resources/sondageDAOSQL.properties")) {
+
+            sqlCodeProp = new Properties();
+
+            if (input == null) {
+                System.out.println("Sorry, unable to find file");
+                return;
+            }
+
+            //load a properties file from class path, inside static method
+            sqlCodeProp.load(input);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     @Override
     public String getMatiereOfSondage(String codeSondage)
             throws SondageDaoException {
+        String getMatiereString = sqlCodeProp.getProperty("getMatiere");
         String matiere = null;
         try (Connection con = ds.getConnection();
-             PreparedStatement stat = con.prepareStatement(getMatiere);) {
+             PreparedStatement stat = con.prepareStatement(getMatiereString);) {
             stat.setString(1, codeSondage);
             ResultSet set = stat.executeQuery();
             if (set.next()) {
@@ -50,8 +69,9 @@ public class SondageDaoImpl implements SondageDao {
 
     @Override
     public void ajouterRessenti(String sondage, Ressenti ressenti) throws SondageDaoException {
+        String addRessentiString = sqlCodeProp.getProperty("addRessenti");
         try (Connection con = ds.getConnection();
-             PreparedStatement stat = con.prepareStatement(addRessenti);) {
+             PreparedStatement stat = con.prepareStatement(addRessentiString);) {
             stat.setString(1, sondage);
             stat.setString(2, ressenti.toString());
             stat.executeUpdate();
@@ -64,8 +84,9 @@ public class SondageDaoImpl implements SondageDao {
     @Override
     public void ajouterSondage(String idProf, String idMatiere)
             throws SondageDaoException {
+        String ajouterSondageString = sqlCodeProp.getProperty("ajouterSondage");
         try (Connection con = ds.getConnection();
-             PreparedStatement stat = con.prepareStatement(addSondage);) {
+             PreparedStatement stat = con.prepareStatement(ajouterSondageString);) {
             stat.setString(1, idProf);
             stat.setString(2, idMatiere);
             stat.executeUpdate();
@@ -78,8 +99,9 @@ public class SondageDaoImpl implements SondageDao {
     @Override
     public String getCode(int id) throws SondageDaoException {
         String code = null;
+        String getCodeString = sqlCodeProp.getProperty("getCode");
         try (Connection con = ds.getConnection();
-             PreparedStatement stat = con.prepareStatement(getCode);) {
+             PreparedStatement stat = con.prepareStatement(getCodeString);) {
             stat.setInt(1, id);
             ResultSet set = stat.executeQuery();
             if (set.next()) {
@@ -93,6 +115,7 @@ public class SondageDaoImpl implements SondageDao {
 
     @Override
     public Map<Ressenti, Integer> getResultat(int id) throws SondageDaoException {
+        String getResultatString = sqlCodeProp.getProperty("getResultat");
         Map<Ressenti, Integer> resultat = new HashMap<Ressenti, Integer>();
         // Init resultat
         for (Ressenti res : Ressenti.values()) {
@@ -101,7 +124,7 @@ public class SondageDaoImpl implements SondageDao {
         
         // Request SQL
         try (Connection con = ds.getConnection();
-             PreparedStatement stat = con.prepareStatement(getResultat);) {
+             PreparedStatement stat = con.prepareStatement(getResultatString);) {
             stat.setInt(1, id);
             ResultSet set = stat.executeQuery();
             while (set.next()) {
