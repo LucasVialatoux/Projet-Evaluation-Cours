@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS matiere (
 CREATE TABLE IF NOT EXISTS sondage (
     idProf VARCHAR,
     idMatiere VARCHAR,
-    idSondage INT,
+    idSondage SERIAL,
     FOREIGN KEY (idProf,idMatiere) REFERENCES matiere(idProf,nomMatiere),
     UNIQUE(idProf,idMatiere,idSondage),
     PRIMARY KEY (idSondage)
