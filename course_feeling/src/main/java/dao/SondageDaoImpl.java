@@ -15,7 +15,7 @@ public class SondageDaoImpl implements SondageDao {
     private DataSource ds;
     private String getMatiere = "SELECT nomMatiere FROM miseadispo Mi "
             + "JOIN Sondage S on Mi.idSondage=S.idSondage" 
-            +  "JOIN Matiere M on S.idMatiere=M.nomMatiere "
+            + " JOIN Matiere M on S.idMatiere=M.nomMatiere "
             + "WHERE Mi.code=?;";
     private String addRessenti = "INSERT INTO ressentis(idSondage,ress) VALUES ("
             + "(SELECT idSondage FROM miseadispo M WHERE code=?)"
