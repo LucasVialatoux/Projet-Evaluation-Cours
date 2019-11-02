@@ -3,6 +3,7 @@ package dao;
 import java.util.Map;
 
 import business.Ressenti;
+import business.ResultatSondage;
 
 public class SondageDaoMockImpl implements SondageDao {
 
@@ -36,7 +37,7 @@ public class SondageDaoMockImpl implements SondageDao {
     }
 
     @Override
-    public Map<Ressenti, Integer> getResultat(int id)
+    public ResultatSondage getResultat(int id)
             throws SondageDaoException {
         // TODO Auto-generated method stub
         return null;
