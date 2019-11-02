@@ -1,8 +1,7 @@
 package dao;
 
-import java.util.Map;
-
 import business.Ressenti;
+import business.ResultatSondage;
 
 public interface SondageDao {
     public String getMatiereOfSondage(String codeSondage) throws SondageDaoException;
@@ -13,5 +12,5 @@ public interface SondageDao {
     
     public String getCode(int id) throws SondageDaoException;
     
-    public Map<Ressenti, Integer> getResultat(int id) throws SondageDaoException;
+    public ResultatSondage getResultat(int id) throws SondageDaoException;
 }

@@ -15,6 +15,7 @@ import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
 
 import business.Ressenti;
+import business.ResultatSondage;
 
 public class SondageDaoImpl implements SondageDao {
 
@@ -112,9 +113,29 @@ public class SondageDaoImpl implements SondageDao {
         }
         return code;
     }
+    
+    private long getDate(int id) throws SondageDaoException {
+        long date = 0;
+        String getDateString = sqlCodeProp.getProperty("getDate");
+        try (Connection con = ds.getConnection();
+             PreparedStatement stat = con.prepareStatement(getDateString);) {
+            stat.setInt(1, id);
+            ResultSet set = stat.executeQuery();
+            if (set.next()) {
+                date = set.getInt("datesondage");
+            }
+        } catch (SQLException e) {
+            throw new SondageDaoException("ERROR SQL : ", e);
+        }
+        return date;
+    }
 
     @Override
-    public Map<Ressenti, Integer> getResultat(int id) throws SondageDaoException {
+    public ResultatSondage getResultat(int id) throws SondageDaoException {
+        ResultatSondage resultatSondage = new ResultatSondage();
+        resultatSondage.setIdSondage(id);
+        resultatSondage.setDateSondage(getDate(id));
+        
         String getResultatString = sqlCodeProp.getProperty("getResultat");
         Map<Ressenti, Integer> resultat = new HashMap<Ressenti, Integer>();
         // Init resultat
@@ -134,6 +155,9 @@ public class SondageDaoImpl implements SondageDao {
         } catch (SQLException e) {
             throw new SondageDaoException("ERROR SQL : ", e);
         }
-        return resultat;
+        
+        resultatSondage.setResultats(resultat);
+        
+        return resultatSondage;
     }
 }
