@@ -11,14 +11,15 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 import dao.SondageDao;
 import dao.SondageDaoImpl;
+import services.GestionSondageService;
 import services.ResponseService;
-
 
 @WebListener
 public class AppContextListener implements ServletContextListener {
 
     SondageDao sondageDao;
     ResponseService responseService;
+    GestionSondageService gestionSondageService;
     DataSource ds;
 
     @Override
@@ -27,8 +28,14 @@ public class AppContextListener implements ServletContextListener {
         setupDatasource();
         setupServicesAndDaos();
         ServletContext ctx = sce.getServletContext();
-        ServletRegistration regist = ctx.addServlet("Response", responseService);
-        regist.addMapping("/sondage/*");
+
+        ServletRegistration registResponseService = ctx.addServlet("Response",
+                responseService);
+        registResponseService.addMapping("/sondage/*");
+
+        ServletRegistration registGestionSondageService = ctx
+                .addServlet("GestionSondage", gestionSondageService);
+        registGestionSondageService.addMapping("/ens/poll/*");
     }
 
     private void setupServicesAndDaos() {
@@ -38,6 +45,9 @@ public class AppContextListener implements ServletContextListener {
 
         responseService = new ResponseService();
         responseService.setSondageDao(sondageDao);
+
+        gestionSondageService = new GestionSondageService();
+        gestionSondageService.setSondageDao(sondageDao);
     }
 
     private void setupDatasource() {
