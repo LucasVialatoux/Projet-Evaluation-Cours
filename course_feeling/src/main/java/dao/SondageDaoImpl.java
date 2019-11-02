@@ -122,7 +122,7 @@ public class SondageDaoImpl implements SondageDao {
             stat.setInt(1, id);
             ResultSet set = stat.executeQuery();
             if (set.next()) {
-                date = set.getInt("datesondage");
+                date = set.getLong("datesondage");
             }
         } catch (SQLException e) {
             throw new SondageDaoException("ERROR SQL : ", e);
