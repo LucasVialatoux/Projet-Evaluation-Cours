@@ -84,7 +84,7 @@ public class SondageDaoImpl implements SondageDao {
     @Override
     public void ajouterSondage(String idProf, String idMatiere)
             throws SondageDaoException {
-        String ajouterSondageString = sqlCodeProp.getProperty("ajouterSondage");
+        String ajouterSondageString = sqlCodeProp.getProperty("addSondage");
         try (Connection con = ds.getConnection();
              PreparedStatement stat = con.prepareStatement(ajouterSondageString);) {
             stat.setString(1, idProf);
