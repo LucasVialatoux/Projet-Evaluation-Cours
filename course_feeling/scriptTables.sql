@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS sondage (
     idProf VARCHAR,
     idMatiere VARCHAR,
     idSondage SERIAL,
+    dateSondage BIGINT,
     FOREIGN KEY (idProf,idMatiere) REFERENCES matiere(idProf,nomMatiere),
     UNIQUE(idProf,idMatiere,idSondage),
     PRIMARY KEY (idSondage)

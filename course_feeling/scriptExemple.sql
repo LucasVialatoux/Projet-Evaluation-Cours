@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS sondage (
     idProf VARCHAR,
     idMatiere VARCHAR,
     idSondage SERIAL,
+    dateSondage BIGINT,
     FOREIGN KEY (idProf,idMatiere) REFERENCES matiere(idProf,nomMatiere),
     UNIQUE(idProf,idMatiere,idSondage),
     PRIMARY KEY (idSondage)
@@ -51,6 +52,6 @@ CREATE TABLE IF NOT EXISTS ressentis (
 
 INSERT INTO utilisateur(adresseMail,mdpHash) VALUES ('jean.dupont@jd.fr','hash');
 INSERT INTO matiere(idProf,nomMatiere) VALUES ('jean.dupont@jd.fr','Web');
-INSERT INTO sondage(idProf,idMatiere) VALUES ('jean.dupont@jd.fr','Web');
+INSERT INTO sondage(idProf, idMatiere, dateSondage) VALUES ('jean.dupont@jd.fr', 'Web', extract(epoch FROM now()) * 1000);
 INSERT INTO miseadispo(idSondage,code,dateCreation) VALUES (1,'AB544','21-05-2019');
 
