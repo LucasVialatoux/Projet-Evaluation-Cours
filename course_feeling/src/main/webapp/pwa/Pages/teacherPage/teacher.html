@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="../../style/emoji.css">
+        <link rel="stylesheet" href="../../style/style.css">
+        <link rel="stylesheet" href="teacher.css">
+        <script src="../../ressources/jquery.min.js"></script>
+        <script src="../../ressources/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="../../ressources/moment.js"></script>
+        <script src="../../ressources/codeManager.js"></script>
+        <script src="teacher.js"></script>
+        <meta charset="utf-8" />
+        <title id="nav_title"></title>
+    </head>
+    <body>
+        <div id="infoErreur" class="alert alert-warning alert_co" role="alert"></div>   
+        <h1 id="account_name" class="text-center title_header"></h1>        
+        <div class="container">
+            <div class="row">
+                <h1 id="discipline_title" class="col-auto mr-auto title_content">Matières</h1>
+                <a id="add_discipline" href="../addDisciplinePage/addDiscipline.html" class="btn btn-link col-auto add_button align-self-center"><img src="../../ressources/add_circle_outline-24px.svg" alt="">AJOUTER</a>
+            </div>
+        </div>
+        <br/>
+        <div class="container discipline_container">
+            <div id="list_discipline" class="list-group"></div>
+        </div>       
+        <div class="container">
+            <br/>
+            <div class="row">
+                <button id="signout_btn" type="button" class="btn btn-link col-md-auto back_button"><img src="../../ressources/arrow_back_ios-24px.svg" alt="">DECONNEXION</button>  
+            </div>
+        </div>
+    </body>
+</html>

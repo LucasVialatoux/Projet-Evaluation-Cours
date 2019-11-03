@@ -12,7 +12,7 @@ body {
     border-radius: 25px;
 }
 
-p {
+p,h5 {
     color: white;
     font-weight: 600;
 }
@@ -37,6 +37,12 @@ p {
         margin-bottom: 10%;
     }
 }
+/* Titre content*/
+.title_content {
+    color: white;
+    font-weight: 600;
+    text-align: center;
+}
 
 /* BackButton */
 .back_button {
@@ -47,18 +53,48 @@ p {
     border-radius: 25px;
     background-color: rgba(0, 0, 0, 0.5);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
+    text-decoration: none;
 }
 .back_button .btn-link:hover{
     text-decoration: none;
 }
 .back_button:hover {
     transition: ease-in-out;
-    background-color: rgba(255, 255, 255, 0.2);
-    
+    text-decoration: none;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2); 
 }
 .back_button img {
     height: 24px;
     width: 24px;
     position: relative;
     top: -2px;
+}
+
+/****************************************************/
+/*          Affichage d'alert                       */
+/****************************************************/
+.alert_co{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+    display: none;
+}
+
+/****************************************************/
+/*          Menu de gestion code sondage            */
+/****************************************************/
+@media screen and (min-width: 768px){
+    .code_manager a{
+        margin-right: 5px;
+    }   
+}
+@media screen and (max-width: 767px){
+    .code_manager {
+        margin: 0px 0px;
+    }
+    .code_manager a{
+        margin-bottom: 5px;
+    }   
 }

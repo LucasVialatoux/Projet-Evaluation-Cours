@@ -1,8 +1,8 @@
-var URL_SEND_FEELING = "http://localhost:8080/sondage/";
-var URL_PAGE_CODE = "../../index.html";
-var URL_PAGE_VALIDATION = "../validationPage/validation.html";
-var NAME_SUBJECT = "nameSbj";
-var CODE_SUBJECT = "codeSbj";
+const URL_SEND_FEELING = "http://localhost:8080/sondage/";
+const URL_PAGE_CODE = "../../index.html";
+const URL_PAGE_VALIDATION = "../validationPage/validation.html";
+const NAME_SUBJECT = "nameSbj";
+const CODE_SUBJECT = "codeSbj";
 // localStorage.setItem(NAME_SUBJECT, "Nom de la matière"); //TEMPO
 // localStorage.setItem(CODE_SUBJECT, "7895A"); //TEMPO
 
