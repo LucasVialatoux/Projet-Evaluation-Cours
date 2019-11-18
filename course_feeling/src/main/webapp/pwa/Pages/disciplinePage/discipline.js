@@ -2,6 +2,7 @@ const JSON_POLLS = '{"statut":"ok","subject":{"name":"Conception web","polls":[{
 const URL_GET_SUBJECT = "http://localhost:8080/ens/subjects/";
 const URL_ADD_POLL = "http://localhost:8080/ens/poll";
 const URL_PAGE_TEACHER = "../teacherPage/teacher.html";
+const URL_PAGE_CONNEXION = "../connexionPage/connexion.html";
 const URL_PAGE_CODE = "../codePage/code.html";
 const EMOTIONS = ['Intéressant', 'Accessible', 'Compliqué', 'Monotone', 'Confus', 'Effrayé'];
 const TOKEN = localStorage.getItem("token");
@@ -10,6 +11,8 @@ const discipline = params.get('discipline');
 
 if (discipline == null ){
     window.location = URL_PAGE_TEACHER;
+} else if (TOKEN == null){
+    window.location = URL_PAGE_CONNEXION;
 }
 
 /**
@@ -99,10 +102,10 @@ function createPoll(poll, charts) {
         +    '<br/>'
         +    '<div class="row justify-content-md-center code_manager">'  
         +        '<h5 class="col-md-auto">Code sondage : <span id="code_'+ poll.id + '" class="badge badge-light"></span></h5>'
-        +        '<a id="getCode" href="'+ URL_PAGE_CODE+'?id='+ poll.id+'" class="btn btn-primary col-md-auto btn_Discipline">'
+        +        '<a id="getCode" href="'+ URL_PAGE_CODE+'?id='+ poll.id+'" class="btn btn-primary col-md-auto btn_action">'
         +            '<img src="../../ressources/fullscreen-24px.svg" alt="">Plein écran'
         +       '</a>'
-        +        '<button type="button" class="btn btn-primary col-md-auto btn_Discipline" onclick="generateCode(\'' + poll.id + '\')">'
+        +        '<button type="button" class="btn btn-primary col-md-auto btn_action" onclick="generateCode(\'' + poll.id + '\')">'
         +            '<img src="../../ressources/refresh-24px.svg" alt="">Regénérer'
         +        '</button>'
         +    '</div>'
@@ -154,51 +157,38 @@ function updatePoll(poll, charts) {
  * @param {Map<string,Chart>} charts Map des charts
  */
 function refreshPolls(charts) {
-    // $.ajax({
-    //     type: "GET",
-    //     url: URL_GET_SUBJECT + discipline + "/results",
-    //     data: {
-    //         subject: $("#disciplineInput").val()
-    //     },
-    //     dataType: "json",
-    //     success: (data) => {
-    //         let response = JSON.parse(data); 
-    //         if (response.statut == "ok") {
-    //             window.location = URL_PAGE_TEACHER;
-    //         } else if (response.statut == "subjectAlreadyUsed") {
-    //             $("#error").text("Le nom de matière saisie existe déjà");
-    //             $("#error").show();
-    //         } else {
-    //             console.error(data);
-    //             window.location = URL_PAGE_TEACHER;
-    //         }
-    //     },
-    //     error: (error) => {
-    //         console.error(error);
-    //         window.location = URL_PAGE_TEACHER;
-    //     },
-    //     beforeSend: (xhr) => xhr.setRequestHeader('Authorization', TOKEN),
-    //     timeout: 1000
-    // });
-    let response = JSON.parse(JSON_POLLS);
-    if (response.statut == "ok") {
-        if ( $("#discipline_title").text() == "" ){
-            $("#discipline_title").text(response.subject.name);
-        }
-        let polls = response.subject.polls;
-        polls.sort((a, b)=> Number(a.date) - Number(b.date))
-        for (let poll of polls){
-            updatePoll(poll, charts);
-        }
-    }
-}
-
-/**
- * Sleep
- * @param {Number} ms temps d'attente en milliseconde
- */
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    $("#infoErreur").hide();
+    $.ajax({
+        type: "GET",
+        url: URL_GET_SUBJECT + discipline + "/results",
+        data: {
+            subject: $("#disciplineInput").val()
+        },
+        dataType: "JSON",
+        success: (data) => {
+            let response = JSON.parse(data);
+            if (response.statut == "ok") {
+                if ( $("#discipline_title").text() == "" ){
+                    $("#discipline_title").text(response.subject.name);
+                }
+                let polls = response.subject.polls;
+                polls.sort((a, b)=> Number(a.date) - Number(b.date))
+                for (let poll of polls){
+                    updatePoll(poll, charts);
+                }
+            } else {
+                console.error(data);
+                window.location = URL_PAGE_TEACHER;
+            }
+        },
+        error: (error) => {
+            console.error(error);
+            $("#infoErreur").text("Veuillez vérifier votre connexion");
+            $("#infoErreur").show();
+        },
+        beforeSend: (xhr) => xhr.setRequestHeader('Authorization', TOKEN),
+        timeout: 1000
+    });
 }
 
 /**
@@ -263,6 +253,7 @@ $(_ => {
                 console.error(error);
                 isAdding = false;
             },
+            beforeSend: (xhr) => xhr.setRequestHeader('Authorization', TOKEN),
             timeout: 2000
         });
     });

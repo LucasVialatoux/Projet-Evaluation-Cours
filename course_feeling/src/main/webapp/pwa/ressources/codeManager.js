@@ -1,4 +1,15 @@
 const URL_CODE = "http://localhost:8080/ens/poll/";
+const TOKEN = localStorage.getItem("token");
+if (TOKEN == null){
+    window.location = URL_PAGE_CONNEXION;
+}
+/**
+ * Sleep
+ * @param {Number} ms temps d'attente en milliseconde
+ */
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 /**
  * Affiche le code du sondage dans le DOM
@@ -33,6 +44,7 @@ function generateCode(idPoll) {
             $("#infoErreur").text("Veuillez vérifier votre connexion");
             $("#infoErreur").show();
         },
+        beforeSend: (xhr) => xhr.setRequestHeader('Authorization', TOKEN),
         timeout: 1500
     });
 }
@@ -42,7 +54,7 @@ function generateCode(idPoll) {
  * @param {string} idPoll 
  */
 function getCode(idPoll) {
-    $("#infoErreur").hide();
+    // $("#infoErreur").hide();
     $.ajax({
         type: "GET",
         url: URL_CODE + idPoll,
@@ -54,6 +66,7 @@ function getCode(idPoll) {
             else {
                 displayCode(idPoll, "ERREUR");
             }
+            $("#infoErreur").hide();
         },
         error: error => {
             console.error(error);
@@ -61,6 +74,7 @@ function getCode(idPoll) {
             $("#infoErreur").text("Veuillez vérifier votre connexion");
             $("#infoErreur").show();
         },
+        beforeSend: (xhr) => xhr.setRequestHeader('Authorization', TOKEN),
         timeout: 1500
     });
 }

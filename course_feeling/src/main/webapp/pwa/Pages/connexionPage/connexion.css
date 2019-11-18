@@ -1,0 +1,20 @@
+#inputID, #inputMdp, .labelInput {
+    color: white;
+    font-weight: 600;
+    font-size: 2.6rem;
+    letter-spacing: 5px;
+}
+@media screen and (max-width: 500px) {
+    #inputID, #inputMdp, .labelInput {
+        font-size: 1.5rem;
+        letter-spacing: normal;
+    }
+}
+
+.form-control-plaintext {
+    width: 50%;
+}
+
+.em_button {
+    text-align: center;
+}
