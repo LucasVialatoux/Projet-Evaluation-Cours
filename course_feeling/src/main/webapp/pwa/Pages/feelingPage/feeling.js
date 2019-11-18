@@ -1,8 +1,3 @@
-const URL_SEND_FEELING = "http://localhost:8080/sondage/";
-const URL_PAGE_CODE = "../../index.html";
-const URL_PAGE_VALIDATION = "../validationPage/validation.html";
-const NAME_SUBJECT = "nameSbj";
-const CODE_SUBJECT = "codeSbj";
 // localStorage.setItem(NAME_SUBJECT, "Nom de la matière"); //TEMPO
 // localStorage.setItem(CODE_SUBJECT, "7895A"); //TEMPO
 
@@ -32,7 +27,7 @@ $(function() {
         // console.log(feeling);
         // window.location = URL_PAGE_VALIDATION;
         $.post(
-            URL_SEND_FEELING + codeSbj,
+            URL_SONDAGE + codeSbj,
             {
                 ressenti:feeling
             },

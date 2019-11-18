@@ -1,4 +1,3 @@
-const URL_CODE = "http://localhost:8080/ens/poll/";
 const TOKEN = localStorage.getItem("token");
 if (TOKEN == null){
     window.location = URL_PAGE_CONNEXION;
@@ -28,7 +27,7 @@ function generateCode(idPoll) {
     $("#infoErreur").hide();
     $.ajax({
         type: "POST",
-        url: URL_CODE + idPoll,
+        url: URL_POLL + idPoll,
         success: data => {
             let response = JSON.parse(data);
             if (response.statut == "ok") {
@@ -57,7 +56,7 @@ function getCode(idPoll) {
     // $("#infoErreur").hide();
     $.ajax({
         type: "GET",
-        url: URL_CODE + idPoll,
+        url: URL_POLL + idPoll,
         success: data => {
             let response = JSON.parse(data);
             if (response.statut == "ok") {

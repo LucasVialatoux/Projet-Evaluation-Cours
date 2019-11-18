@@ -1,15 +1,12 @@
-const URL_PAGE_CODE = "../../index.html";
-const NAME_SUBJECT = "nameSbj";
+let nameSbj = localStorage.getItem("nameSbj");
+if (nameSbj == null){
+    window.location = URL_PAGE_CODE;
+}
 
 $(function() {
     /* Récupération du nom de métier depuis le stockage local*/  
-    let nameSbj = localStorage.getItem(NAME_SUBJECT);
-    if (nameSbj != null) {
-        $("#nav_title").text(nameSbj);
-        $("#discipline_title").text(nameSbj); 
-    } else {
-        window.location = URL_PAGE_CODE;
-    }
+    $("#nav_title").text(nameSbj);
+    $("#discipline_title").text(nameSbj); 
 
     /**
      * Event du bouton de retour

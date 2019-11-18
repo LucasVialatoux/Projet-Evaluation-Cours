@@ -1,6 +1,7 @@
-const URL_ADD_SUBJECT = "http://localhost:8080/ens/subjects/";
-const URL_PAGE_TEACHER = "../teacherPage/teacher.html";
 const TOKEN = localStorage.getItem("token");
+if (TOKEN == null){
+    window.location = URL_PAGE_CONNEXION;
+}
 
 $(_=>{
     $("#addForm").submit(event =>{
@@ -8,7 +9,7 @@ $(_=>{
         $("#error").hide();
         $.ajax({
             type: "POST",
-            url: URL_ADD_SUBJECT,
+            url: URL_SUBJECT,
             data: {
                 subject: $("#disciplineInput").val()
             },

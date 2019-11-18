@@ -1,9 +1,4 @@
 const JSON_POLLS = '{"statut":"ok","subject":{"name":"Conception web","polls":[{"id":"unid1poll1","date":"1572338690503","results":[{"num":"0","result":"20"},{"num":"1","result":"50"},{"num":"2","result":"12"},{"num":"3","result":"5"},{"num":"4","result":"15"},{"num":"5","result":"30"}]},{"id":"unid1poll2","date":"1572438690503","results":[{"num":"0","result":"50"},{"num":"1","result":"20"},{"num":"2","result":"50"},{"num":"3","result":"0"},{"num":"4","result":"5"},{"num":"5","result":"62"}]},{"id":"unid1poll3","date":"1572538690503","results":[{"num":"0","result":"85"},{"num":"1","result":"2"},{"num":"2","result":"45"},{"num":"3","result":"20"},{"num":"4","result":"15"},{"num":"5","result":"42"}]}]}}';
-const URL_GET_SUBJECT = "http://localhost:8080/ens/subjects/";
-const URL_ADD_POLL = "http://localhost:8080/ens/poll";
-const URL_PAGE_TEACHER = "../teacherPage/teacher.html";
-const URL_PAGE_CONNEXION = "../connexionPage/connexion.html";
-const URL_PAGE_CODE = "../codePage/code.html";
 const EMOTIONS = ['Intéressant', 'Accessible', 'Compliqué', 'Monotone', 'Confus', 'Effrayé'];
 const TOKEN = localStorage.getItem("token");
 const params = new URL(location.href).searchParams;
@@ -102,7 +97,7 @@ function createPoll(poll, charts) {
         +    '<br/>'
         +    '<div class="row justify-content-md-center code_manager">'  
         +        '<h5 class="col-md-auto">Code sondage : <span id="code_'+ poll.id + '" class="badge badge-light"></span></h5>'
-        +        '<a id="getCode" href="'+ URL_PAGE_CODE+'?id='+ poll.id+'" class="btn btn-primary col-md-auto btn_action">'
+        +        '<a id="getCode" href="'+ URL_PAGE_CODESONDAGE +'?id='+ poll.id+'" class="btn btn-primary col-md-auto btn_action">'
         +            '<img src="../../ressources/fullscreen-24px.svg" alt="">Plein écran'
         +       '</a>'
         +        '<button type="button" class="btn btn-primary col-md-auto btn_action" onclick="generateCode(\'' + poll.id + '\')">'
@@ -160,7 +155,7 @@ function refreshPolls(charts) {
     $("#infoErreur").hide();
     $.ajax({
         type: "GET",
-        url: URL_GET_SUBJECT + discipline + "/results",
+        url: URL_SUBJECT + discipline + "/results",
         data: {
             subject: $("#disciplineInput").val()
         },
@@ -231,7 +226,7 @@ $(_ => {
         $("#infoErreur").hide();
         $.ajax({
             type: "POST",
-            url: URL_ADD_POLL,
+            url: URL_POLL,
             data: {
                 id:discipline
             },
