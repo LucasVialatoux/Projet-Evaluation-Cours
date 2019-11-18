@@ -1,5 +1,5 @@
 const TOKEN = localStorage.getItem("token");
-if (TOKEN == null){
+if (TOKEN == null) {
     window.location = URL_PAGE_CONNEXION;
 }
 /**
@@ -15,8 +15,8 @@ function sleep(ms) {
  * @param {String} idPoll id du sondage 
  * @param {Number} code code de sondage
  */
-function displayCode(idPoll,code) {
-    $("#code_"+idPoll).text(code);
+function displayCode(idPoll, code) {
+    $("#code_" + idPoll).text(code);
 }
 
 /**
@@ -76,4 +76,14 @@ function getCode(idPoll) {
         beforeSend: (xhr) => xhr.setRequestHeader('Authorization', TOKEN),
         timeout: 1500
     });
+}
+
+/**
+ * Actualise en tâche de fond le code de sondage
+ */
+async function codeUpdater(idPoll) {
+    while (true) {
+        getCode(idPoll);
+        await sleep(2000);
+    }
 }

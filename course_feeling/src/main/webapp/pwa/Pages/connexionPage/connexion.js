@@ -14,7 +14,8 @@ $(function() {
             (data) => {
                 let reponse = JSON.parse(data);
                 if (reponse.statut != undefined && reponse.statut == "ok") {
-                	localStorage.setItem('token', reponse.token);
+                    localStorage.setItem('token', reponse.token);
+                    localStorage.setItem('mail',$('#inputID').val());
                     window.location = URL_PAGE_TEACHER;
                 } else {
                     console.log("Erreur de connexion");

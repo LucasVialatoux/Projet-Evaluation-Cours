@@ -1,13 +1,10 @@
-const JSON_POLLS = '{"statut":"ok","subject":{"name":"Conception web","polls":[{"id":"unid1poll1","date":"1572338690503","results":[{"num":"0","result":"20"},{"num":"1","result":"50"},{"num":"2","result":"12"},{"num":"3","result":"5"},{"num":"4","result":"15"},{"num":"5","result":"30"}]},{"id":"unid1poll2","date":"1572438690503","results":[{"num":"0","result":"50"},{"num":"1","result":"20"},{"num":"2","result":"50"},{"num":"3","result":"0"},{"num":"4","result":"5"},{"num":"5","result":"62"}]},{"id":"unid1poll3","date":"1572538690503","results":[{"num":"0","result":"85"},{"num":"1","result":"2"},{"num":"2","result":"45"},{"num":"3","result":"20"},{"num":"4","result":"15"},{"num":"5","result":"42"}]}]}}';
+// const JSON_POLLS = '{"statut":"ok","subject":{"name":"Conception web","polls":[{"id":"unid1poll1","date":"1572338690503","results":[{"num":"0","result":"20"},{"num":"1","result":"50"},{"num":"2","result":"12"},{"num":"3","result":"5"},{"num":"4","result":"15"},{"num":"5","result":"30"}]},{"id":"unid1poll2","date":"1572438690503","results":[{"num":"0","result":"50"},{"num":"1","result":"20"},{"num":"2","result":"50"},{"num":"3","result":"0"},{"num":"4","result":"5"},{"num":"5","result":"62"}]},{"id":"unid1poll3","date":"1572538690503","results":[{"num":"0","result":"85"},{"num":"1","result":"2"},{"num":"2","result":"45"},{"num":"3","result":"20"},{"num":"4","result":"15"},{"num":"5","result":"42"}]}]}}';
 const EMOTIONS = ['Intéressant', 'Accessible', 'Compliqué', 'Monotone', 'Confus', 'Effrayé'];
-const TOKEN = localStorage.getItem("token");
 const params = new URL(location.href).searchParams;
 const discipline = params.get('discipline');
 
-if (discipline == null ){
+if (discipline == null) {
     window.location = URL_PAGE_TEACHER;
-} else if (TOKEN == null){
-    window.location = URL_PAGE_CONNEXION;
 }
 
 /**
@@ -44,19 +41,19 @@ function createChart(ctx, emotions, data) {
         },
         options: {
             legend: {
-                position:'false',
+                position: 'false',
                 labels: {
                     fontStyle: 'bold',
                     fontSize: 14,
                 }
             },
-            scales:{
-                xAxes:[{
+            scales: {
+                xAxes: [{
                     gridLines: {
                         color: "rgba(255, 255, 255, 0.3)"
                     }
                 }],
-                yAxes:[{
+                yAxes: [{
                     gridLines: {
                         color: "rgba(255, 255, 255, 0.3)"
                     }
@@ -84,40 +81,40 @@ function updateChart(chart, data) {
 function createPoll(poll, charts) {
     $("#poll_container").prepend(
         '<div class="container poll">'
-        +    '<br/>'
-        +    '<div class="row">'
-        +       '<h4 class="col"> Sondage du : ' + moment(Number(poll.date)).locale("fr").format('L') +'  '
-        +           '<span class="badge badge-secondary">Participants '
-        +               '<span class="badge badge-light" id="nb'+ poll.id +'"></span>'
-        +           '</span>'
-        +       '</h4>'
-        +    '</div>'
-        +    '<br/>'
-        +    '<canvas  width="4" height="2" class="row col" id="'+ poll.id +'"></canvas>'
-        +    '<br/>'
-        +    '<div class="row justify-content-md-center code_manager">'  
-        +        '<h5 class="col-md-auto">Code sondage : <span id="code_'+ poll.id + '" class="badge badge-light"></span></h5>'
-        +        '<a id="getCode" href="'+ URL_PAGE_CODESONDAGE +'?id='+ poll.id+'" class="btn btn-primary col-md-auto btn_action">'
-        +            '<img src="../../ressources/fullscreen-24px.svg" alt="">Plein écran'
-        +       '</a>'
-        +        '<button type="button" class="btn btn-primary col-md-auto btn_action" onclick="generateCode(\'' + poll.id + '\')">'
-        +            '<img src="../../ressources/refresh-24px.svg" alt="">Regénérer'
-        +        '</button>'
-        +    '</div>'
-        +    '<br/>'
-        +    '<br/>'
-        +'</div>'
-        +'<br/>'
+        + '<br/>'
+        + '<div class="row">'
+        + '<h4 class="col"> Sondage du : ' + moment(Number(poll.date)).locale("fr").format('L') + '  '
+        + '<span class="badge badge-secondary">Participants '
+        + '<span class="badge badge-light" id="nb' + poll.id + '"></span>'
+        + '</span>'
+        + '</h4>'
+        + '</div>'
+        + '<br/>'
+        + '<canvas  width="4" height="2" class="row col" id="' + poll.id + '"></canvas>'
+        + '<br/>'
+        + '<div class="row justify-content-md-center code_manager">'
+        + '<h5 class="col-md-auto">Code sondage : <span id="code_' + poll.id + '" class="badge badge-light"></span></h5>'
+        + '<a id="getCode" href="' + URL_PAGE_CODESONDAGE + '?id=' + poll.id + '" class="btn btn-primary col-md-auto btn_action">'
+        + '<img src="../../ressources/fullscreen-24px.svg" alt="">Plein écran'
+        + '</a>'
+        + '<button type="button" class="btn btn-primary col-md-auto btn_action" onclick="generateCode(\'' + poll.id + '\')">'
+        + '<img src="../../ressources/refresh-24px.svg" alt="">Regénérer'
+        + '</button>'
+        + '</div>'
+        + '<br/>'
+        + '<br/>'
+        + '</div>'
+        + '<br/>'
     );
     let ctx = document.getElementById(poll.id).getContext('2d');
     let resultats = [];
     let nbTotal = 0;
     for (data of poll.results) {
-        resultats[data.num] = Number(data.result); 
+        resultats[data.num] = Number(data.result);
         nbTotal += Number(data.result);
     }
-    $("#nb"+poll.id).text(nbTotal);
-    charts.set(poll.id, createChart(ctx,EMOTIONS,resultats));
+    $("#nb" + poll.id).text(nbTotal);
+    charts.set(poll.id, createChart(ctx, EMOTIONS, resultats));
     getCode(poll.id);
 }
 
@@ -134,16 +131,16 @@ function updatePoll(poll, charts) {
         let diff = false; // Optimisation pour accélérer l'actualisation des données
         let oldData = charts.get(poll.id).data.datasets[0].data
         for (data of poll.results) {
-            results[data.num] = Number(data.result); 
+            results[data.num] = Number(data.result);
             diff = diff || (results[data.num] != oldData[data.num])
             nbTotal += Number(data.result);
         }
         if (diff) {
-            $("#nb"+poll.id).text(nbTotal);
+            $("#nb" + poll.id).text(nbTotal);
             updateChart(charts.get(poll.id), results);
         }
     } else { // Le sondage n'est pas affiché
-        createPoll(poll,charts);
+        createPoll(poll, charts);
     }
 }
 
@@ -163,12 +160,12 @@ function refreshPolls(charts) {
         success: (data) => {
             let response = JSON.parse(data);
             if (response.statut == "ok") {
-                if ( $("#discipline_title").text() == "" ){
+                if ($("#discipline_title").text() == "") {
                     $("#discipline_title").text(response.subject.name);
                 }
                 let polls = response.subject.polls;
-                polls.sort((a, b)=> Number(a.date) - Number(b.date))
-                for (let poll of polls){
+                polls.sort((a, b) => Number(a.date) - Number(b.date))
+                for (let poll of polls) {
                     updatePoll(poll, charts);
                 }
             } else {
@@ -207,16 +204,16 @@ async function pollsService() {
 /**
  * Déclenché au chargement du DOM
  */
-$(_ => {
+$(function() {
     console.log(discipline);
     //On lance le service de sondage
     pollsService();
-    
+
     /**
      * Event ajout d'un sondage
      */
     var isAdding = false;
-    $("#add_discipline").click((event) => { 
+    $("#add_discipline").click((event) => {
         event.preventDefault();
         if (isAdding) {
             return;
@@ -228,14 +225,14 @@ $(_ => {
             type: "POST",
             url: URL_POLL,
             data: {
-                id:discipline
+                id: discipline
             },
             dataType: "JSON",
             success: data => {
                 $("#add_discipline").html('<img src="../../ressources/add_circle_outline-24px.svg" alt="">AJOUTER');
                 let response = JSON.parse(data);
                 if (response.statut == "ok") {
-                }else {
+                } else {
                     $("#infoErreur").text("Ajout impossible d'un sondage");
                     $("#infoErreur").show();
                 }
