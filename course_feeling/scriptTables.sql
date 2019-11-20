@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS miseadispo (
     idSondage INT,
     code VARCHAR,
     dateCreation BIGINT,
-    FOREIGN KEY (idSondage) REFERENCES sondage(idSondage),
+    FOREIGN KEY (idSondage) REFERENCES sondage(idSondage) on delete cascade,
     PRIMARY KEY (idSondage),
     UNIQUE (code)
 );
