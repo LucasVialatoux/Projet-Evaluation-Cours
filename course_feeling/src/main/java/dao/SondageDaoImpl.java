@@ -103,12 +103,13 @@ public class SondageDaoImpl implements SondageDao {
     }
 
     @Override
-    public String getCode(int id) throws SondageDaoException {
+    public String getCode(String idProf, int idSondage) throws SondageDaoException {
         String code = null;
         String getCodeString = sqlCodeProp.getProperty("getCode");
         try (Connection con = ds.getConnection();
              PreparedStatement stat = con.prepareStatement(getCodeString);) {
-            stat.setInt(1, id);
+            stat.setInt(1, idSondage);
+            stat.setString(2, idProf);
             ResultSet set = stat.executeQuery();
             if (set.next()) {
                 code = set.getString("code");
@@ -137,8 +138,8 @@ public class SondageDaoImpl implements SondageDao {
     }
     
     @Override
-    public String addCode(int id) throws SondageDaoException {
-        String code = getCode(id);
+    public String addCode(String idProf, int idSondage) throws SondageDaoException {
+        String code = getCode(idProf, idSondage);
         if(!code.equals("") && code != null) return code;
         
         List<String> codes = getExistingCode();
@@ -159,7 +160,7 @@ public class SondageDaoImpl implements SondageDao {
         String addCodeString = sqlCodeProp.getProperty("addCode");
         try (Connection con = ds.getConnection();
              PreparedStatement stat = con.prepareStatement(addCodeString);) {
-            stat.setInt(1, id);
+            stat.setInt(1, idSondage);
             stat.setString(2, code);
             stat.setLong(3, System.currentTimeMillis());
             stat.executeUpdate();
