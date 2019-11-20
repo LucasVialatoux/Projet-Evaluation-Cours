@@ -1,12 +1,18 @@
-let nameSbj = localStorage.getItem("nameSbj");
-if (nameSbj == null){
-    window.location = URL_PAGE_CODE;
-}
+var URL_PAGE_CODE = "../../index.html";
+var NAME_SUBJECT = "nameSbj";
 
 $(function() {
     /* Récupération du nom de métier depuis le stockage local*/  
-    $("#nav_title").text(nameSbj);
-    $("#discipline_title").text(nameSbj); 
+    let nameSbj = localStorage.getItem(NAME_SUBJECT);
+    if (nameSbj == null) {
+        nameSbj = "Matière par défaut";
+    }
+    if (nameSbj != null) {
+        $("#nav_title").text(nameSbj);
+        $("#discipline_title").text(nameSbj); 
+    } else {
+        window.location = URL_PAGE_CODE;
+    }
 
     /**
      * Event du bouton de retour

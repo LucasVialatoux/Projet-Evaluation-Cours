@@ -1,3 +1,8 @@
+var URL_PAGE_CODE = "../connexionPage/connexion.html";
+var URL_SEND_INSCRIPTION = "http://localhost:8080/signup/";
+var URL_PAGE_VALIDATION = "../validationPage/validation.html";//METTRE ADRESSE DASHBOARD (PIERRE)
+
+
 $(function() {
     
 	/**
@@ -7,7 +12,7 @@ $(function() {
     	//Si les 2 mot de passe sont identiques
     	if ($('#inputMdp1').val() == $('#inputMdp2').val() ){
 	        $.post(
-	            URL_INSCRIPTION,
+	            URL_SEND_INSCRIPTION,
 	            {
 	                email:$('#inputID').val(),
 	                password:$('#inputMdp1').val()
@@ -16,7 +21,7 @@ $(function() {
 	                let reponse = JSON.parse(data);
 	                if (reponse.statut != undefined && reponse.statut == "ok") {
 	                	localStorage.setItem('token', reponse.token);
-	                    window.location = URL_PAGE_TEACHER;
+	                    window.location = URL_PAGE_VALIDATION;
 	                } else if(reponse.statut == "emailAlreadyUsed"){
 	                	$('#inputID').text("Cette adresse email existe déjà.");
             			$('#inputID').show();
@@ -42,6 +47,6 @@ $(function() {
      * Event du bouton de retour
      */
     $("#back_button_code").click(_=> {
-        window.location = URL_PAGE_CONNEXION;
+        window.location = URL_PAGE_CODE;
     });
 });
