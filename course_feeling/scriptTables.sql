@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS sondage (
 CREATE TABLE IF NOT EXISTS miseadispo (
     idSondage INT,
     code VARCHAR,
-    dateCreation DATE,
+    dateCreation BIGINT,
     FOREIGN KEY (idSondage) REFERENCES sondage(idSondage),
     PRIMARY KEY (idSondage),
     UNIQUE (code)
