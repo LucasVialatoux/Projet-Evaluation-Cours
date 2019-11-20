@@ -1,0 +1,98 @@
+{
+    "statut": "ok",
+    "subject": {
+      "name": "Conception web",
+      "polls": [
+        {
+          "id": "unid1poll1",
+          "date": "1572338690503",
+          "results": [
+            {
+              "num": "0",
+              "result": "20"
+            },
+            {
+              "num": "1",
+              "result": "50"
+            },
+            {
+              "num": "2",
+              "result": "12"
+            },
+            {
+              "num": "3",
+              "result": "5"
+            },
+            {
+              "num": "4",
+              "result": "15"
+            },
+            {
+              "num": "5",
+              "result": "30"
+            }
+          ]
+        },
+        {
+          "id": "unid1poll2",
+          "date": "1572438690503",
+          "results": [
+            {
+              "num": "0",
+              "result": "50"
+            },
+            {
+              "num": "1",
+              "result": "20"
+            },
+            {
+              "num": "2",
+              "result": "50"
+            },
+            {
+              "num": "3",
+              "result": "0"
+            },
+            {
+              "num": "4",
+              "result": "5"
+            },
+            {
+              "num": "5",
+              "result": "62"
+            }
+          ]
+        },
+        {
+          "id": "unid1poll3",
+          "date": "1572538690503",
+          "results": [
+            {
+              "num": "0",
+              "result": "85"
+            },
+            {
+              "num": "1",
+              "result": "2"
+            },
+            {
+              "num": "2",
+              "result": "45"
+            },
+            {
+              "num": "3",
+              "result": "20"
+            },
+            {
+              "num": "4",
+              "result": "15"
+            },
+            {
+              "num": "5",
+              "result": "42"
+            }
+          ]
+        }
+      ]
+    }
+  }

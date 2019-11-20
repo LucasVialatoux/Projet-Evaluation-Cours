@@ -1,9 +1,3 @@
-var URL_PAGE_FEELING = "Pages/feelingPage/feeling.html";
-var URL_PAGE_CONNEXION = "Pages/connexionPage/connexion.html";
-var URL_SEND_CODE = "http://localhost:8080/sondage/";
-var NAME_SUBJECT = "nameSbj";
-var CODE_SUBJECT = "codeSbj";
-
 //Supprimer text de l'input
 function jQ_append(text) {
     if($("#inputID").val().length <5) {
@@ -30,13 +24,13 @@ $(function() {
         e.preventDefault();
         if ($('#inputID').val().length == 5) {
             $('#retour').hide();
-            $.get(URL_SEND_CODE+$('#inputID').val(),
+            $.get(URL_SONDAGE + $('#inputID').val(),
                 (data) => {
                     let reponse = JSON.parse(data);
                     if (reponse.statut!= undefined && reponse.statut == "ok" ){
                         localStorage.setItem(NAME_SUBJECT, reponse.matiere);
                         localStorage.setItem(CODE_SUBJECT, $('#inputID').val());
-                        $( location ).attr("href", URL_PAGE_FEELING);
+                        $( location ).attr("href", URL_ABS_PAGE_FEELING);
                     } else {
                         $('#retour').text("Code incorrect, veuillez le vérifier.");
                         $('#retour').show();
@@ -53,7 +47,7 @@ $(function() {
      * Event du bouton Enseignant
      */
     $("#connect_button_code").click(_=> {
-        window.location = URL_PAGE_CONNEXION;
+        window.location = URL_ABS_PAGE_CONNEXION;
     });
 
 });
