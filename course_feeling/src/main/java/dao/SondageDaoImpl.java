@@ -7,9 +7,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
@@ -90,6 +94,7 @@ public class SondageDaoImpl implements SondageDao {
              PreparedStatement stat = con.prepareStatement(ajouterSondageString);) {
             stat.setString(1, idProf);
             stat.setString(2, idMatiere);
+            stat.setLong(3, System.currentTimeMillis());
             stat.executeUpdate();
 
         } catch (SQLException e) {
@@ -111,6 +116,58 @@ public class SondageDaoImpl implements SondageDao {
         } catch (SQLException e) {
             throw new SondageDaoException("ERROR SQL : ", e);
         }
+        return code;
+    }
+
+    private List<String> getExistingCode() throws SondageDaoException {
+        List<String> codes = new ArrayList<String>();
+        
+        String getCodeString = sqlCodeProp.getProperty("getCodes");
+        try (Connection con = ds.getConnection();
+             PreparedStatement stat = con.prepareStatement(getCodeString);) {
+            ResultSet set = stat.executeQuery();
+            if (set.next()) {
+                codes.add(set.getString("code"));
+            }
+        } catch (SQLException e) {
+            throw new SondageDaoException("ERROR SQL : ", e);
+        }
+        
+        return codes;
+    }
+    
+    @Override
+    public String addCode(int id) throws SondageDaoException {
+        String code = getCode(id);
+        if(!code.equals("") && code != null) return code;
+        
+        List<String> codes = getExistingCode();
+        Random r = new Random();
+        
+        char[] codeChars = { '0', '1', '2', '3', '4', '5',
+                              '6', '7', '8', '9', 'A', 'B'};
+        do {
+            char[] ccode = new char[5];
+            for(int i = 0; i < 5; i++) {
+                int cid = r.nextInt(codeChars.length);
+                ccode[i] = codeChars[cid];
+            }
+            code = String.valueOf(ccode);
+        } while(!codes.contains(code));
+        
+        // Adding code to database
+        String addCodeString = sqlCodeProp.getProperty("addCode");
+        try (Connection con = ds.getConnection();
+             PreparedStatement stat = con.prepareStatement(addCodeString);) {
+            stat.setInt(1, id);
+            stat.setString(2, code);
+            stat.setLong(3, System.currentTimeMillis());
+            stat.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new SondageDaoException("ERROR SQL : ", e);
+        }
+        
         return code;
     }
     

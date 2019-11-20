@@ -12,5 +12,7 @@ public interface SondageDao {
     
     public String getCode(int id) throws SondageDaoException;
     
+    public String addCode(int id) throws SondageDaoException;
+    
     public ResultatSondage getResultat(int id) throws SondageDaoException;
 }
