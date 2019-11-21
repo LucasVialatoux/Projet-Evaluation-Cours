@@ -9,9 +9,9 @@
 
 }
 .btn-group-default button:hover{
-    transition: all 300ms ease-in-out;
-    color: #00c9b3;
-    border: solid 2px #00c9b3;
+    transition: all 100ms ease-in-out;
+    color: #00c2f7;
+    border: solid 2px #00c2f7;
 }
 
 #inputID {
@@ -30,11 +30,11 @@
     margin-right: 20px;
 }
 
-#connect_button_code{
+/* #connect_button_code{
     margin-top: 15px;
     font-weight: 600;
     border-radius: 25px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
     background-color:  rgba(0, 0, 0, 0.5);
     border: 0px;
-}
+} */

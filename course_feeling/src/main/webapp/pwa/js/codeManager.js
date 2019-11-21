@@ -1,6 +1,6 @@
 const TOKEN = localStorage.getItem("token");
 if (TOKEN == null) {
-    window.location = URL_PAGE_CONNEXION;
+    // window.location = URL_PAGE_CONNEXION;
 }
 /**
  * Sleep
@@ -68,7 +68,7 @@ function getCode(idPoll) {
             $("#infoErreur").hide();
         },
         error: error => {
-            console.error(error);
+            // console.error(error);
             displayCode(idPoll, "#####");
             $("#infoErreur").text("Veuillez vérifier votre connexion");
             $("#infoErreur").show();

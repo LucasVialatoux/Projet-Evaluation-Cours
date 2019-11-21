@@ -1,8 +1,9 @@
-// const JSON_DISCIPLINE = '{"statut":"ok","subjects":[{"id":"unid1","name":"Conception web","polls":[{"id":"unid1poll1","date":"1572338690503"},{"id":"unid1poll2","date":"1572438690503"},{"id":"unid1poll3","date":"1572538690503"}]},{"id":"unid2","name":"Réseaux","polls":[{"id":"unid2poll1","date":"1572338690503"},{"id":"unid2poll2","date":"1572438690503"},{"id":"unid2poll3","date":"1572538690503"}]}]}';
-const MAIL = localStorage.getItem("mail");
+const JSON_DISCIPLINE = '{"statut":"ok","subjects":[{"id":"unid1","name":"Conception web","polls":[{"id":"unid1poll1","date":"1572338690503"},{"id":"unid1poll2","date":"1572438690503"},{"id":"unid1poll3","date":"1572538690503"}]},{"id":"unid2","name":"Réseaux","polls":[{"id":"unid2poll1","date":"1572338690503"},{"id":"unid2poll2","date":"1572438690503"},{"id":"unid2poll3","date":"1572538690503"}]}]}';
+var MAIL = localStorage.getItem("mail");
 
 if (MAIL == null) {
-    window.location = URL_PAGE_CONNEXION;
+    MAIL = "vaslin.pierre@test.com";
+    // window.location = URL_PAGE_CONNEXION;
 }
 
 /**
@@ -29,12 +30,12 @@ function displaySubject(subject) {
         + '<a href="' + URL_PAGE_DISCIPLINE + "?discipline=" + subject.id + '" class="container link_discipline">'
         + '<div class="row">'
         + '<p class="col">' + subject.name + '</p>'
-        + '<img class="col-auto" src="../../ressources/arrow_forward_ios-24px.svg" alt="">'
+        + '<img class="col-auto" src="../../ressources/arrow_forward_ios-24px_white.svg" alt="">'
         + '</div>'
         + '<small class="row col">Dernier sondage : ' + time + '</small>'
         + '</a>'
         + '<div class="row code_manager">'
-        + '<h5 style="color: black;" class="col-md-auto">Code du dernier sondage : <span id="code_' + latePoll.id + '" class="badge badge-dark"></span></h5>'
+        + '<h5 class="col-md-auto">Code du dernier sondage : <span id="code_' + latePoll.id + '" class="badge badge-dark"></span></h5>'
         + '<a id="getCode" href="' + URL_PAGE_CODESONDAGE + '?id=' + latePoll.id + '" class="btn btn-primary col-md-auto btn_action">'
         + '<img src="../../ressources/fullscreen-24px.svg" alt="">Plein écran'
         + '</a>'
@@ -50,13 +51,25 @@ function displaySubject(subject) {
     //Lancement de l'actualisation des codes de sondages
     // codeUpdater(latePoll.id)
 }
-
+function debug(){
+    let response = JSON.parse(JSON_DISCIPLINE);
+    if (response.statut != undefined && response.statut == "ok") {
+        // console.log(response.subjects);
+        let subjects = response.subjects;
+        // on tri les matière du plus grand au plus récent au plus ancien
+        subjects.sort((a, b) => Number(recentPoll(b.polls).date) - Number(recentPoll(a.polls).date));
+        for (let subject of response.subjects) {
+            displaySubject(subject);
+        }
+    }
+}
 /**
  * Récupère la liste des matières d'un professeur
  * et les affiches dans le DOM
  */
 function loadDiscipline() {
     $("#list_discipline").html("");
+    debug();
     $.ajax({
         type: "GET",
         url: URL_SUBJECT,

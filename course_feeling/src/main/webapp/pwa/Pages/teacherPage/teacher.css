@@ -1,4 +1,22 @@
-/* ADDButton */
+/*******************************************************************/
+/*                         Fond CSS                                */
+/*******************************************************************/
+#list_discipline {
+    background-color: #28282a;
+    border-radius: 25px;
+    color: white!important;
+    /* padding: 0px 20px 0px 20px; */
+}
+
+.discipline_container {
+    background: linear-gradient(to right, red, orange);
+    border-radius: 25px;
+    padding: 3px;
+}
+
+/*******************************************************************/
+/*                        ADDButton CSS                            */
+/*******************************************************************/
 .add_button {
     color: white;
     font-weight: bold;
@@ -7,15 +25,21 @@
     padding: .2rem .75rem;
     width: max-content;
     border-radius: 25px;
-    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    background: linear-gradient(to right, red, orange);
+    border: none;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
 }
 .add_button .btn-link:hover{
     text-decoration: none;
+    color: white;
 }
 .add_button:hover {
     transition: ease-in-out;
-    background-color: rgba(255, 255, 255, 0.2); 
+    text-decoration: none;
+    color: white;
+    background: rgba(255, 255, 255, 0.3); 
+    /* background: linear-gradient(to left, rgba(255, 255, 255, 0.1),rgba(255, 255, 255, 0.2));  */
 }
 .add_button img {
     height: 24px;
@@ -24,18 +48,20 @@
     top: -2px;
     right:2px;
 }
-.discipline_container{
-    padding: 0px;   
-}
+
+/*******************************************************************/
+/*                        Liste CSS                                */
+/*******************************************************************/
 .link_discipline p{
-    color: black;
+    color: white;
 }
 .link_discipline:hover{
     text-decoration: none;
     color: #00b9ff;
 }
 #list_discipline .item_discipline{
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
+    background-color: #28282a;
 }
 #list_discipline .item_discipline:first-child{
     border-radius: 25px 25px 0px 0px;
@@ -51,10 +77,10 @@
 }
 
 .code_manager {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.5);
     margin: 0px -22px -12px -22px;
     padding: 8px;
-    /* width: 100%; */
+   /* width: 100%; */
 }
 .item_discipline:last-child .code_manager {
     border-radius: 0px 0px 25px 25px;
@@ -62,11 +88,12 @@
 .code_manager h5{
     position: relative;
     top: 4px;
+    color: black;
 }
 
-.btn_remove{
+/* .btn_remove{
     border-radius: 25px;
     border: none;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
     text-decoration: none;
-}
+} */

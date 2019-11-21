@@ -15,19 +15,21 @@
     <body>
         <h1 id="account_name" class="text-center title_header">Ajout d'une matières</h1> 
         <div class="container container_main">
-            <br/>
-            <form id="addForm" class="form container">
-				<span id="error" class="text-danger" style="display: none">Le nom de matière saisie existe déjà</span>
-                <div class="form-group row">
-                    <p for="disciplineInput">Nom de la matière</p>
-                    <input type="text" class="form-control" id="disciplineInput" placeholder="Nom">
-                </div>
-                <div class="row justify-content-center">
-                    <button type="submit" class="btn btn-primary col aling-self-center">Ajouter</button>
-                </div>
-            </form>
-            <br/>
-        </div>      
+            <div class="module">
+                <br/>
+                <form id="addForm" class="form container">
+                    <span id="error" class="text-danger" style="display: none">Le nom de matière saisie existe déjà</span>
+                    <div class="form-group row">
+                        <h5 for="disciplineInput">Nom de la matière</h5>
+                        <input type="text" class="form-control" id="disciplineInput" placeholder="Nom">
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary col-md-2 aling-self-center btn_action">Ajouter</button>
+                    </div>
+                </form>
+                <br/>
+            </div>   
+        </div>
         <div class="container">
             <br/>
             <div class="row">
