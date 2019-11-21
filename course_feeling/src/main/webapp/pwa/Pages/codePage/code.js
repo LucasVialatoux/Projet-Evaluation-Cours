@@ -5,7 +5,6 @@ const idPoll = params.get('id');
 /* Test token et code à afficher*/
 if (CODE_SONDAGE == null || idPoll == null) {
     window.location = URL_PAGE_CONNEXION;
-    return
 }
 
 $(function () {

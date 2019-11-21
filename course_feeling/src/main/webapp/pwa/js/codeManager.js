@@ -80,6 +80,7 @@ function getCode(idPoll) {
 
 /**
  * Actualise en tâche de fond le code de sondage
+ * @param {string} idPoll 
  */
 async function codeUpdater(idPoll) {
     while (true) {

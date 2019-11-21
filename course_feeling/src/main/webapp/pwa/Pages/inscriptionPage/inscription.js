@@ -4,7 +4,7 @@ $(function() {
      * Gérer le submit du formulaire
      */
     $('#formCode').submit(function(e){
-    	//Si les 2 mot de passe sont identiques
+        e.preventDefault();
     	if ($('#inputMdp1').val() == $('#inputMdp2').val() ){
 	        $.post(
 	            URL_INSCRIPTION,
@@ -16,12 +16,12 @@ $(function() {
 	                let reponse = JSON.parse(data);
 	                if (reponse.statut != undefined && reponse.statut == "ok") {
 	                	localStorage.setItem('token', reponse.token);
+                        localStorage.setItem('mail',$('#inputID').val());
 	                    window.location = URL_PAGE_TEACHER;
 	                } else if(reponse.statut == "emailAlreadyUsed"){
-	                	$('#inputID').text("Cette adresse email existe déjà.");
-            			$('#inputID').show();
+	                	$('#retourID').text("Cette adresse email existe déjà.");
+            			$('#retourID').show();
 	                } else {
-	                    console.log("Erreur d'inscription");
 	                    window.location.reload();
 	                    $('#retourMdp2').text("Erreur d'inscription");
             			$('#retourMdp2').show();
@@ -29,11 +29,9 @@ $(function() {
 	            }
 	        );
         } else if ($('#inputMdp1').val() != $('#inputMdp2').val()){
-        	e.preventDefault();
             $('#retourMdp2').text("Veuillez vérifier votre mot de passe.");
             $('#retourMdp2').show();
         } else {
-        	e.preventDefault();
         	$('#retourMdp2').text("Erreur d'inscription");
             $('#retourMdp2').show();
         }
