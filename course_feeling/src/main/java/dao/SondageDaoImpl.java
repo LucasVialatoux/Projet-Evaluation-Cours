@@ -214,6 +214,7 @@ public class SondageDaoImpl implements SondageDao {
                 PreparedStatement stat = con
                         .prepareStatement(getResultatString);) {
             stat.setInt(1, idSondage);
+            stat.setString(1, idProf);
             ResultSet set = stat.executeQuery();
             while (set.next()) {
                 resultat.put(Ressenti.valueOf(set.getString("ress")),
@@ -231,7 +232,18 @@ public class SondageDaoImpl implements SondageDao {
     @Override
     public void supprimerSondage(String idProf, int idSondage)
             throws SondageDaoException {
-        // TODO Auto-generated method stub
+        String supprimerSondageString = sqlCodeProp.getProperty("deleteSondage");
+        try (Connection con = ds.getConnection();
+                PreparedStatement stat = con
+                        .prepareStatement(supprimerSondageString);) {
+            stat.setInt(1, idSondage);
+            stat.setString(2, idProf);
+            stat.setLong(3, System.currentTimeMillis());
+            stat.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new SondageDaoException("ERROR SQL : ", e);
+        }
 
     }
 }
