@@ -8,11 +8,8 @@ import javax.persistence.Table;
 
 import java.util.ArrayList;
 
-@Entity
-@Table(name = "MATIERES")
 public class Matiere {
     
-    @Id
     private int id;
     private String name;
     private List<Sondage> sondages = new ArrayList<Sondage>();
