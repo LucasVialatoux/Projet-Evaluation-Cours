@@ -58,8 +58,7 @@ public class GestionSondageService extends AbstractServlet {
             } catch (NullPointerException e) {
                 jsonResponse = generateErrorStatus();
             }
-        } else if (matiere != null && !matiere.equals("")) { // To add a new
-                                                             // form
+        } else if (matiere != null && !matiere.equals("")) { // Add a new form
             jsonResponse = addSondage(idProf, matiere);
         } else {
             jsonResponse = generateErrorStatus();
@@ -75,7 +74,7 @@ public class GestionSondageService extends AbstractServlet {
         String idProf = getIdProf(req);
         JsonObject jsonResponse = null;
         String idSondageString = req.getRequestURI().split("/")[3];
-        if (idSondageString != null) { // To create a code
+        if (idSondageString != null) { // To delete a form
             try {
                 int idSondage = Integer.parseInt(idSondageString);
                 jsonResponse = deleteSondage(idProf, idSondage);
@@ -138,7 +137,7 @@ public class GestionSondageService extends AbstractServlet {
         }
         return response;
     }
-    
+
     private JsonObject createCodeSondage(String idProf, int idSondage) {
         JsonObject response = null;
         String codeSondage = null;
