@@ -1,6 +1,6 @@
 $(function() {
     
-	/**
+    /**
      * Gérer le submit du formulaire
      */
     $('#formCode').submit(function(e){
@@ -18,7 +18,6 @@ $(function() {
                     localStorage.setItem('mail',$('#inputID').val());
                     window.location = URL_PAGE_TEACHER;
                 } else {
-                    console.log("Erreur de connexion");
                     window.location.reload();
                     $('#retourID').text("Veuillez vérifier votre email.");
                     $('#retourID').show();

@@ -44,8 +44,8 @@ public class AppContextListener implements ServletContextListener {
         PGSimpleDataSource datasource = new PGSimpleDataSource();
         datasource.setServerName("localhost");
         datasource.setDatabaseName("course_feeling");
-        datasource.setUser("course_feeling");
-        datasource.setPassword("");
+        datasource.setUser("postgres");
+        datasource.setPassword("test");
         ds = datasource;
     }
 }

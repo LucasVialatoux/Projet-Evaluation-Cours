@@ -29,4 +29,3 @@ const URL_PAGE_CONNEXION = "../connexionPage/connexion.html";
 const URL_PAGE_DISCIPLINE = "../disciplinePage/discipline.html";
 const URL_PAGE_VALIDATION = "../validationPage/validation.html";
 const URL_PAGE_CODESONDAGE = "../codePage/code.html";
-
