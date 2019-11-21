@@ -3,11 +3,9 @@ package dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +13,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
-import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
 
 import business.Ressenti;
@@ -27,7 +24,7 @@ public class SondageDaoImpl implements SondageDao {
     private Properties sqlCodeProp;
 
     /**
-     * .
+     * Charge le code SQL depuis un fichier.
      * 
      * @throws SondageDaoException .
      */
@@ -179,31 +176,15 @@ public class SondageDaoImpl implements SondageDao {
         return code;
     }
 
-    private long getDate(int id) throws SondageDaoException {
-        long date = 0;
-        String getDateString = sqlCodeProp.getProperty("getDate");
-        try (Connection con = ds.getConnection();
-                PreparedStatement stat = con.prepareStatement(getDateString);) {
-            stat.setInt(1, id);
-            ResultSet set = stat.executeQuery();
-            if (set.next()) {
-                date = set.getLong("datesondage");
-            }
-        } catch (SQLException e) {
-            throw new SondageDaoException("ERROR SQL : ", e);
-        }
-        return date;
-    }
-
     @Override
     public ResultatSondage getResultat(String idProf, int idSondage)
             throws SondageDaoException {
         ResultatSondage resultatSondage = new ResultatSondage();
         resultatSondage.setIdSondage(idSondage);
-        resultatSondage.setDateSondage(getDate(idSondage));
 
         String getResultatString = sqlCodeProp.getProperty("getResultat");
         Map<Ressenti, Integer> resultat = new HashMap<Ressenti, Integer>();
+        
         // Init resultat
         for (Ressenti res : Ressenti.values()) {
             resultat.put(res, 0);
@@ -214,11 +195,12 @@ public class SondageDaoImpl implements SondageDao {
                 PreparedStatement stat = con
                         .prepareStatement(getResultatString);) {
             stat.setInt(1, idSondage);
-            stat.setString(1, idProf);
+            stat.setString(2, idProf);
             ResultSet set = stat.executeQuery();
             while (set.next()) {
                 resultat.put(Ressenti.valueOf(set.getString("ress")),
                         (Integer) set.getInt("count"));
+                resultatSondage.setDateSondage(set.getLong("datesondage"));
             }
         } catch (SQLException e) {
             throw new SondageDaoException("ERROR SQL : ", e);

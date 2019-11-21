@@ -11,7 +11,7 @@ public interface MatiereDao {
      * Ajout d'une matière pour un prof.
      * @param idProf : identifiant du prof.
      * @param nomMat : nom de la matière.
-     * @throws MatiereDaoException
+     * @throws MatiereDaoException .
      */
     public void ajoutMatiere(String idProf, String nomMat) throws MatiereDaoException;
     
@@ -19,15 +19,15 @@ public interface MatiereDao {
      * Suppression d'une matière d'un prof.
      * @param idProf : identifiant du prof.
      * @param nomMat : nom de la matière.
-     * @throws MatiereDaoException
+     * @throws MatiereDaoException .
      */
     public void supprimerMatiere(String idProf, String nomMat) throws MatiereDaoException;
     
     /**
      * Récupère les resultats de sondage des matières d'un prof.
      * @param idProf : identifiant du prof.
-     * @return
-     * @throws MatiereDaoException
+     * @return Une liste des matières.
+     * @throws MatiereDaoException .
      */
     public List<Matiere> getMatieres(String idProf) throws MatiereDaoException;
     
@@ -35,8 +35,8 @@ public interface MatiereDao {
      * Récupère les résultats de sondage d'une matière.
      * @param idProf : identifiant du prof.
      * @param nomMat : nom de la matière.
-     * @return
-     * @throws MatiereDaoException
+     * @return Resultat de la matière.
+     * @throws MatiereDaoException .
      */
     public MatiereResultat getResultat(String idProf, String nomMat) throws MatiereDaoException;
     

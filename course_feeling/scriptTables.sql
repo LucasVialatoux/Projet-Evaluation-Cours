@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS sondage (
     idMatiere VARCHAR,
     idSondage SERIAL,
     dateSondage BIGINT,
-    FOREIGN KEY (idProf,idMatiere) REFERENCES matiere(idProf,nomMatiere),
+    FOREIGN KEY (idProf,idMatiere) REFERENCES matiere(idProf,nomMatiere) on delete cascade,
     UNIQUE(idProf,idMatiere,idSondage),
     PRIMARY KEY (idSondage)
 );
@@ -47,5 +47,6 @@ CREATE TYPE ressenti_t as ENUM(
 
 CREATE TABLE IF NOT EXISTS ressentis (
     idSondage INT,
-    ress ressenti_t
+    ress ressenti_t,
+    FOREIGN KEY (idSondage) REFERENCES sondage(idSondage) on delete cascade
 );
