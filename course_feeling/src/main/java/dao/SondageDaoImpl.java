@@ -189,10 +189,10 @@ public class SondageDaoImpl implements SondageDao {
     }
 
     @Override
-    public ResultatSondage getResultat(int id) throws SondageDaoException {
+    public ResultatSondage getResultat(String idProf, int idSondage) throws SondageDaoException {
         ResultatSondage resultatSondage = new ResultatSondage();
-        resultatSondage.setIdSondage(id);
-        resultatSondage.setDateSondage(getDate(id));
+        resultatSondage.setIdSondage(idSondage);
+        resultatSondage.setDateSondage(getDate(idSondage));
         
         String getResultatString = sqlCodeProp.getProperty("getResultat");
         Map<Ressenti, Integer> resultat = new HashMap<Ressenti, Integer>();
@@ -204,7 +204,7 @@ public class SondageDaoImpl implements SondageDao {
         // Request SQL
         try (Connection con = ds.getConnection();
              PreparedStatement stat = con.prepareStatement(getResultatString);) {
-            stat.setInt(1, id);
+            stat.setInt(1, idSondage);
             ResultSet set = stat.executeQuery();
             while (set.next()) {
                 resultat.put(Ressenti.valueOf(set.getString("ress")), (
@@ -217,5 +217,12 @@ public class SondageDaoImpl implements SondageDao {
         resultatSondage.setResultats(resultat);
         
         return resultatSondage;
+    }
+
+    @Override
+    public void supprimerSondage(String idProf, int idSondage)
+            throws SondageDaoException {
+        // TODO Auto-generated method stub
+        
     }
 }

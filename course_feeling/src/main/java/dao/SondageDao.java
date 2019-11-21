@@ -10,9 +10,11 @@ public interface SondageDao {
     
     public void ajouterSondage(String idProf, String idMatiere) throws SondageDaoException;
     
+    public void supprimerSondage(String idProf, int idSondage) throws SondageDaoException;
+    
     public String getCode(String idProf, int idSondage) throws SondageDaoException;
     
     public String addCode(String idProf, int idSondage) throws SondageDaoException;
-    
-    public ResultatSondage getResultat(int id) throws SondageDaoException;
+
+    public ResultatSondage getResultat(String idProf, int idSondage) throws SondageDaoException;
 }
