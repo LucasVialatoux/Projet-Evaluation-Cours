@@ -31,13 +31,28 @@ public class SondageDaoMockImpl implements SondageDao {
     }
 
     @Override
-    public String getCode(int id) throws SondageDaoException {
+    public String getCode(String idProf, int idSondage)
+            throws SondageDaoException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ResultatSondage getResultat(int id)
+    public String addCode(String idProf, int idSondage)
+            throws SondageDaoException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void supprimerSondage(String idProf, int idSondage)
+            throws SondageDaoException {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public ResultatSondage getResultat(String idProf, int idSondage)
             throws SondageDaoException {
         // TODO Auto-generated method stub
         return null;

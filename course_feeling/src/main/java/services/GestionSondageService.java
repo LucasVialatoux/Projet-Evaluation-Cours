@@ -29,14 +29,15 @@ public class GestionSondageService extends AbstractServlet {
             throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
         String[] parametres = req.getRequestURI().split("/");
+        String idProf = getIdProf(req);
         int idSondage = Integer.parseInt(parametres[3]);
         boolean resultats = (parametres.length == 5
                 && parametres[4].equals("results"));
         JsonObject jsonResponse = null;
         if (resultats) {
-            jsonResponse = getResultSondages(idSondage);
+            jsonResponse = getResultSondages(idProf, idSondage);
         } else {
-            jsonResponse = getCodeSondage(idSondage);
+            jsonResponse = getCodeSondage(idProf, idSondage);
         }
         resp.setStatus(200);
         out.print(jsonResponse.toString());
@@ -47,12 +48,40 @@ public class GestionSondageService extends AbstractServlet {
             throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
         String matiere = req.getParameter("id");
-        String idProf = null;
+        String idProf = getIdProf(req);
         JsonObject jsonResponse = null;
-        if (matiere != null && !matiere.equals("")) {
+        String idSondageString = req.getRequestURI().split("/")[3];
+        if (idSondageString != null) { // To create a code
+            try {
+                int idSondage = Integer.parseInt(idSondageString);
+                jsonResponse = createCodeSondage(idProf, idSondage);
+            } catch (NullPointerException e) {
+                jsonResponse = generateErrorStatus();
+            }
+        } else if (matiere != null && !matiere.equals("")) { // To add a new
+                                                             // form
             jsonResponse = addSondage(idProf, matiere);
         } else {
             jsonResponse = generateErrorStatus();
+        }
+        resp.setStatus(200);
+        out.print(jsonResponse.toString());
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        PrintWriter out = resp.getWriter();
+        String idProf = getIdProf(req);
+        JsonObject jsonResponse = null;
+        String idSondageString = req.getRequestURI().split("/")[3];
+        if (idSondageString != null) { // To create a code
+            try {
+                int idSondage = Integer.parseInt(idSondageString);
+                jsonResponse = deleteSondage(idProf, idSondage);
+            } catch (NullPointerException e) {
+                jsonResponse = generateErrorStatus();
+            }
         }
         resp.setStatus(200);
         out.print(jsonResponse.toString());
@@ -62,12 +91,12 @@ public class GestionSondageService extends AbstractServlet {
         this.sondageDao = sondageDao;
     }
 
-    private JsonObject getResultSondages(int idSondage) {
-        JsonObject response = new JsonObject();
+    private JsonObject getResultSondages(String idProf, int idSondage) {
+        JsonObject response = null;
         try {
-            ResultatSondage resultats = sondageDao
-                    .getResultat(idSondage);
-            response.addProperty("statut", "ok");
+            ResultatSondage resultats = sondageDao.getResultat(idProf,
+                    idSondage);
+            response = generateSuccessStatus();
             JsonObject poll = new JsonObject();
             poll.addProperty("id", resultats.getIdSondage());
             poll.addProperty("date", resultats.getDateSondage());
@@ -81,35 +110,60 @@ public class GestionSondageService extends AbstractServlet {
             poll.add("results", jsonResults);
             response.add("poll", poll);
         } catch (SondageDaoException e) {
-            e.printStackTrace();
             response = generateErrorStatus();
         }
         return response;
     }
 
-    private JsonObject getCodeSondage(int idSondage) {
+    private JsonObject getCodeSondage(String idProf, int idSondage) {
         JsonObject response = null;
         String codeSondage = null;
         try {
-            codeSondage = sondageDao.getCode(idSondage);
-            response = new JsonObject();
-            response.addProperty("statut", "ok");
+            codeSondage = sondageDao.getCode(idProf, idSondage);
+            response = generateSuccessStatus();
             response.addProperty("code", codeSondage);
         } catch (SondageDaoException e) {
             response = generateErrorStatus();
         }
         return response;
     }
+
+    private JsonObject deleteSondage(String idProf, int idSondage) {
+        JsonObject response = null;
+        try {
+            sondageDao.supprimerSondage(idProf, idSondage);
+            response = generateSuccessStatus();
+        } catch (SondageDaoException e) {
+            response = generateErrorStatus();
+        }
+        return response;
+    }
     
+    private JsonObject createCodeSondage(String idProf, int idSondage) {
+        JsonObject response = null;
+        String codeSondage = null;
+        try {
+            codeSondage = sondageDao.addCode(idProf, idSondage);
+            response = generateSuccessStatus();
+            response.addProperty("code", codeSondage);
+        } catch (SondageDaoException e) {
+            response = generateErrorStatus();
+        }
+        return response;
+    }
+
     private JsonObject addSondage(String idProf, String matiere) {
         JsonObject jsonResponse = null;
         try {
             sondageDao.ajouterSondage(idProf, matiere);
-            jsonResponse = new JsonObject();
-            jsonResponse.addProperty("statut", "ok");
+            jsonResponse = generateSuccessStatus();
         } catch (SondageDaoException e) {
             jsonResponse = generateErrorStatus();
-        } 
+        }
         return jsonResponse;
+    }
+
+    private String getIdProf(HttpServletRequest req) {
+        return null;
     }
 }

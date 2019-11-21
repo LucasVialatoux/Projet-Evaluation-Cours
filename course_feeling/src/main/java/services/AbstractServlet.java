@@ -13,4 +13,10 @@ public abstract class AbstractServlet extends HttpServlet {
         j.addProperty("statut", "erreur");
         return j;
     }
+    
+    protected JsonObject generateSuccessStatus() {
+        JsonObject j = new JsonObject();
+        j.addProperty("statut", "ok");
+        return j;
+    }
 }
