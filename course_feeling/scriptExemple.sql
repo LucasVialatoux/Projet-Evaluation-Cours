@@ -1,4 +1,4 @@
-INSERT INTO utilisateur(adresseMail,mdpHash) VALUES ('jean.dupont@jd.fr','hash');
+INSERT INTO utilisateur(email,mdpHash,token) VALUES ('jean.dupont@jd.fr','hash','token');
 INSERT INTO matiere(idProf,nomMatiere) VALUES ('jean.dupont@jd.fr','Web');
 INSERT INTO sondage(idProf, idMatiere, dateSondage) VALUES ('jean.dupont@jd.fr', 'Web', extract(epoch FROM now()) * 1000);
 INSERT INTO miseadispo(idSondage,code,dateCreation) VALUES (1,'AB544',extract(epoch FROM now()) * 1000);

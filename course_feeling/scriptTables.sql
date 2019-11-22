@@ -6,14 +6,15 @@ DROP TABLE IF EXISTS utilisateur;
 DROP TYPE  IF EXISTS Ressenti_t;
 
 CREATE TABLE IF NOT EXISTS utilisateur (
-    adresseMail VARCHAR PRIMARY KEY,
-    mdpHash VARCHAR NOT NULL
+    email VARCHAR PRIMARY KEY,
+    mdpHash VARCHAR NOT NULL,
+    token VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS matiere (
     idProf VARCHAR,
     nomMatiere VARCHAR,
-    FOREIGN KEY (idProf) REFERENCES utilisateur(adresseMail),
+    FOREIGN KEY (idProf) REFERENCES utilisateur(email),
     PRIMARY KEY (idProf,nomMatiere)
 );
 
