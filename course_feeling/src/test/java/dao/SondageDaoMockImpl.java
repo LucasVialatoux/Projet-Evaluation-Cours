@@ -45,8 +45,11 @@ public class SondageDaoMockImpl implements SondageDao {
     @Override
     public String addCode(String idProf, int idSondage)
             throws SondageDaoException {
-        // TODO Auto-generated method stub
-        return null;
+		// TODO Auto-generated method stub
+		if (idProf == "test@test.com" && idSondage == 12345)
+			return "98765";
+		else 
+			return null;
     }
 
     @Override
