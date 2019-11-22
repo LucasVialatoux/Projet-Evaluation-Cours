@@ -50,10 +50,11 @@ public class AbstractServletTest extends Mockito {
 		assertEquals(jErreur, absErreur.generateErrorStatus());
 	}
 
+	@Test
 	public void generateSuccessStatusTest() throws IOException, ServletException {
 		AbstractServlet absSucces = new AbstractServlet() {};
 		JsonObject jSuccess = new JsonObject();
 		jSuccess.addProperty("statut", "ok");
-		assertEquals(jSuccess, absSucces.generateErrorStatus());
+		assertEquals(jSuccess, absSucces.generateSuccessStatus());
 	}
 }
