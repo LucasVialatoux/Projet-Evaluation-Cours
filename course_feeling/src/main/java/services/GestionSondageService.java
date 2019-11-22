@@ -176,8 +176,12 @@ public class GestionSondageService extends AbstractServlet {
         String codeSondage = null;
         try {
             codeSondage = sondageDao.getCode(idProf, idSondage);
-            response = generateSuccessStatus();
-            response.addProperty("code", codeSondage);
+            if(codeSondage != null) {
+                response = generateSuccessStatus();
+                response.addProperty("code", codeSondage);
+            } else {
+                response = generateErrorStatus();
+            }
         } catch (SondageDaoException e) {
             response = generateErrorStatus();
         }
