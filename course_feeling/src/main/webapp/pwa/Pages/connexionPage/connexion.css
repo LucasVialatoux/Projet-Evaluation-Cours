@@ -2,11 +2,14 @@
     color: white;
     font-weight: 600;
     font-size: 2.6rem;
-    letter-spacing: 5px;
 }
 
 .form-control-plaintext {
     width: 50%;
+}
+
+#formCode {
+    margin: 5%;
 }
 
 .em_button {
@@ -16,6 +19,5 @@
 @media (min-width: 320px) and (max-width: 1024px) {
     #inputID, #inputMdp, .labelInput {
         font-size: 1.5rem;
-        letter-spacing: normal;
     }
 }
