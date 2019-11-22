@@ -176,7 +176,7 @@ public class GestionSondageService extends AbstractServlet {
         String codeSondage = null;
         try {
             codeSondage = sondageDao.getCode(idProf, idSondage);
-            if(codeSondage != null) {
+            if (codeSondage != null) {
                 response = generateSuccessStatus();
                 response.addProperty("code", codeSondage);
             } else {
@@ -218,7 +218,7 @@ public class GestionSondageService extends AbstractServlet {
         String codeSondage = null;
         try {
             codeSondage = sondageDao.addCode(idProf, idSondage);
-            if(codeSondage != null) {
+            if (codeSondage != null) {
                 response = generateSuccessStatus();
                 response.addProperty("code", codeSondage);
             } else {
