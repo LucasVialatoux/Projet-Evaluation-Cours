@@ -141,7 +141,7 @@ public class GestionMatiereService extends AbstractServlet {
      * @return L'ID de l'enseignant
      */
     private String getIdProf(HttpServletRequest req) {
-        return (String) req.getAttribute("id");
+        return (String) req.getAttribute("ensId");
     }
 
     /**
