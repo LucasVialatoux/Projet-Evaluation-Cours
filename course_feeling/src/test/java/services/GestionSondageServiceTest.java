@@ -102,7 +102,6 @@ public class GestionSondageServiceTest extends Mockito {
         StringWriter sw = new StringWriter();
 		PrintWriter out = new PrintWriter(sw);
         when(req.getPathInfo()).thenReturn(null);
-        when(req.getAttribute("id")).thenReturn("CPP");
         when(req.getParameter("id")).thenReturn("CPP");
         when(req.getAttribute("ensId")).thenReturn("test@test.com");
         when(resp.getWriter()).thenReturn(out);	
@@ -118,7 +117,6 @@ public class GestionSondageServiceTest extends Mockito {
         StringWriter sw = new StringWriter();
 		PrintWriter out = new PrintWriter(sw);
         when(req.getPathInfo()).thenReturn("/12345");
-        when(req.getAttribute("id")).thenReturn("CPP");
         when(req.getParameter("id")).thenReturn("CPP");
         when(req.getAttribute("ensId")).thenReturn("test@test.com");
         when(resp.getWriter()).thenReturn(out);	
@@ -135,7 +133,6 @@ public class GestionSondageServiceTest extends Mockito {
         StringWriter sw = new StringWriter();
 		PrintWriter out = new PrintWriter(sw);
         when(req.getPathInfo()).thenReturn(null);
-        when(req.getAttribute("id")).thenReturn("CPP");
         when(req.getParameter("id")).thenReturn("CPP");
         when(req.getAttribute("ensId")).thenReturn("test@test.com");
         when(resp.getWriter()).thenReturn(out);	
