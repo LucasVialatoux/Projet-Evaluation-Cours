@@ -43,8 +43,10 @@ public class GestionSondageService extends AbstractServlet {
         JsonObject jsonResponse = null;
         if (resultats) {
             jsonResponse = getResultSondages(idProf, idSondage);
-        } else {
+        } else if (parametres.length == 2) {
             jsonResponse = getCodeSondage(idProf, idSondage);
+        } else {
+            jsonResponse = generateErrorStatus();
         }
 
         // Écriture de la réponse
