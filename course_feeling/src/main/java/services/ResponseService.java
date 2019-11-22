@@ -21,7 +21,7 @@ public class ResponseService extends HttpServlet {
      */
     private static final long serialVersionUID = 6012769876508579988L;
 
-    private SondageDao sondageDao;
+    private static SondageDao sondageDao;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -77,6 +77,6 @@ public class ResponseService extends HttpServlet {
     }
 
     public void setSondageDao(SondageDao sondageDao) {
-        this.sondageDao = sondageDao;
+        ResponseService.sondageDao = sondageDao;
     }
 }
