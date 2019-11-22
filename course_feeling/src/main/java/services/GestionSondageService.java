@@ -134,7 +134,11 @@ public class GestionSondageService extends AbstractServlet {
         try {
             ResultatSondage resultats = sondageDao.getResultat(idProf,
                     idSondage);
-            response = serializeFromResults(resultats);
+            if (resultats != null) {
+                response = serializeFromResults(resultats);
+            } else {
+                response = generateErrorStatus();
+            }
         } catch (SondageDaoException e) {
             response = generateErrorStatus();
         }
