@@ -214,8 +214,12 @@ public class GestionSondageService extends AbstractServlet {
         String codeSondage = null;
         try {
             codeSondage = sondageDao.addCode(idProf, idSondage);
-            response = generateSuccessStatus();
-            response.addProperty("code", codeSondage);
+            if(codeSondage != null) {
+                response = generateSuccessStatus();
+                response.addProperty("code", codeSondage);
+            } else {
+                response = generateErrorStatus();
+            }
         } catch (SondageDaoException e) {
             response = generateErrorStatus();
         }
@@ -247,6 +251,6 @@ public class GestionSondageService extends AbstractServlet {
      * @return L'ID du professeur.
      */
     private String getIdProf(HttpServletRequest req) {
-        return null;
+        return req.getParameter("id");
     }
 }
