@@ -8,13 +8,18 @@ import business.ResultatSondage;
 public class SondageDaoMockImpl implements SondageDao {
 
     @Override
-    public String getMatiereOfSondage(String codeSondage) {
+    public String getMatiereOfSondage(String codeSondage) throws SondageDaoException {
         if (codeSondage.contentEquals("00000")) {
-            return "Sciences";
-        } else {
-            return "";
-        }
-    }
+			return "Sciences";	
+		} else if (codeSondage.equals("abcde")) {
+			throw new SondageDaoException("abc", null);
+		}
+		else {
+			return "";
+		}
+	}
+	
+
 
     @Override
     public void ajouterRessenti(String sondage, Ressenti ressenti)

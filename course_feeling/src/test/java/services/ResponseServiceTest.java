@@ -63,6 +63,33 @@ public class ResponseServiceTest extends Mockito {
 		
 		assert(response.contains("\"statut\":\"erreur\""));
 	}
+
+	@Test
+	public void getSondageCodeSondageIncorrect() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("/afjvhdjf");
+		when(resp.getWriter()).thenReturn(out);
+
+		service.doGet(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"erreur\""));
+	}
+
+
+	@Test
+	public void getSondageCodeSondageVide() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("/abcde");
+		when(resp.getWriter()).thenReturn(out);
+
+		service.doGet(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"erreur\""));
+	}
 	
 	@Test
 	public void ajouterRessentiSondageExistant() throws IOException, ServletException {
@@ -75,6 +102,19 @@ public class ResponseServiceTest extends Mockito {
 		String response = sw.getBuffer().toString().trim();
 		
 		assert(response.contains("\"statut\":\"ok\""));
+	}
+
+	@Test
+	public void ajouterMauvaisRessentiSondageExistant() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("/00000");
+		when(resp.getWriter()).thenReturn(out);
+		when(req.getParameter("ressenti")).thenReturn("abcbd");
+		service.doPost(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"erreur\""));
 	}
 	
 	@Test
