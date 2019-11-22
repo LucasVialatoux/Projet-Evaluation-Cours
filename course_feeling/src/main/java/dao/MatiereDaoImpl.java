@@ -97,21 +97,25 @@ public class MatiereDaoImpl implements MatiereDao {
                 PreparedStatement stat = con
                         .prepareStatement(getMatieresString);) {
             stat.setString(1, idProf);
-            ResultSet set = stat.executeQuery();
-            while (set.next()) {
-                String matNom = set.getString("idmatiere");
-
-                if (matMap.get(matNom) == null) {
-                    matMap.put(matNom, new ArrayList<Sondage>());
+            
+            try (ResultSet set = stat.executeQuery()) {
+                while (set.next()) {
+                    String matNom = set.getString("idmatiere");
+    
+                    if (matMap.get(matNom) == null) {
+                        matMap.put(matNom, new ArrayList<Sondage>());
+                    }
+    
+                    List<Sondage> mat = matMap.get(matNom);
+    
+                    Sondage sondage = new Sondage();
+                    sondage.setId(set.getInt("idsondage"));
+                    sondage.setDate(set.getLong("datesondage"));
+    
+                    mat.add(sondage);
                 }
-
-                List<Sondage> mat = matMap.get(matNom);
-
-                Sondage sondage = new Sondage();
-                sondage.setId(set.getInt("idsondage"));
-                sondage.setDate(set.getLong("datesondage"));
-
-                mat.add(sondage);
+            } catch (SQLException e) {
+                throw new MatiereDaoException("ERROR SQL : ", e);
             }
         } catch (SQLException e) {
             throw new MatiereDaoException("ERROR SQL : ", e);
@@ -154,25 +158,29 @@ public class MatiereDaoImpl implements MatiereDao {
                         .prepareStatement(getResultatString);) {
             stat.setString(1, nomMat);
             stat.setString(2, idProf);
-            ResultSet set = stat.executeQuery();
-            while (set.next()) {
-                int idSondage = set.getInt("idsondage");
-                long dateSondage = set.getLong("datesondage");
-
-                ResultatSondage res = getResultatSondage(
-                        matRes.getResultatsSondage(), idSondage);
-                if (res == null) {
-                    res = new ResultatSondage();
-                    res.setIdSondage(idSondage);
-                    res.setDateSondage(dateSondage);
-                    for (Ressenti ress : Ressenti.values()) {
-                        res.getResultats().put(ress, 0);
+            
+            try (ResultSet set = stat.executeQuery()) {
+                while (set.next()) {
+                    int idSondage = set.getInt("idsondage");
+                    long dateSondage = set.getLong("datesondage");
+    
+                    ResultatSondage res = getResultatSondage(
+                            matRes.getResultatsSondage(), idSondage);
+                    if (res == null) {
+                        res = new ResultatSondage();
+                        res.setIdSondage(idSondage);
+                        res.setDateSondage(dateSondage);
+                        for (Ressenti ress : Ressenti.values()) {
+                            res.getResultats().put(ress, 0);
+                        }
+    
+                        matRes.getResultatsSondage().add(res);
                     }
-
-                    matRes.getResultatsSondage().add(res);
+                    res.getResultats().put(Ressenti.valueOf(set.getString("ress")),
+                            (Integer) set.getInt("count"));
                 }
-                res.getResultats().put(Ressenti.valueOf(set.getString("ress")),
-                        (Integer) set.getInt("count"));
+            } catch (SQLException e) {
+                throw new MatiereDaoException("ERROR SQL : ", e);
             }
         } catch (SQLException e) {
             throw new MatiereDaoException("ERROR SQL : ", e);

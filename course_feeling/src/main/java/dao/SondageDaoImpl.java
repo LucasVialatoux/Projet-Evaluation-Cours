@@ -55,9 +55,13 @@ public class SondageDaoImpl implements SondageDao {
                 PreparedStatement stat = con
                         .prepareStatement(getMatiereString);) {
             stat.setString(1, codeSondage);
-            ResultSet set = stat.executeQuery();
-            if (set.next()) {
-                matiere = set.getString("nomMatiere");
+            
+            try (ResultSet set = stat.executeQuery()) {
+                if (set.next()) {
+                    matiere = set.getString("nomMatiere");
+                }
+            } catch (SQLException e) {
+                throw new SondageDaoException("ERROR SQL : ", e);
             }
         } catch (SQLException e) {
             throw new SondageDaoException("ERROR SQL : ", e);
@@ -111,9 +115,12 @@ public class SondageDaoImpl implements SondageDao {
                 PreparedStatement stat = con.prepareStatement(getCodeString);) {
             stat.setInt(1, idSondage);
             stat.setString(2, idProf);
-            ResultSet set = stat.executeQuery();
-            if (set.next()) {
-                code = set.getString("code");
+            try (ResultSet set = stat.executeQuery()) {
+                if (set.next()) {
+                    code = set.getString("code");
+                }
+            } catch (SQLException e) {
+                throw new SondageDaoException("ERROR SQL : ", e);
             }
         } catch (SQLException e) {
             throw new SondageDaoException("ERROR SQL : ", e);
