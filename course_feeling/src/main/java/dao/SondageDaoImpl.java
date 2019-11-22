@@ -25,8 +25,6 @@ public class SondageDaoImpl implements SondageDao {
 
     /**
      * Charge le code SQL depuis un fichier.
-     * 
-     * @throws SondageDaoException .
      */
     public SondageDaoImpl() {
         try (InputStream input = SondageDaoImpl.class.getClassLoader()
