@@ -93,7 +93,7 @@ public class GestionMatiereService extends AbstractServlet {
     }
 
     private String getIdProf(HttpServletRequest req) {
-        return req.getParameter("id");
+        return (String)req.getAttribute("id");
     }
 
     private JsonObject getResultsMatiere(String idProf, String idMatiere) {

@@ -259,6 +259,6 @@ public class GestionSondageService extends AbstractServlet {
      * @return L'ID du professeur.
      */
     private String getIdProf(HttpServletRequest req) {
-        return req.getParameter("id");
+        return (String)req.getAttribute("id");
     }
 }
