@@ -45,9 +45,12 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
                 PreparedStatement stat = con
                         .prepareStatement(getMdpHashString);) {
             stat.setString(1, email);
-            ResultSet set = stat.executeQuery();
-            if (set.next()) {
-                mdpHash = set.getString("mdphash");
+            try (ResultSet set = stat.executeQuery()) {
+                if (set.next()) {
+                    mdpHash = set.getString("mdphash");
+                }
+            } catch (SQLException e) {
+                throw new UtilisateurDaoException("ERROR SQL : ", e);
             }
         } catch (SQLException e) {
             throw new UtilisateurDaoException("ERROR SQL : ", e);
@@ -63,9 +66,12 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
                 PreparedStatement stat = con
                         .prepareStatement(getTokenString);) {
             stat.setString(1, email);
-            ResultSet set = stat.executeQuery();
-            if (set.next()) {
-                token = set.getString("token");
+            try (ResultSet set = stat.executeQuery()) {
+                if (set.next()) {
+                    token = set.getString("token");
+                }
+            } catch (SQLException e) {
+                throw new UtilisateurDaoException("ERROR SQL : ", e);
             }
         } catch (SQLException e) {
             throw new UtilisateurDaoException("ERROR SQL : ", e);
@@ -117,9 +123,12 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
                 PreparedStatement stat = con
                         .prepareStatement(getEmailString);) {
             stat.setString(1, token);
-            ResultSet set = stat.executeQuery();
-            if (set.next()) {
-                email = set.getString("token");
+            try (ResultSet set = stat.executeQuery()) {
+                if (set.next()) {
+                    email = set.getString("token");
+                }
+            } catch (SQLException e) {
+                throw new UtilisateurDaoException("ERROR SQL : ", e);
             }
         } catch (SQLException e) {
             throw new UtilisateurDaoException("ERROR SQL : ", e);
