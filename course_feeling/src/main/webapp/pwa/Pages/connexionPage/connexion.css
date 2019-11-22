@@ -4,12 +4,6 @@
     font-size: 2.6rem;
     letter-spacing: 5px;
 }
-@media screen and (max-width: 500px) {
-    #inputID, #inputMdp, .labelInput {
-        font-size: 1.5rem;
-        letter-spacing: normal;
-    }
-}
 
 .form-control-plaintext {
     width: 50%;
@@ -17,4 +11,11 @@
 
 .em_button {
     text-align: center;
+}
+
+@media (min-width: 320px) and (max-width: 1024px) {
+    #inputID, #inputMdp, .labelInput {
+        font-size: 1.5rem;
+        letter-spacing: normal;
+    }
 }
