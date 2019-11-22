@@ -22,10 +22,10 @@ import dao.MatiereDaoException;
 
 public class GestionMatiereService extends AbstractServlet {
 
-    private MatiereDao matiereDao;
+    private static MatiereDao matiereDao;
 
     public void setMatiereDao(MatiereDao matiereDao) {
-        this.matiereDao = matiereDao;
+        GestionMatiereService.matiereDao = matiereDao;
     }
 
     @Override

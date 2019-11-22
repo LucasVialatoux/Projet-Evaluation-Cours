@@ -20,7 +20,7 @@ import dao.SondageDaoException;
 public class GestionSondageService extends AbstractServlet {
 
     // urlPatterns = "/ens/poll"
-    private SondageDao sondageDao;
+    private static SondageDao sondageDao;
 
     private static final long serialVersionUID = -7794936188718493591L;
 
@@ -119,7 +119,7 @@ public class GestionSondageService extends AbstractServlet {
     }
 
     public void setSondageDao(SondageDao sondageDao) {
-        this.sondageDao = sondageDao;
+        GestionSondageService.sondageDao = sondageDao;
     }
 
     /**
