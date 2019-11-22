@@ -33,13 +33,13 @@ public class GestionSondageService extends AbstractServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         // Récupération des paramètres nécessaires dans l'URI
-        String[] parametres = req.getRequestURI().split("/");
+        String[] parametres = req.getPathInfo().split("/");
         String idProf = getIdProf(req);
-        int idSondage = Integer.parseInt(parametres[3]);
+        int idSondage = Integer.parseInt(parametres[1]);
 
         // Vérification de l'URI afin de différencier les cas
-        boolean resultats = (parametres.length == 5
-                && parametres[4].equals("results"));
+        boolean resultats = (parametres.length == 3
+                && parametres[2].equals("results"));
         JsonObject jsonResponse = null;
         if (resultats) {
             jsonResponse = getResultSondages(idProf, idSondage);
@@ -67,7 +67,10 @@ public class GestionSondageService extends AbstractServlet {
         JsonObject jsonResponse = null;
 
         // Vérification de l'URI afin de différencier les cas
-        String idSondageString = req.getRequestURI().split("/")[3];
+        String idSondageString = null;
+        if (req.getPathInfo() != null) {
+            idSondageString = req.getPathInfo().split("/")[1];
+        }
         if (idSondageString != null) { // To create a code
             try {
                 int idSondage = Integer.parseInt(idSondageString);
@@ -96,7 +99,7 @@ public class GestionSondageService extends AbstractServlet {
         // Récupération des paramètres nécessaires dans l'URI
         String idProf = getIdProf(req);
         JsonObject jsonResponse = null;
-        String idSondageString = req.getRequestURI().split("/")[3];
+        String idSondageString = req.getPathInfo().split("/")[1];
 
         // Vérification de l'URI et traitement.
         if (idSondageString != null) {
@@ -122,7 +125,7 @@ public class GestionSondageService extends AbstractServlet {
     /**
      * Récupère les résultats d'un sondage.
      * 
-     * @param idProf L'ID du professeur.
+     * @param idProf    L'ID du professeur.
      * @param idSondage Le code du sondage.
      * @return Le JSON contenant les résultats ou le JSON d'erreur
      */
@@ -164,7 +167,7 @@ public class GestionSondageService extends AbstractServlet {
     /**
      * Récupère le code d'un sondage s'il existe.
      * 
-     * @param idProf L'ID du professeur.
+     * @param idProf    L'ID du professeur.
      * @param idSondage Le code du sondage.
      * @return Le JSON contenant le code ou un JSON d'erreur
      */
@@ -184,7 +187,7 @@ public class GestionSondageService extends AbstractServlet {
     /**
      * Supprime le sondage.
      * 
-     * @param idProf L'ID du professeur.
+     * @param idProf    L'ID du professeur.
      * @param idSondage Le code du sondage.
      * @return Un JSON de validation ou un JSON d'erreur
      */
@@ -202,7 +205,7 @@ public class GestionSondageService extends AbstractServlet {
     /**
      * Crée un code de sondage.
      * 
-     * @param idProf L'ID du professeur.
+     * @param idProf    L'ID du professeur.
      * @param idSondage Le code du sondage.
      * @return Un JSON contenant le code créé ou un JSON d'erreur
      */
@@ -222,7 +225,7 @@ public class GestionSondageService extends AbstractServlet {
     /**
      * Ajoute un sondage.
      * 
-     * @param idProf L'ID du professeur.
+     * @param idProf  L'ID du professeur.
      * @param matiere Le nom de la matière du sondage.
      * @return Un JSON de validation ou un JSON d'erreur
      */
