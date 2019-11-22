@@ -24,13 +24,20 @@ public class GestionSondageService extends AbstractServlet {
 
     private static final long serialVersionUID = -7794936188718493591L;
 
+    /**
+     * /ens/poll/{idSondage} : Récupération d'un code de sondage existant.
+     * 
+     * /ens/poll/{idSondage]/results : Récupération des résultats d'un sondage.
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
+        // Récupération des paramètres nécessaires dans l'URI
         String[] parametres = req.getRequestURI().split("/");
         String idProf = getIdProf(req);
         int idSondage = Integer.parseInt(parametres[3]);
+
+        // Vérification de l'URI afin de différencier les cas
         boolean resultats = (parametres.length == 5
                 && parametres[4].equals("results"));
         JsonObject jsonResponse = null;
@@ -39,17 +46,27 @@ public class GestionSondageService extends AbstractServlet {
         } else {
             jsonResponse = getCodeSondage(idProf, idSondage);
         }
+
+        // Écriture de la réponse
         resp.setStatus(200);
+        PrintWriter out = resp.getWriter();
         out.print(jsonResponse.toString());
     }
 
+    /**
+     * /ens/poll : Ajout d'un sondage.
+     * 
+     * /ens/poll/{idSondage} : Création d'un code de sondage
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
+        // Récupération des paramètres nécessaires dans l'URI
         String matiere = req.getParameter("id");
         String idProf = getIdProf(req);
         JsonObject jsonResponse = null;
+
+        // Vérification de l'URI afin de différencier les cas
         String idSondageString = req.getRequestURI().split("/")[3];
         if (idSondageString != null) { // To create a code
             try {
@@ -63,26 +80,38 @@ public class GestionSondageService extends AbstractServlet {
         } else {
             jsonResponse = generateErrorStatus();
         }
+
+        // Écriture de la réponse
         resp.setStatus(200);
+        PrintWriter out = resp.getWriter();
         out.print(jsonResponse.toString());
     }
 
+    /**
+     * /ens/poll/{idSondage} : Supprimer un sondage.
+     */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
+        // Récupération des paramètres nécessaires dans l'URI
         String idProf = getIdProf(req);
         JsonObject jsonResponse = null;
         String idSondageString = req.getRequestURI().split("/")[3];
-        if (idSondageString != null) { // To delete a form
+
+        // Vérification de l'URI et traitement.
+        if (idSondageString != null) {
             try {
                 int idSondage = Integer.parseInt(idSondageString);
                 jsonResponse = deleteSondage(idProf, idSondage);
             } catch (NullPointerException e) {
                 jsonResponse = generateErrorStatus();
             }
+        } else {
+            jsonResponse = generateErrorStatus();
         }
+        // Écriture de la réponse
         resp.setStatus(200);
+        PrintWriter out = resp.getWriter();
         out.print(jsonResponse.toString());
     }
 
@@ -90,30 +119,55 @@ public class GestionSondageService extends AbstractServlet {
         this.sondageDao = sondageDao;
     }
 
+    /**
+     * Récupère les résultats d'un sondage.
+     * 
+     * @param idProf L'ID du professeur.
+     * @param idSondage Le code du sondage.
+     * @return Le JSON contenant les résultats ou le JSON d'erreur
+     */
     private JsonObject getResultSondages(String idProf, int idSondage) {
         JsonObject response = null;
         try {
             ResultatSondage resultats = sondageDao.getResultat(idProf,
                     idSondage);
-            response = generateSuccessStatus();
-            JsonObject poll = new JsonObject();
-            poll.addProperty("id", resultats.getIdSondage());
-            poll.addProperty("date", resultats.getDateSondage());
-            JsonArray jsonResults = new JsonArray();
-            for (Ressenti r : Ressenti.values()) {
-                JsonObject result = new JsonObject();
-                result.addProperty("num", r.ordinal());
-                result.addProperty("result", resultats.getResultats().get(r));
-                jsonResults.add(result);
-            }
-            poll.add("results", jsonResults);
-            response.add("poll", poll);
+            response = serializeFromResults(resultats);
         } catch (SondageDaoException e) {
             response = generateErrorStatus();
         }
         return response;
     }
 
+    /**
+     * Sérialize un objet de type ResultatSondage en réponse JSON.
+     * 
+     * @param resultats Les résultats communiqués par le DAO.
+     * @return L'équivalent JSON de resultats
+     */
+    private JsonObject serializeFromResults(ResultatSondage resultats) {
+        JsonObject poll = new JsonObject();
+        poll.addProperty("id", resultats.getIdSondage());
+        poll.addProperty("date", resultats.getDateSondage());
+        JsonArray jsonResults = new JsonArray();
+        for (Ressenti r : Ressenti.values()) {
+            JsonObject result = new JsonObject();
+            result.addProperty("num", r.ordinal());
+            result.addProperty("result", resultats.getResultats().get(r));
+            jsonResults.add(result);
+        }
+        poll.add("results", jsonResults);
+        JsonObject response = generateSuccessStatus();
+        response.add("poll", poll);
+        return response;
+    }
+
+    /**
+     * Récupère le code d'un sondage s'il existe.
+     * 
+     * @param idProf L'ID du professeur.
+     * @param idSondage Le code du sondage.
+     * @return Le JSON contenant le code ou un JSON d'erreur
+     */
     private JsonObject getCodeSondage(String idProf, int idSondage) {
         JsonObject response = null;
         String codeSondage = null;
@@ -127,6 +181,13 @@ public class GestionSondageService extends AbstractServlet {
         return response;
     }
 
+    /**
+     * Supprime le sondage.
+     * 
+     * @param idProf L'ID du professeur.
+     * @param idSondage Le code du sondage.
+     * @return Un JSON de validation ou un JSON d'erreur
+     */
     private JsonObject deleteSondage(String idProf, int idSondage) {
         JsonObject response = null;
         try {
@@ -138,6 +199,13 @@ public class GestionSondageService extends AbstractServlet {
         return response;
     }
 
+    /**
+     * Crée un code de sondage.
+     * 
+     * @param idProf L'ID du professeur.
+     * @param idSondage Le code du sondage.
+     * @return Un JSON contenant le code créé ou un JSON d'erreur
+     */
     private JsonObject createCodeSondage(String idProf, int idSondage) {
         JsonObject response = null;
         String codeSondage = null;
@@ -151,6 +219,13 @@ public class GestionSondageService extends AbstractServlet {
         return response;
     }
 
+    /**
+     * Ajoute un sondage.
+     * 
+     * @param idProf L'ID du professeur.
+     * @param matiere Le nom de la matière du sondage.
+     * @return Un JSON de validation ou un JSON d'erreur
+     */
     private JsonObject addSondage(String idProf, String matiere) {
         JsonObject jsonResponse = null;
         try {
@@ -162,6 +237,12 @@ public class GestionSondageService extends AbstractServlet {
         return jsonResponse;
     }
 
+    /**
+     * Récupère l'ID du professeur.
+     * 
+     * @param req La requête HTTP contenant l'ID.
+     * @return L'ID du professeur.
+     */
     private String getIdProf(HttpServletRequest req) {
         return null;
     }
