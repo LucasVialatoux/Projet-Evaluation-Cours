@@ -22,6 +22,7 @@ public class SondageDaoImpl implements SondageDao {
 
     private DataSource ds;
     private Properties sqlCodeProp;
+    private Random random = new Random();
 
     /**
      * Charge le code SQL depuis un fichier.
@@ -145,14 +146,13 @@ public class SondageDaoImpl implements SondageDao {
             return code;
         }
         List<String> codes = getExistingCode();
-        Random r = new Random();
 
         char[] codeChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B' };
         do {
             char[] ccode = new char[5];
             for (int i = 0; i < 5; i++) {
-                int cid = r.nextInt(codeChars.length);
+                int cid = random.nextInt(codeChars.length);
                 ccode[i] = codeChars[cid];
             }
             code = String.valueOf(ccode);
