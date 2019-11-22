@@ -28,58 +28,100 @@ public class GestionMatiereService extends AbstractServlet {
         GestionMatiereService.matiereDao = matiereDao;
     }
 
+    /**
+     * /ens/subjects : Récupération des matières et sondages d'un enseignant.
+     * 
+     * /ens/subjects/{idMatiere}/results : Récupération des résultats d'une
+     * matière.
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
-        String[] parametres = req.getRequestURI().split("/");
+        // Récupération des paramètres nécessaires dans l'URI
         String idProf = getIdProf(req);
-        String idMatiere = parametres[3];
-        boolean resultats = (parametres.length == 5
-                && parametres[4].equals("results"));
+        String[] parametres = null;
+        if (req.getPathInfo() != null) {
+            parametres = req.getPathInfo().split("/");
+        }
+        String idMatiere = null;
+        if (parametres != null && parametres.length > 1) {
+            idMatiere = parametres[1];
+        }
+
+        // Vérification de l'URI afin de différencier les cas
+        boolean resultats = (parametres != null && parametres.length == 3
+                && parametres[2].equals("results") && idMatiere != null);
         JsonObject jsonResponse = null;
         if (resultats) {
             jsonResponse = getResultsMatiere(idProf, idMatiere);
-        } else {
+        } else if (parametres != null && parametres.length == 1) {
             jsonResponse = getMatieres(idProf);
+        } else {
+            jsonResponse = generateErrorStatus();
         }
+
+        // Écriture de la réponse
         resp.setStatus(200);
+        PrintWriter out = resp.getWriter();
         out.print(jsonResponse.toString());
     }
 
+    /**
+     * /ens/subjects : Ajout d'une matière.
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
+        // Récupération des paramètres nécessaires dans l'URI
         String matiere = req.getParameter("subject");
         String idProf = getIdProf(req);
+
+        // Traitement de la requête
         JsonObject jsonResponse = null;
-        if (matiere != null && !matiere.equals("")) { // To create a code
+        if (matiere != null && !matiere.equals("")) {
             jsonResponse = addMatiere(idProf, matiere);
         } else {
             jsonResponse = generateErrorStatus();
         }
+
+        // Écriture de la réponse
+        PrintWriter out = resp.getWriter();
         resp.setStatus(200);
         out.print(jsonResponse.toString());
     }
 
+    /**
+     * /ens/subjects/{matiere} : Supprimer une matière.
+     */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
-        String[] parametres = req.getRequestURI().split("/");
-        String matiere = parametres[3];
+        // Récupération des paramètres nécessaires dans l'URI
+        String[] parametres = req.getPathInfo().split("/");
+        String matiere = parametres[1];
         String idProf = getIdProf(req);
+
+        // Traitement de la requête
         JsonObject jsonResponse = null;
         if (matiere != null && !matiere.equals("")) { // To create a code
             jsonResponse = deleteMatiere(idProf, matiere);
         } else {
             jsonResponse = generateErrorStatus();
         }
+
+        // Écriture de la réponse
+        PrintWriter out = resp.getWriter();
         resp.setStatus(200);
         out.print(jsonResponse.toString());
     }
 
+    /**
+     * Supprime une matière.
+     * 
+     * @param idProf  L'enseignant à qui appartient la matière.
+     * @param matiere La matière à supprimer.
+     * @return Un JSON de confirmation ou un JSON d'erreur.
+     */
     private JsonObject deleteMatiere(String idProf, String matiere) {
         JsonObject response = null;
         try {
@@ -92,10 +134,24 @@ public class GestionMatiereService extends AbstractServlet {
         return response;
     }
 
+    /***
+     * Récupère l'ID de l'enseignant dans la requête.
+     * 
+     * @param req La requête
+     * @return L'ID de l'enseignant
+     */
     private String getIdProf(HttpServletRequest req) {
-        return (String) req.getAttribute("id");
+        return (String) req.getAttribute("ensId");
     }
 
+    /**
+     * Récupère les résultats d'une matière.
+     * 
+     * @param idProf    L'enseignant à qui appartient la matière.
+     * @param idMatiere La matière dont on récupère les résultats.
+     * @return Un JSON contenant les résultats de la matière ou un JSON
+     *         d'erreur.
+     */
     private JsonObject getResultsMatiere(String idProf, String idMatiere) {
         JsonObject response = null;
         try {
@@ -132,6 +188,12 @@ public class GestionMatiereService extends AbstractServlet {
         return response;
     }
 
+    /**
+     * Récupère les matières et sondages des matières d'un enseignant.
+     * 
+     * @param idProf L'enseignant.
+     * @return Un JSON contenant les matières et sondages.
+     */
     private JsonObject getMatieres(String idProf) {
         JsonObject response = null;
         try {
@@ -159,6 +221,13 @@ public class GestionMatiereService extends AbstractServlet {
         return response;
     }
 
+    /**
+     * Crée une nouvelle matière.
+     * 
+     * @param idProf     L'enseignant à qui appartient la nouvelle matière.
+     * @param nomMatiere Le nom de la nouvelle matière.
+     * @return Un JSON contenant l'ID de la matière créée ou un JSON d'erreur.
+     */
     private JsonObject addMatiere(String idProf, String nomMatiere) {
         JsonObject response = null;
         try {

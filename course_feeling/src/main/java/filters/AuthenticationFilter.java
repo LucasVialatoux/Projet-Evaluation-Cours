@@ -29,7 +29,7 @@ public class AuthenticationFilter implements Filter {
         if (token != null) {
             try {
                 String idProf = utilisateurDao.getEmail(token);
-                req.setAttribute("id", idProf);
+                req.setAttribute("ensId", idProf);
                 chain.doFilter(request, response);
             } catch (UtilisateurDaoException e) {
                 sendError(resp);
