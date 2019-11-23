@@ -100,20 +100,25 @@ public class GestionSondageService extends AbstractServlet {
             throws ServletException, IOException {
         // Récupération des paramètres nécessaires dans l'URI
         String idProf = getIdProf(req);
-        JsonObject jsonResponse = null;
-        String idSondageString = req.getPathInfo().split("/")[1];
+        String pathInfo = req.getPathInfo();
+        String idSondageString = null;
+        if (pathInfo != null && pathInfo.split("/").length == 2) {
+            idSondageString = req.getPathInfo().split("/")[1];
+        }
 
         // Vérification de l'URI et traitement.
+        JsonObject jsonResponse = null;
         if (idSondageString != null) {
             try {
                 int idSondage = Integer.parseInt(idSondageString);
                 jsonResponse = deleteSondage(idProf, idSondage);
-            } catch (NullPointerException e) {
+            } catch (NullPointerException | NumberFormatException e) {
                 jsonResponse = generateErrorStatus();
             }
         } else {
             jsonResponse = generateErrorStatus();
         }
+
         // Écriture de la réponse
         resp.setStatus(200);
         PrintWriter out = resp.getWriter();
