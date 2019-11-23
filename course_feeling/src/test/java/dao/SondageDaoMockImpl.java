@@ -48,7 +48,11 @@ public class SondageDaoMockImpl implements SondageDao {
 		// TODO Auto-generated method stub
 		if (idProf == "test@test.com" && idSondage == 12345)
 			return "98765";
-		else
+		else if (idProf == "test@test2.com" && idSondage == 12345)
+            return "13579";
+        else if (idProf == "test@vide.com") 
+            return null;
+        else
 			return null;
     }
 
@@ -72,7 +76,9 @@ public class SondageDaoMockImpl implements SondageDao {
 			rS.setResultats(monSondage);
 
 			return rS;
-		}
-        return null;
+		} else if (idProf == "test@vide.com") {
+            return null;
+        } else
+            return null;
     }
 }
