@@ -144,7 +144,78 @@ public class GestionSondageServiceTest extends Mockito {
     }
 
     @Test
-    public void postCreateMauvaisCodeSondage() throws IOException, ServletException {
+    public void deleteUnSondageBonCode() throws IOException, ServletException {
+        StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+        when(req.getPathInfo()).thenReturn("/12345");
+        when(req.getParameter("id")).thenReturn("CPP");
+        when(req.getAttribute("ensId")).thenReturn("test@test.com");
+        when(resp.getWriter()).thenReturn(out);	
 
+		service.doDelete(req, resp);
+        String response = sw.getBuffer().toString().trim();
+
+        assert(response.contains("\"statut\":\"ok\""));
     }
+
+    @Test
+    public void deleteUnSondageMauvaisCode() throws IOException, ServletException {
+        StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+        when(req.getPathInfo()).thenReturn("/389829");
+        when(req.getParameter("id")).thenReturn("CPP");
+        when(req.getAttribute("ensId")).thenReturn("test@fail.com");
+        when(resp.getWriter()).thenReturn(out);	
+
+		service.doDelete(req, resp);
+        String response = sw.getBuffer().toString().trim();
+
+        assert(response.contains("\"statut\":\"ok\""));
+    }
+
+    // @Test
+    // public void deleteUnSondageCodeVide() throws IOException, ServletException {
+    //     StringWriter sw = new StringWriter();
+	// 	PrintWriter out = new PrintWriter(sw);
+    //     when(req.getPathInfo()).thenReturn("/ /");
+    //     when(req.getParameter("id")).thenReturn("CPP");
+    //     when(req.getAttribute("ensId")).thenReturn("test@fail.com");
+    //     when(resp.getWriter()).thenReturn(out);	
+
+	// 	service.doDelete(req, resp);
+    //     String response = sw.getBuffer().toString().trim();
+
+    //     assert(response.contains("\"statut\":\"erreur\""));
+    // }
+
+    // @Test
+    // public void deleteUnSondageChaineVide() throws IOException, ServletException {
+    //     StringWriter sw = new StringWriter();
+	// 	PrintWriter out = new PrintWriter(sw);
+    //     when(req.getPathInfo()).thenReturn("    ");
+    //     when(req.getParameter("id")).thenReturn("CPP");
+    //     when(req.getAttribute("ensId")).thenReturn("test@fail.com");
+    //     when(resp.getWriter()).thenReturn(out);	
+
+	// 	service.doDelete(req, resp);
+    //     String response = sw.getBuffer().toString().trim();
+
+    //     assert(response.contains("\"statut\":\"erreur\""));
+    // }
+
+    // @Test
+    // public void deleteUnSondageCodeAlphabetique() throws IOException, ServletException {
+    //     StringWriter sw = new StringWriter();
+	// 	PrintWriter out = new PrintWriter(sw);
+    //     when(req.getPathInfo()).thenReturn("/cdfsvd");
+    //     when(req.getParameter("id")).thenReturn("CPP");
+    //     when(req.getAttribute("ensId")).thenReturn("test@fail.com");
+    //     when(resp.getWriter()).thenReturn(out);	
+
+	// 	service.doDelete(req, resp);
+    //     String response = sw.getBuffer().toString().trim();
+
+    //     assert(response.contains("\"statut\":\"erreur\""));
+    // }
+
 }

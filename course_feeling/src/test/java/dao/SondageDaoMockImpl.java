@@ -38,8 +38,8 @@ public class SondageDaoMockImpl implements SondageDao {
 		// TODO Auto-generated method stub
 		if(idProf == "test@test.com" && idSondage == 00000) {
 			return "AA999";
-		}
-		else return null;
+        } else 
+            return null;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SondageDaoMockImpl implements SondageDao {
 		// TODO Auto-generated method stub
 		if (idProf == "test@test.com" && idSondage == 12345)
 			return "98765";
-		else 
+		else
 			return null;
     }
 
