@@ -7,12 +7,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
 public class UtilisateurDaoImpl implements UtilisateurDao {
     private DataSource ds;
     private Properties sqlCodeProp;
+    static final Logger logger = 
+            Logger.getLogger(MatiereDaoImpl.class.getName());
 
     /**
      * Charge le code SQL depuis un fichier.
@@ -33,7 +36,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             sqlCodeProp.load(input);
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.severe("Error while loading SQL code : " + ex.getMessage());
         }
     }
 

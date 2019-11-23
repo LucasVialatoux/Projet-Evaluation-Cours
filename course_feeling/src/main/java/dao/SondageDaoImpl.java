@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -22,6 +23,8 @@ public class SondageDaoImpl implements SondageDao {
 
     private DataSource ds;
     private Properties sqlCodeProp;
+    static final Logger logger = 
+            Logger.getLogger(MatiereDaoImpl.class.getName());
     private Random random = new Random();
 
     /**
@@ -42,7 +45,7 @@ public class SondageDaoImpl implements SondageDao {
             sqlCodeProp.load(input);
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.severe("Error while loading SQL code : " + ex.getMessage());
         }
     }
 
