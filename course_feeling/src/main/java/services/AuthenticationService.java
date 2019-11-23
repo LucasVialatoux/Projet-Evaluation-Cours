@@ -19,82 +19,115 @@ import com.google.gson.JsonObject;
 import org.apache.commons.codec.digest.DigestUtils;
 
 
-@WebServlet(name = "AuthenticationService", urlPatterns = "/login")
+@WebServlet(name = "AuthenticationService", urlPatterns = {"/signin","/signup","/signout"})
 public class AuthenticationService extends HttpServlet {
 
     private UtilisateurDaoImpl utilisateurDao;
     private String token = "";
-    private TokenClass tokenClass;
-    private String url = "";
+    private TokenProvider tokenProvider;
     Jws<Claims> claimsJws;
 
     @Override
     public void init() throws ServletException {
         super.init();
         utilisateurDao = new UtilisateurDaoImpl();
-        tokenClass = new TokenClass();
+        tokenProvider = new TokenProvider();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String password = DigestUtils.sha256Hex(request.getParameter("inputMdp"));
-        //String password = request.getParameter("inputMdp");
+        String[] path = request.getRequestURI().split("/");
+        PrintWriter out = response.getWriter();
 
+        if (path.length > 2) {
 
-        if (request.getParameter("inputID").equals(utilisateurDao.getEmail())
-                && password.equals(utilisateurDao.getMdpHash(request.getParameter("inputID")))) {
-            this.token = utilisateurDao.getToken();
-
-            JsonObject jsonResponse = new JsonObject();
-            if ((this.token.equals("")) || !tokenClass.isValidToken(this.token)) {
-
-                this.token =  tokenClass.createToken(request.getParameter("email"));
-                utilisateurDao.stockerToken(request.getParameter("email"), this.token);
-                this.claimsJws = tokenClass.validateJwtToken(this.token);
-
-                Cookie cookieToken = new Cookie("token", this.token);
-                cookieToken.setMaxAge(60 * 60);
-                //add the cookie to the  response
-                response.addCookie(cookieToken);
-
-                jsonResponse.addProperty("token", this.token);
-                jsonResponse.addProperty("statut", "ok");
-                setResponseHeaders(response);
-
-               // url = "/result.html?signature=" + token;
-
-                this.getServletContext().getRequestDispatcher(url).forward(request, response);
-
-            } else {
-                this.claimsJws = tokenClass.validateJwtToken(token);
-
-                jsonResponse.addProperty("token", this.token);
-                jsonResponse.addProperty("statut", "ok");
-                setResponseHeaders(response);
-
-                this.getServletContext().getRequestDispatcher(url).forward(request, response);
+            if (path[2].equals("signin")) {
+                String password = DigestUtils.sha256Hex(request.getParameter("inputMdp"));
+                if (request.getParameter("inputID").equals(utilisateurDao.getEmail())
+                        && password.equals(
+                                utilisateurDao.getMdpHash(request.getParameter("inputID")))) {
+                    this.token = tokenProvider.createToken(
+                            request.getParameter("inputID"));
+                    JsonObject jsonResponse = new JsonObject();
+                    if (token != null) {
+                        utilisateurDao.stockerToken(request.getParameter("inputID"), token);
+                        jsonResponse.addProperty("token", token);
+                        jsonResponse.addProperty("statut", "ok");
+                        response.setHeader("Authorization", token);
+                        setResponseHeaders(response);
+                        out.print(jsonResponse.toString());
+                    } else {
+                        jsonResponse.addProperty("statut", "error");
+                        jsonResponse.addProperty("error", "Token : impossible de créer le token");
+                        out.print(jsonResponse.toString());
+                        setResponseHeaders(response);
+                        out.print(jsonResponse.toString());
+                    }
+                } else {
+                    JsonObject jsonResponse = new JsonObject();
+                    jsonResponse.addProperty("statut", "error");
+                    jsonResponse.addProperty("error", "identifiant incorrect");
+                    setResponseHeaders(response);
+                    out.print(jsonResponse.toString());
+                }
             }
-        } else {
-            JsonObject jsonResponse = new JsonObject();
-            jsonResponse.addProperty("statut", "erreur");
-
-        //    url = "/result.html?signature=" + token;
-            this.getServletContext().getRequestDispatcher(url).forward(request, response);
-            setResponseHeaders(response);
+            if (path[2].equals("signup")) {
+                String email = request.getParameter("inputID");
+                String password = request.getParameter("inputMdp1");
+                if (!utilisateurDao.isExist(email)) {
+                    String passwordHash = DigestUtils.sha256Hex(password);
+                    this.token =  tokenProvider.createToken(email);
+                    utilisateurDao.ajouterUtilisateur(email,passwordHash,token);
+                    JsonObject jsonResponse = new JsonObject();
+                    jsonResponse.addProperty("statut", "ok");
+                    jsonResponse.addProperty("token", token);
+                    response.setHeader("Authorization", token);
+                    setResponseHeaders(response);
+                    out.print(jsonResponse.toString());
+                } else {
+                    JsonObject jsonResponse = new JsonObject();
+                    jsonResponse.addProperty("statut", "emailAlreadyUsed");
+                    jsonResponse.addProperty("error", "email déja utilisé");
+                    setResponseHeaders(response);
+                    out.print(jsonResponse.toString());
+                }
+            }
         }
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // url = "/result.html?signature=" + token;
-        response.sendRedirect(url);
+
+        String[] path = request.getRequestURI().split("/");
+        PrintWriter out = response.getWriter();
+        if (path.length > 2) {
+            if (path[2].equals("signout")) {
+                String tokenFromAutorization = request.getHeader("Authorization");
+                JsonObject jsonResponse = new JsonObject();
+                if (tokenFromAutorization != null
+                        && tokenFromAutorization.equals(utilisateurDao.getToken())) {
+                    Jws<Claims> claimsJws =
+                            tokenProvider.validateJwtToken(tokenFromAutorization);
+                    String email = (String) claimsJws.getBody().get("email");
+                    utilisateurDao.supprimerToken(email);
+                    jsonResponse.addProperty("statut", "ok");
+                    setResponseHeaders(response);
+                    out.print(jsonResponse.toString());
+                } else {
+                    jsonResponse.addProperty("statut", "error");
+                    jsonResponse.addProperty("error", "error autorization");
+                    setResponseHeaders(response);
+                    out.print(jsonResponse.toString());
+                }
+            }
+        }
     }
 
-    private void setResponseHeaders(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+    private void setResponseHeaders(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+        response.setContentType("application/json");
     }
 }
 

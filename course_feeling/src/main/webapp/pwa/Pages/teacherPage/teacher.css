@@ -1,0 +1,72 @@
+/* ADDButton */
+.add_button {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    height: 2em;
+    padding: .2rem .75rem;
+    width: max-content;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.add_button .btn-link:hover{
+    text-decoration: none;
+}
+.add_button:hover {
+    transition: ease-in-out;
+    background-color: rgba(255, 255, 255, 0.2); 
+}
+.add_button img {
+    height: 24px;
+    width: 24px;
+    position: relative;
+    top: -2px;
+    right:2px;
+}
+.discipline_container{
+    padding: 0px;   
+}
+.link_discipline p{
+    color: black;
+}
+.link_discipline:hover{
+    text-decoration: none;
+    color: #00b9ff;
+}
+#list_discipline .item_discipline{
+    background-color: rgb(255, 255, 255);
+}
+#list_discipline .item_discipline:first-child{
+    border-radius: 25px 25px 0px 0px;
+}
+#list_discipline .item_discipline:last-child{
+    border-radius: 0px 0px 25px 25px;
+}
+#list_discipline img{
+    top: .5rem;
+}
+#list_discipline p{
+    font-size: 1.5em;
+}
+
+.code_manager {
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 0px -22px -12px -22px;
+    padding: 8px;
+    /* width: 100%; */
+}
+.item_discipline:last-child .code_manager {
+    border-radius: 0px 0px 25px 25px;
+}
+.code_manager h5{
+    position: relative;
+    top: 4px;
+}
+
+.btn_remove{
+    border-radius: 25px;
+    border: none;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
+    text-decoration: none;
+}
