@@ -1,0 +1,18 @@
+{
+  "name": "pwa",
+  "config": {
+    "port": "8081"
+  },
+  "version": "1.0.0",
+  "description": "Univ feeling",
+  "main": "index.html",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "VASLIN Pierre",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <link rel="stylesheet" href="../../ressources/bootstrap.min.css">
+        <link rel="stylesheet" href="../../style/emoji.css">
+        <link rel="stylesheet" href="../../style/style.css">
+        <link rel="stylesheet" href="inscription.css">
+        <script src="../../ressources/jquery.min.js"></script>
+        <script src="../../ressources/bootstrap.min.js"></script>
+        <script src="../../js/constVar.js"></script>
+        <script src="inscription.js"></script>
+        <meta charset="utf-8" />
+        <title id="nav_title"></title>
+    </head>
+    <body>
+        <h1 class="text-center title_header">Inscription</h1>
+        <form id="formCode" class="form container container_main">
+            <div class="module">
+                <div class="form-group row justify-content-center">
+                    <label for="inputID" class="labelInput col-sm-4 col-form-label">E-mail</label>
+                    <input type="email" id="inputID" name="inputID" class="form-control-plaintext col-md-auto" placeholder="jean.dupond@mail.fr" required>
+                </div>
+                <span id="retourID" class="text-danger row justify-content-center" style="display: none"></span>
+                <div class="form-group row justify-content-center">
+                    <label for="inputMdp1" class="labelInput col-sm-4 col-form-label">Mot de passe</label>
+                    <input type="password" id="inputMdp1" name="inputMdp1" class="form-control-plaintext col-md-auto" placeholder="••••••••" required>
+                </div>
+                <span id="retourMdp1" class="text-danger row justify-content-center" style="display: none"></span>
+                <div class="form-group row justify-content-center">
+                    <label for="inputMdp2" class="labelInput col-sm-4 col-form-label">Mot de passe</label>
+                    <input type="password" id="inputMdp2" name="inputMdp2" class="form-control-plaintext col-md-auto" placeholder="••••••••" required>
+                </div>
+                <span id="retourMdp2" class="text-danger row justify-content-center" style="display: none"></span>
+                <div class="row justify-content-center text-center form_edit_btn">
+                    <input class="btn btn-primary col-md-2 aling-self-center btn_action" type="submit" value="Valider">
+                </div>
+                <br/>
+            </div>
+        </form>
+        <div class="container">
+            <br/>
+            <div class="row">
+                <button id="back_button_code" type="button" class="btn btn-link col-md-auto back_button"><img src="../../ressources/arrow_back_ios-24px.svg" alt="">RETOUR</button>
+            </div>
+        </div>
+    </body>
+</html>

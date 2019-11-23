@@ -1,0 +1,134 @@
+body {
+    /* background-image: linear-gradient(to right top, #c70039, #e0432e, #f26f1f, #fd9908, #ffc300); */
+    /* background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12); */
+    /* background-color: #54405f; */
+    background-color: #121212;
+    /* background-repeat: no-repeat;
+    background-attachment: fixed; */
+}
+.container_main{
+    background: linear-gradient(to right, red, orange);
+    border-radius: 25px;
+    padding: 3px;
+    margin:auto;
+}
+
+.module{
+    background-color: #28282a;
+    border-radius: 25px;
+    color: white!important;
+    padding: 0px 20px 0px 20px;
+}
+/* .container_main {
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
+    border-radius: 25px;
+} */
+
+p,h5 {
+    color: white;
+    font-weight: 600;
+}
+
+/* Titre */
+.title_header {
+    margin-top: 10%;
+    margin-bottom: 6%;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+@media (max-width: 500px) and (min-height: 701px){
+    .title_header{
+        margin-top: 20%;
+        margin-bottom: 18%;
+    }
+}
+@media (max-width: 500px) and (max-height:700px) {
+    .title_header{
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
+}
+@media (max-height:658px) {
+    .title_header{
+        margin-top: 4%;
+        margin-bottom: 4%;
+    }
+}
+/* Titre content*/
+.title_content {
+    color: white;
+    font-weight: 600;
+    text-align: center;
+}
+/* BackButton */
+.back_button {
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    width: max-content;
+    border-radius: 25px;
+    background: linear-gradient(to top left, red, orange);
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
+    text-decoration: none;
+}
+.back_button .btn-link:hover{
+    text-decoration: none;
+}
+.back_button:hover {
+    transition: ease-in-out;
+    text-decoration: none;
+    color: white;
+    background: rgba(255, 255, 255, 0.2); 
+}
+.back_button img {
+    height: 24px;
+    width: 24px;
+    position: relative;
+    top: -2px;
+}
+
+.btn_action, .btn_remove{
+    border-radius: 25px;
+    /* background-color: #00c3ff; */
+    background-color: rgba(0, 0, 0, 0.5);
+    border: solid white;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    text-decoration: none;
+}
+/* Réajustement des icons dans les boutons */
+.btn_action img {
+    position: relative;
+    top: -1px!important;
+}
+
+/****************************************************/
+/*          Affichage d'alert                       */
+/****************************************************/
+.alert_co{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+    display: none;
+}
+
+/****************************************************/
+/*          Menu de gestion code sondage            */
+/****************************************************/
+@media screen and (min-width: 768px){
+    .code_manager a{
+        margin-right: 5px;
+    }   
+}
+@media screen and (max-width: 767px){
+    .code_manager {
+        margin: 0px 0px;
+    }
+    .code_manager a{
+        margin-bottom: 5px;
+    }   
+}
