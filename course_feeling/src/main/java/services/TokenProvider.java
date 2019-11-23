@@ -33,7 +33,7 @@ public class TokenProvider {
                 .signWith(Keys.hmacShaKeyFor(secretKey))
                 .claim("email", email)
                 .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(now.plus(24, ChronoUnit.HOURS)))
+                .setExpiration(Date.from(now.plus(720, ChronoUnit.HOURS)))
                 .signWith(Keys.hmacShaKeyFor(secretKey))
                 .compact();
         } catch (SignatureException e) {

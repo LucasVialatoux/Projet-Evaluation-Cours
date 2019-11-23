@@ -44,14 +44,14 @@ public class AuthenticationService extends HttpServlet {
 
             if (path[2].equals("signin")) {
                 String password = DigestUtils.sha256Hex(request.getParameter("inputMdp"));
-                if (request.getParameter("inputID").equals(utilisateurDao.getEmail())
-                        && password.equals(
-                                utilisateurDao.getMdpHash(request.getParameter("inputID")))) {
+                String email = request.getParameter("inputID");
+                if (utilisateurDao.isExist(email) && password.equals(
+                                utilisateurDao.getMdpHash(email))) {
                     this.token = tokenProvider.createToken(
                             request.getParameter("inputID"));
                     JsonObject jsonResponse = new JsonObject();
                     if (token != null) {
-                        utilisateurDao.stockerToken(request.getParameter("inputID"), token);
+                        utilisateurDao.stockerToken(email, token);
                         jsonResponse.addProperty("token", token);
                         jsonResponse.addProperty("statut", "ok");
                         response.setHeader("Authorization", token);
@@ -105,8 +105,7 @@ public class AuthenticationService extends HttpServlet {
             if (path[2].equals("signout")) {
                 String tokenFromAutorization = request.getHeader("Authorization");
                 JsonObject jsonResponse = new JsonObject();
-                if (tokenFromAutorization != null
-                        && tokenFromAutorization.equals(utilisateurDao.getToken())) {
+                if (tokenFromAutorization != null) {
                     Jws<Claims> claimsJws =
                             tokenProvider.validateJwtToken(tokenFromAutorization);
                     String email = (String) claimsJws.getBody().get("email");

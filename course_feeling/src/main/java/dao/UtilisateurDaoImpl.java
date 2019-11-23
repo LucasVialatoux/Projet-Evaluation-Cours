@@ -19,12 +19,8 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      * @return le token de l'utilisaeur stocké dans la base de données.
      */
     @Override
-    public String getToken() {
-
-        return "eyJhbGciOiJIUzI1NiJ9.e"
-                + "yJpc3MiOiIvc2lnbmluIiwiZW1haWwiOiJ0ZXN0QHRlc3QudGVz"
-                + "dCIsImlhdCI6MTU3NDUzNzM3NSwiZXhwIjoxNTc0NTM5MTc1fQ.z-YhVaJTDPT"
-                + "wj1cURo39ztzVSJccVnmngC-8k34oMjQ";
+    public String getToken(String nomUtilisateur) {
+        return " ";
     }
 
     /**
@@ -68,11 +64,4 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         return false;
     }
 
-    public String getEmail() {
-        return "test@test.test";
-    }
-
-    public String getPassword(String email) {
-        return  "";
-    }
 }

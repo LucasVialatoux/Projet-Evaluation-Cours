@@ -4,7 +4,7 @@ public interface UtilisateurDao {
 
     public String getMdpHash(String nomUtilisateur);
 
-    public String getToken();
+    public String getToken(String nomUtilisateur);
 
     public void stockerToken(String nomUtilisateur, String token);
 
