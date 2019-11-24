@@ -12,9 +12,10 @@ import com.google.gson.JsonObject;
 public abstract class AbstractServlet extends HttpServlet {
 
     private static final long serialVersionUID = 2453774818147500647L;
-    
-    private static final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
-    
+
+    private static final Logger logger = Logger
+            .getLogger(AbstractServlet.class.getName());
+
     protected JsonObject generateErrorStatus() {
         JsonObject j = new JsonObject();
         j.addProperty("statut", "erreur");
@@ -45,6 +46,6 @@ public abstract class AbstractServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods",
                 "GET, PUT, POST, DELETE, OPTIONS");
-        response.setContentType("application/json");
+        response.setContentType("text/plain");
     }
 }

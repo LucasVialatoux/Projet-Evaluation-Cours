@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 import com.google.gson.JsonObject;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -25,6 +26,9 @@ public class AuthenticationService extends AbstractServlet {
     private UtilisateurDao utilisateurDao;
 
     private TokenProvider tokenProvider;
+
+    private static final Logger logger = Logger
+            .getLogger(AuthenticationService.class.getName());
 
     @Override
     public void init() throws ServletException {
@@ -44,17 +48,19 @@ public class AuthenticationService extends AbstractServlet {
         if (path.length > 2) {
             if (path[2].equals("signin")) {
                 String passwordHash = DigestUtils
-                        .sha256Hex(request.getParameter("inputMdp"));
-                String email = request.getParameter("inputID");
+                        .sha256Hex(request.getParameter("password"));
+                String email = request.getParameter("email");
                 jsonResponse = signin(email, passwordHash, response);
             } else if (path[2].equals("signup")) {
-                String email = request.getParameter("inputID");
-                String password = request.getParameter("inputMdp1");
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
                 jsonResponse = signup(email, password, response);
             } else {
+                logger.severe("Error : doPost invalid");
                 jsonResponse = generateErrorStatus();
             }
         } else {
+            logger.severe("Error : doPost invalid");
             jsonResponse = generateErrorStatus();
         }
         writeResponse(response, jsonResponse);
@@ -82,9 +88,12 @@ public class AuthenticationService extends AbstractServlet {
                 utilisateurDao.supprimerToken(email);
                 jsonResponse = generateSuccessStatus();
             } catch (ServletException | UtilisateurDaoException e) {
+                logger.severe("Can't signout user : Exception in token "
+                        + " validation or DAO");
                 jsonResponse = generateErrorStatus();
             }
         } else {
+            logger.severe("Can't signout user : token not found");
             jsonResponse = generateErrorStatus();
         }
         return jsonResponse;
@@ -103,12 +112,15 @@ public class AuthenticationService extends AbstractServlet {
                     jsonResponse = generateSuccessStatus();
                     jsonResponse.addProperty("token", token);
                 } else {
+                    logger.severe("Can't signin user : token null");
                     jsonResponse = generateErrorStatus();
                 }
             } else {
+                logger.severe("Can't signin user : user not found");
                 jsonResponse = generateErrorStatus();
             }
         } catch (UtilisateurDaoException e) {
+            logger.severe("Can't signin user : exception in DAO");
             jsonResponse = generateErrorStatus();
         }
         return jsonResponse;
@@ -128,12 +140,15 @@ public class AuthenticationService extends AbstractServlet {
                     jsonResponse.addProperty("token", token);
                     response.setHeader("Authorization", token);
                 } catch (UtilisateurDaoException e) {
+                    logger.severe("Can't signup user : Exception in DAO");
                     jsonResponse = generateErrorStatus();
                 }
             } else {
+                logger.severe("Can't signup user : user not found");
                 jsonResponse = generateErrorStatus();
             }
         } catch (UtilisateurDaoException e) {
+            logger.severe("Can't signup user : Exception in DAO");
             jsonResponse = generateErrorStatus();
         }
         return jsonResponse;

@@ -74,6 +74,7 @@ public class ResponseService extends HttpServlet {
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Methods",
                 "GET, PUT, POST, DELETE, OPTIONS");
+        resp.setContentType("text/plain");
     }
 
     public void setSondageDao(SondageDao sondageDao) {
