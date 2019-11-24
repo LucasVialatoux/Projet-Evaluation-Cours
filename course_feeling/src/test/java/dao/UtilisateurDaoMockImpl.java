@@ -39,9 +39,8 @@ public class UtilisateurDaoMockImpl implements UtilisateurDao {
      * @return un boolean , vrai si on met le token a null, faux sinon
      */
     @Override
-    public boolean supprimerToken(String nomUtilisateur) {
+    public void supprimerToken(String nomUtilisateur) {
         // met le token de l'utilisateur à null en base
-        return true;
     }
 
     /**

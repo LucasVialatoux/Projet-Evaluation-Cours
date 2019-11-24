@@ -140,15 +140,28 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
     }
 
     @Override
-    public boolean isExist(String email) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean isExist(String email) throws UtilisateurDaoException {
+        String emailSql = null;
+        String getEmailString = sqlCodeProp.getProperty("isExists");
+        try (Connection con = ds.getConnection();
+                PreparedStatement stat = con
+                        .prepareStatement(getEmailString);) {
+            try (ResultSet set = stat.executeQuery()) {
+                if (set.next()) {
+                    emailSql = set.getString("email");
+                }
+            } catch (SQLException e) {
+                throw new UtilisateurDaoException("ERROR SQL : ", e);
+            }
+        } catch (SQLException e) {
+            throw new UtilisateurDaoException("ERROR SQL : ", e);
+        }
+        return emailSql != null;
     }
 
     @Override
-    public boolean supprimerToken(String nomUtilisateur) {
-        // TODO Auto-generated method stub
-        return false;
+    public void supprimerToken(String email) throws UtilisateurDaoException {
+        stockerToken(email, null);
     }
 
 }

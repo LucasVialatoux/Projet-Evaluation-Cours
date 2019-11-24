@@ -45,8 +45,19 @@ public interface UtilisateurDao {
      */
     public String getEmail(String token) throws UtilisateurDaoException;
     
-    public boolean isExist(String email);
+    /**
+     * Vérifie qu'un email existe.
+     * @param email Email que l'on vérifie.
+     * @return si l'email existe.
+     * @throws UtilisateurDaoException .
+     */
+    public boolean isExist(String email) throws UtilisateurDaoException;
     
-    public boolean supprimerToken(String nomUtilisateur);
+    /**
+     * Supprime le token d'un utilisateur.
+     * @param email Email de l'utilisateur dont on supprime le token.
+     * @throws UtilisateurDaoException .
+     */
+    public void supprimerToken(String email) throws UtilisateurDaoException;
 
 }
