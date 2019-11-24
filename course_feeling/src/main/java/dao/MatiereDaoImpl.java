@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
@@ -35,7 +34,7 @@ public class MatiereDaoImpl implements MatiereDao {
      * @throws SondageDaoException .
      */
     public MatiereDaoImpl() {
-        try (InputStream input = SondageDaoImpl.class.getClassLoader()
+        try (InputStream input = MatiereDaoImpl.class.getClassLoader()
                 .getResourceAsStream("resources/matiereDAOSQL.properties")) {
 
             sqlCodeProp = new Properties();

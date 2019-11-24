@@ -24,7 +24,7 @@ public class SondageDaoImpl implements SondageDao {
     private DataSource ds;
     private Properties sqlCodeProp;
     static final Logger logger = 
-            Logger.getLogger(MatiereDaoImpl.class.getName());
+            Logger.getLogger(SondageDaoImpl.class.getName());
     private Random random = new Random();
 
     /**
