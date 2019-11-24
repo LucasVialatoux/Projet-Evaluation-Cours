@@ -44,5 +44,9 @@ public interface UtilisateurDao {
      * @throws UtilisateurDaoException .
      */
     public String getEmail(String token) throws UtilisateurDaoException;
+    
+    public boolean isExist(String email);
+    
+    public boolean supprimerToken(String nomUtilisateur);
 
 }

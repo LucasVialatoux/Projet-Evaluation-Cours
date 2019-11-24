@@ -21,7 +21,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      * Charge le code SQL depuis un fichier.
      */
     public UtilisateurDaoImpl() {
-        try (InputStream input = SondageDaoImpl.class.getClassLoader()
+        try (InputStream input = UtilisateurDaoImpl.class.getClassLoader()
                 .getResourceAsStream(
                         "resources/utilisateurDAOSQL.properties")) {
 
@@ -137,6 +137,18 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             throw new UtilisateurDaoException("ERROR SQL : ", e);
         }
         return email;
+    }
+
+    @Override
+    public boolean isExist(String email) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean supprimerToken(String nomUtilisateur) {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }
