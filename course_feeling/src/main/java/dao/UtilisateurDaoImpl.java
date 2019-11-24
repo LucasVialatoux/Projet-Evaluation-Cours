@@ -151,6 +151,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         try (Connection con = ds.getConnection();
                 PreparedStatement stat = con
                         .prepareStatement(getEmailString);) {
+            stat.setString(1, email);
             try (ResultSet set = stat.executeQuery()) {
                 if (set.next()) {
                     emailSql = set.getString("email");
