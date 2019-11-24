@@ -39,6 +39,11 @@ public class AuthenticationService extends AbstractServlet {
         this.utilisateurDao = utilisateurDao;
     }
 
+    /**
+     * Gère le signIn (connexion) ou le SignUp (inscription).
+     * 
+     * @return Un JSON contenant le statut
+     */
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
 
@@ -66,6 +71,11 @@ public class AuthenticationService extends AbstractServlet {
         writeResponse(response, jsonResponse);
     }
 
+    /**
+     * Gère la deconnexion.
+     * 
+     * @return Un JSON contenant le statut
+     */
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         String[] path = request.getRequestURI().split("/");
