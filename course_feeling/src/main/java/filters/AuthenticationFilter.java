@@ -2,6 +2,7 @@ package filters;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -22,6 +23,8 @@ public class AuthenticationFilter implements Filter {
 
     private static UtilisateurDao utilisateurDao;
 
+    private static final Logger logger = Logger.getLogger(AuthenticationFilter.class.getName());
+    
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
@@ -34,9 +37,11 @@ public class AuthenticationFilter implements Filter {
                 req.setAttribute("ensId", idProf);
                 chain.doFilter(request, response);
             } catch (UtilisateurDaoException e) {
+                logger.severe("Authentication failed : error in UtilisateurDAO");
                 sendError(resp);
             }
         } else {
+            logger.severe("Authentication failed : no token found");
             sendError(resp);
         }
 
@@ -49,7 +54,7 @@ public class AuthenticationFilter implements Filter {
     private void sendError(HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
         JsonObject jsonResponse = generateInvalidTokenStatus();
-        out.println(jsonResponse.toString());
+        out.print(jsonResponse.toString());
     }
 
     private JsonObject generateInvalidTokenStatus() {
