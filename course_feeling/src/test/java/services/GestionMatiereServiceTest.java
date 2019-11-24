@@ -40,17 +40,168 @@ public class GestionMatiereServiceTest extends Mockito {
 	
 	@Test
 	public void getMatiereSondageEnseignant() throws IOException, ServletException {
-		// StringWriter sw = new StringWriter();
-		// PrintWriter out = new PrintWriter(sw);
-		// when(req.getPathInfo()).thenReturn("");
-		// when(req.getAttribute("ensId")).thenReturn("test@test.com");
-		// when(resp.getWriter()).thenReturn(out);	
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("");
+		when(req.getAttribute("ensId")).thenReturn("test@test.com");
+		when(resp.getWriter()).thenReturn(out);	
 		
-		// service.doGet(req, resp);
-		// String response = sw.getBuffer().toString().trim();
+		service.doGet(req, resp);
+		String response = sw.getBuffer().toString().trim();
 		
-		// System.out.println("=======>");
-		// System.out.println(response);
-		// //assert(response.contains("\"statut\":\"ok\""));
+		assert(response.contains("\"statut\":\"ok\""));
 	}
+
+	@Test
+	public void getMatiereSondageEnseignantPathNull() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn(null);
+		when(req.getAttribute("ensId")).thenReturn("test@test.com");
+		when(resp.getWriter()).thenReturn(out);	
+		
+		service.doGet(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"erreur\""));
+	}
+
+	@Test
+	public void getResultatMatiere() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("/WEB/results");
+		when(req.getAttribute("ensId")).thenReturn("test@test2.com");
+		when(resp.getWriter()).thenReturn(out);	
+		
+		service.doGet(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"ok\""));
+		assert(response.contains("\"name\":\"WEB\""));
+		assert(response.contains("\"id\":666"));
+		assert(response.contains("\"date\":24112019"));
+	}
+
+
+
+	@Test
+	public void getResultatMatiereMauvaiseURI() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("/WEB/relts");
+		when(req.getAttribute("ensId")).thenReturn("test@test2.com");
+		when(resp.getWriter()).thenReturn(out);	
+		
+		service.doGet(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"erreur\""));
+	}
+
+	// @Test
+	// public void getResultatMatiereIdMatiereVide() throws IOException, ServletException {
+	// 	StringWriter sw = new StringWriter();
+	// 	PrintWriter out = new PrintWriter(sw);
+	// 	when(req.getPathInfo()).thenReturn("//results");
+	// 	when(req.getAttribute("ensId")).thenReturn("test@test2.com");
+	// 	when(resp.getWriter()).thenReturn(out);	
+		
+	// 	service.doGet(req, resp);
+	// 	String response = sw.getBuffer().toString().trim();
+		
+	// 	System.out.println("====>");
+	// 	System.out.println(response);
+	// 	assert(response.contains("\"statut\":\"erreur\""));
+	// }
+
+	@Test
+	public void postAjoutDUneMatiere() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("");
+		when(req.getAttribute("ensId")).thenReturn("test@test.com");
+		when(req.getParameter("subject")).thenReturn("LIFAP2");
+		when(resp.getWriter()).thenReturn(out);	
+		
+		service.doPost(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"ok\""));
+	}
+
+	@Test
+	public void postAjoutDUneMatiereVide() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("");
+		when(req.getAttribute("ensId")).thenReturn("test@test.com");
+		when(req.getParameter("subject")).thenReturn("");
+		when(resp.getWriter()).thenReturn(out);	
+		
+		service.doPost(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"erreur\""));
+	}
+
+	@Test
+	public void postAjoutDUneMatiereNull() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("");
+		when(req.getAttribute("ensId")).thenReturn("test@test.com");
+		when(req.getParameter("subject")).thenReturn(null);
+		when(resp.getWriter()).thenReturn(out);	
+		
+		service.doPost(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"erreur\""));
+	}
+
+	@Test
+	public void deleteUneMatiere() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("/WEB");
+		when(req.getAttribute("ensId")).thenReturn("test@test.com");
+		when(req.getParameter("subject")).thenReturn(null);
+		when(resp.getWriter()).thenReturn(out);	
+		
+		service.doDelete(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"ok\""));
+	}
+
+	// @Test
+	// public void deleteUneMatierePathVide() throws IOException, ServletException {
+	// 	StringWriter sw = new StringWriter();
+	// 	PrintWriter out = new PrintWriter(sw);
+	// 	when(req.getPathInfo()).thenReturn("");
+	// 	when(req.getAttribute("ensId")).thenReturn("test@test.com");
+	// 	when(req.getParameter("subject")).thenReturn(null);
+	// 	when(resp.getWriter()).thenReturn(out);	
+		
+	// 	service.doDelete(req, resp);
+	// 	String response = sw.getBuffer().toString().trim();
+		
+	// 	assert(response.contains("\"statut\":\"erreur\""));
+	// }
+
+	// @Test
+	// public void deleteUneMatierePathNull() throws IOException, ServletException {
+	// 	StringWriter sw = new StringWriter();
+	// 	PrintWriter out = new PrintWriter(sw);
+	// 	when(req.getPathInfo()).thenReturn(null);
+	// 	when(req.getAttribute("ensId")).thenReturn("test@test.com");
+	// 	when(req.getParameter("subject")).thenReturn(null);
+	// 	when(resp.getWriter()).thenReturn(out);	
+		
+	// 	service.doDelete(req, resp);
+	// 	String response = sw.getBuffer().toString().trim();
+		
+	// 	assert(response.contains("\"statut\":\"erreur\""));
+	// }
 }
