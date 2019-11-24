@@ -17,6 +17,11 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
     static final Logger logger = 
             Logger.getLogger(MatiereDaoImpl.class.getName());
 
+    public void setDatasource(DataSource ds) {
+        this.ds = ds;
+    }
+
+    
     /**
      * Charge le code SQL depuis un fichier.
      */

@@ -49,10 +49,7 @@ public class GestionSondageService extends AbstractServlet {
             jsonResponse = generateErrorStatus();
         }
 
-        // Écriture de la réponse
-        resp.setStatus(200);
-        PrintWriter out = resp.getWriter();
-        out.print(jsonResponse.toString());
+        writeResponse(resp, jsonResponse);
     }
 
     /**
@@ -86,10 +83,7 @@ public class GestionSondageService extends AbstractServlet {
             jsonResponse = generateErrorStatus();
         }
 
-        // Écriture de la réponse
-        resp.setStatus(200);
-        PrintWriter out = resp.getWriter();
-        out.print(jsonResponse.toString());
+        writeResponse(resp, jsonResponse);
     }
 
     /**
@@ -119,10 +113,7 @@ public class GestionSondageService extends AbstractServlet {
             jsonResponse = generateErrorStatus();
         }
 
-        // Écriture de la réponse
-        resp.setStatus(200);
-        PrintWriter out = resp.getWriter();
-        out.print(jsonResponse.toString());
+        writeResponse(resp, jsonResponse);
     }
 
     public void setSondageDao(SondageDao sondageDao) {

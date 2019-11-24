@@ -20,8 +20,6 @@ import java.io.PrintWriter;
 import com.google.gson.JsonObject;
 import org.apache.commons.codec.digest.DigestUtils;
 
-@WebServlet(name = "AuthenticationService", urlPatterns = { "/signin",
-    "/signup", "/signout" })
 public class AuthenticationService extends AbstractServlet {
 
     private UtilisateurDao utilisateurDao;
@@ -83,7 +81,7 @@ public class AuthenticationService extends AbstractServlet {
                 String email = (String) claimsJws.getBody().get("email");
                 utilisateurDao.supprimerToken(email);
                 jsonResponse = generateSuccessStatus();
-            } catch (ServletException e) {
+            } catch (ServletException | UtilisateurDaoException e) {
                 jsonResponse = generateErrorStatus();
             }
         } else {
@@ -119,18 +117,23 @@ public class AuthenticationService extends AbstractServlet {
     private JsonObject signup(String email, String password,
             HttpServletResponse response) {
         JsonObject jsonResponse = null;
-        if (!utilisateurDao.isExist(email)) {
-            String passwordHash = DigestUtils.sha256Hex(password);
-            String token = tokenProvider.createToken(email);
-            try {
-                utilisateurDao.ajouterUtilisateur(email, passwordHash, token);
-                jsonResponse = generateSuccessStatus();
-                jsonResponse.addProperty("token", token);
-                response.setHeader("Authorization", token);
-            } catch (UtilisateurDaoException e) {
+        try {
+            if (!utilisateurDao.isExist(email)) {
+                String passwordHash = DigestUtils.sha256Hex(password);
+                String token = tokenProvider.createToken(email);
+                try {
+                    utilisateurDao.ajouterUtilisateur(email, passwordHash,
+                            token);
+                    jsonResponse = generateSuccessStatus();
+                    jsonResponse.addProperty("token", token);
+                    response.setHeader("Authorization", token);
+                } catch (UtilisateurDaoException e) {
+                    jsonResponse = generateErrorStatus();
+                }
+            } else {
                 jsonResponse = generateErrorStatus();
             }
-        } else {
+        } catch (UtilisateurDaoException e) {
             jsonResponse = generateErrorStatus();
         }
         return jsonResponse;
