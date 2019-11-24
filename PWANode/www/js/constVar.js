@@ -9,9 +9,9 @@ const NAME_SUBJECT = "nameSbj";
 const CODE_SUBJECT = "codeSbj";
 
 /* SERVEUR */
-const URL_CONNEXION = URL_SERVEUR + "signin/";
-const URL_INSCRIPTION = URL_SERVEUR + "signup/";
-const URL_DECO = URL_SERVEUR + "signout/";
+const URL_CONNEXION = URL_SERVEUR + "signin";
+const URL_INSCRIPTION = URL_SERVEUR + "signup";
+const URL_DECO = URL_SERVEUR + "signout";
 
 const URL_SONDAGE = URL_SERVEUR + "sondage/";
 const URL_SUBJECT = URL_SERVEUR + "ens/subjects/";
