@@ -4,13 +4,7 @@
 $(function() {
     /* Récupération du nom de métier et du code matière depuis le stockage local*/  
     let nameSbj = localStorage.getItem(NAME_SUBJECT);
-    if (nameSbj == null) {
-        nameSbj = "Matière par Défaut";
-    }
-    var codeSbj = localStorage.getItem(CODE_SUBJECT);
-    if (codeSbj == null) {
-        codeSbj = "12345";
-    }
+    let codeSbj = localStorage.getItem(CODE_SUBJECT);
     if (nameSbj != null && codeSbj != null) {
         $("#nav_title").text(nameSbj);
         $("#discipline_title").text(nameSbj); 
@@ -37,7 +31,7 @@ $(function() {
                     window.location = URL_PAGE_VALIDATION; // Redirection sur la page de validation de transfert
                 } else {
                     console.log("Erreur d'envoie d'une émotion");
-                    window.location.reload();
+                    window.location = URL_PAGE_CODE;
                 }
             }
         );

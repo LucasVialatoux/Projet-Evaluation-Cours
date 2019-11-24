@@ -61,11 +61,12 @@ public class AuthenticationService extends AbstractServlet {
                 String password = request.getParameter("password");
                 jsonResponse = signup(email, password, response);
             } else {
-                logger.severe("Error : doPost invalid");
+                logger.severe("Error : doPost invalid : invalid attribute");
                 jsonResponse = generateErrorStatus();
             }
         } else {
-            logger.severe("Error : doPost invalid");
+            logger.severe(
+                    "Error : doPost invalid : path with unexpected length");
             jsonResponse = generateErrorStatus();
         }
         writeResponse(response, jsonResponse);
@@ -154,13 +155,19 @@ public class AuthenticationService extends AbstractServlet {
                     jsonResponse = generateErrorStatus();
                 }
             } else {
-                logger.severe("Can't signup user : user not found");
-                jsonResponse = generateErrorStatus();
+                logger.severe("Can't signup user : user exists");
+                jsonResponse = generateEmailAlreadyUsedStatus();
             }
         } catch (UtilisateurDaoException e) {
             logger.severe("Can't signup user : Exception in DAO");
             jsonResponse = generateErrorStatus();
         }
+        return jsonResponse;
+    }
+    
+    private JsonObject generateEmailAlreadyUsedStatus() {
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.addProperty("statut", "emailAlreadyUsed");
         return jsonResponse;
     }
 }

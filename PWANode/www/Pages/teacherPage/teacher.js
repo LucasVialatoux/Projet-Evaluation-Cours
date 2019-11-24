@@ -89,7 +89,7 @@ function loadDiscipline() {
             }
         },
         error: error => {
-            window.location = URL_PAGE_CONNEXION;
+            // window.location = URL_PAGE_CONNEXION;
         },
         beforeSend: (xhr) => xhr.setRequestHeader('Authorization', TOKEN),
         timeout: 2000
