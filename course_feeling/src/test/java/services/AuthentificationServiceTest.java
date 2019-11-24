@@ -126,7 +126,7 @@ public class AuthentificationServiceTest extends Mockito {
 		service.doPost(req, resp);
 		String response = sw.getBuffer().toString().trim();
         
-		assert(response.contains("\"statut\":\"erreur\""));
+		assert(response.contains("\"statut\":\"emailAlreadyUsed\""));
     }
 
     @Test
