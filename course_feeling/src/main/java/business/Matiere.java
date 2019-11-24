@@ -2,18 +2,15 @@ package business;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import java.util.ArrayList;
 
 public class Matiere {
     
     private String name;
-    private List<Sondage> sondages = new ArrayList<Sondage>();
+    private List<Sondage> sondages = new ArrayList<>();
     
     public Matiere() {
+        // Les données membres sont modifiés ensuite
     }
 
     public String getName() {

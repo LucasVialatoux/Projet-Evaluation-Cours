@@ -132,7 +132,7 @@ public class SondageDaoImpl implements SondageDao {
     }
 
     private List<String> getExistingCode() throws SondageDaoException {
-        List<String> codes = new ArrayList<String>();
+        List<String> codes = new ArrayList<>();
 
         String getCodeString = sqlCodeProp.getProperty("getCodes");
         try (Connection con = ds.getConnection();
@@ -192,7 +192,7 @@ public class SondageDaoImpl implements SondageDao {
         resultatSondage.setIdSondage(idSondage);
 
         String getResultatString = sqlCodeProp.getProperty("getResultat");
-        Map<Ressenti, Integer> resultat = new HashMap<Ressenti, Integer>();
+        Map<Ressenti, Integer> resultat = new HashMap<>();
 
         // Init resultat
         for (Ressenti res : Ressenti.values()) {

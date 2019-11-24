@@ -5,6 +5,7 @@ public class Sondage {
     private long date;
     
     public Sondage() {
+        // Les données membres sont modifiés ensuite
     }
 
     public int getId() {

@@ -98,7 +98,7 @@ public class MatiereDaoImpl implements MatiereDao {
     public List<Matiere> getMatieres(String idProf) throws MatiereDaoException {
         String getMatieresString = sqlCodeProp.getProperty("getMatieres");
 
-        Map<String, List<Sondage>> matMap = new HashMap<String, List<Sondage>>();
+        Map<String, List<Sondage>> matMap = new HashMap<>();
 
         // Request SQL
         try (Connection con = ds.getConnection();
@@ -111,7 +111,7 @@ public class MatiereDaoImpl implements MatiereDao {
                     String matNom = set.getString("idmatiere");
 
                     if (matMap.get(matNom) == null) {
-                        matMap.put(matNom, new ArrayList<Sondage>());
+                        matMap.put(matNom, new ArrayList<>());
                     }
 
                     List<Sondage> mat = matMap.get(matNom);
@@ -129,7 +129,7 @@ public class MatiereDaoImpl implements MatiereDao {
             throw new MatiereDaoException("ERROR SQL : ", e);
         }
 
-        List<Matiere> matieres = new ArrayList<Matiere>();
+        List<Matiere> matieres = new ArrayList<>();
 
         for (Entry<String, List<Sondage>> it : matMap.entrySet()) {
             Matiere mat = new Matiere();

@@ -2,20 +2,14 @@ package services;
 
 import dao.UtilisateurDao;
 import dao.UtilisateurDaoException;
-import dao.UtilisateurDaoImpl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.security.SignatureException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 import com.google.gson.JsonObject;
