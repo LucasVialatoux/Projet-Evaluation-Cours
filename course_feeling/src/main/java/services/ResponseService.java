@@ -71,8 +71,8 @@ public class ResponseService extends HttpServlet {
     }
 
     private void setResponseHeaders(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods",
+        //resp.addHeader("Access-Control-Allow-Origin", "*");
+        resp.addHeader("Access-Control-Allow-Methods",
                 "GET, PUT, POST, DELETE, OPTIONS");
         resp.setContentType("text/plain");
     }
