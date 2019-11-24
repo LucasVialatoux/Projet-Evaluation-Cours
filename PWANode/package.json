@@ -14,6 +14,7 @@
   "author": "VASLIN Pierre",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "sonarqube-scanner": "^2.5.0"
   }
