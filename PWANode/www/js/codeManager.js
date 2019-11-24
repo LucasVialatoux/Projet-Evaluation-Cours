@@ -83,7 +83,9 @@ function getCode(idPoll) {
  * @param {string} idPoll 
  */
 async function codeUpdater(idPoll) {
-    while (true) {
+    let counter = 1000000000;
+    while (counter > 0) {
+        counter--;
         getCode(idPoll);
         await sleep(2000);
     }

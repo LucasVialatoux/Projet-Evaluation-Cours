@@ -119,8 +119,12 @@ function deletDiscipline(idSubject) {
 }
 
 $(function () {
-    /^(.*)@.*$/.test(MAIL);
-    let result = RegExp.$1;
+    let result;
+    if (/^(.*)@.*$/.test(MAIL)) {
+        result = RegExp.$1;
+    } else {
+        window.location = URL_PAGE_CONNEXION;
+    }
     $("#account_name").text(result);
     loadDiscipline();
     $("#signout_btn").click((e) => {

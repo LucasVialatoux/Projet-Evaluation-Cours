@@ -214,7 +214,9 @@ async function pollsService() {
     // Liste des charts affiché dans la page sondage
     let chartMap = new Map();
     //
-    while (true) {
+    let counter = 1000000000;
+    while (counter > 0) {
+        counter--;
         refreshPolls(chartMap);
         await sleep(1000);
     }

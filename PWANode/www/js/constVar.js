@@ -1,7 +1,7 @@
 /***************************/
 /*      URL DU SERVEUR     */
 /***************************/
-const URL_SERVEUR = "http://192.168.74.217:80/";
+const URL_SERVEUR = "http://192.168.74.217:8080/";
 // const URL_SERVEUR = "http://localhost:80/";
 
 /* CONSTANTES */
