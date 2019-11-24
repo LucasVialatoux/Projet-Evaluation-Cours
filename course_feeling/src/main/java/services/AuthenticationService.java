@@ -45,13 +45,13 @@ public class AuthenticationService extends AbstractServlet {
         String[] path = request.getRequestURI().split("/");
         JsonObject jsonResponse = null;
 
-        if (path.length > 2) {
-            if (path[2].equals("signin")) {
+        if (path.length == 2) {
+            if (path[1].equals("signin")) {
                 String passwordHash = DigestUtils
                         .sha256Hex(request.getParameter("password"));
                 String email = request.getParameter("email");
                 jsonResponse = signin(email, passwordHash, response);
-            } else if (path[2].equals("signup")) {
+            } else if (path[1].equals("signup")) {
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
                 jsonResponse = signup(email, password, response);
