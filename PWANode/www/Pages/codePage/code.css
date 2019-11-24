@@ -1,0 +1,15 @@
+.codeFinal{
+	font-size: 10em;
+}
+
+@media (max-width:500px) {
+	.codeFinal{
+		font-size: 6em;
+	}
+}
+
+p{
+	margin: 0 auto;
+}
+
+
