@@ -61,7 +61,7 @@ public class ResponseService extends HttpServlet {
         try {
             matiere = sondageDao.getMatiereOfSondage(codeSondage);
         } catch (SondageDaoException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "errreur", e);
         }
         JsonObject infosSondage = new JsonObject();
         if (matiere != null && !matiere.equals("")) {
