@@ -83,8 +83,6 @@ public class GestionMatiereServiceTest extends Mockito {
 		assert(response.contains("\"date\":24112019"));
 	}
 
-
-
 	@Test
 	public void getResultatMatiereMauvaiseURI() throws IOException, ServletException {
 		StringWriter sw = new StringWriter();

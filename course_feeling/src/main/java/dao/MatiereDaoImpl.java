@@ -45,10 +45,9 @@ public class MatiereDaoImpl implements MatiereDao {
             sqlCodeProp = new Properties();
 
             if (input == null) {
-                System.out.println("Sorry, unable to find file");
+                logger.log("Sorry, unable to find file");
                 return;
             }
-
             // load a properties file from class path, inside static method
             sqlCodeProp.load(input);
 
