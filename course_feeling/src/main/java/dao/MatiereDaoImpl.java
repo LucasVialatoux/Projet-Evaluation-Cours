@@ -15,7 +15,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 import javax.sql.DataSource;
 
 import business.Matiere;
@@ -118,11 +117,11 @@ public class MatiereDaoImpl implements MatiereDao {
                     List<Sondage> mat = matMap.get(matNom);
 
                     Integer id = set.getInt("idsondage");
-                    if(id != null) {
+                    if (id != null) {
                         Sondage sondage = new Sondage();
                         sondage.setId(id);
                         sondage.setDate(set.getLong("datesondage"));
-    
+
                         mat.add(sondage);
                     }
                 }

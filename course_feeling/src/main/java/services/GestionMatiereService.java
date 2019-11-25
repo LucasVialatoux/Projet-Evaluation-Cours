@@ -25,8 +25,9 @@ public class GestionMatiereService extends AbstractServlet {
 
     private static MatiereDao matiereDao;
 
-    private static final Logger logger = Logger.getLogger(GestionMatiereService.class.getName());
-    
+    private static final Logger logger = Logger
+            .getLogger(GestionMatiereService.class.getName());
+
     public void setMatiereDao(MatiereDao matiereDao) {
         GestionMatiereService.matiereDao = matiereDao;
     }
@@ -57,9 +58,11 @@ public class GestionMatiereService extends AbstractServlet {
         JsonObject jsonResponse = null;
         if (resultats) {
             jsonResponse = getResultsMatiere(idProf, idMatiere);
-        } else if (parametres != null && parametres.length == 1) {
+        } else if (parametres != null && (parametres.length == 0
+                || (parametres.length == 1 && parametres[0].equals("")))) {
             jsonResponse = getMatieres(idProf);
         } else {
+            logger.severe("Malformed request on doGet " + req.getPathInfo());
             jsonResponse = generateErrorStatus();
         }
 
@@ -82,6 +85,7 @@ public class GestionMatiereService extends AbstractServlet {
         if (matiere != null && !matiere.equals("")) {
             jsonResponse = addMatiere(idProf, matiere);
         } else {
+            logger.severe("Malformed request on doPost");
             jsonResponse = generateErrorStatus();
         }
 
@@ -100,8 +104,8 @@ public class GestionMatiereService extends AbstractServlet {
         String matiere = null;
         try {
             matiere = parametres[1];
-        } catch(ArrayIndexOutOfBoundsException e) {
-            logger.severe("MalformedURL on doDelete call");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            logger.severe("Malformed request on doDelete call : matiere null");
         }
         String idProf = getIdProf(req);
 
@@ -110,6 +114,7 @@ public class GestionMatiereService extends AbstractServlet {
         if (matiere != null && !matiere.equals("")) { // To create a code
             jsonResponse = deleteMatiere(idProf, matiere);
         } else {
+            logger.severe("Malformed request on doDelete call");
             jsonResponse = generateErrorStatus();
         }
 
@@ -131,6 +136,7 @@ public class GestionMatiereService extends AbstractServlet {
             response = generateSuccessStatus();
             response.addProperty("id", matiere);
         } catch (MatiereDaoException e) {
+            logger.severe("Error on deleteMatiere from DAO");
             response = generateErrorStatus();
         }
         return response;
@@ -185,6 +191,7 @@ public class GestionMatiereService extends AbstractServlet {
             response = generateSuccessStatus();
             response.add("subject", subject);
         } catch (MatiereDaoException e) {
+            logger.severe("Error on getResultsMatiere from DAO");
             response = generateErrorStatus();
         }
         return response;
@@ -218,6 +225,7 @@ public class GestionMatiereService extends AbstractServlet {
             response = generateSuccessStatus();
             response.add("subjects", subjects);
         } catch (MatiereDaoException e) {
+            logger.severe("Error on getMatieres from DAO");
             response = generateErrorStatus();
         }
         return response;
@@ -237,6 +245,7 @@ public class GestionMatiereService extends AbstractServlet {
             response = generateSuccessStatus();
             response.addProperty("id", nomMatiere);
         } catch (MatiereDaoException e) {
+            logger.severe("Error on addMatiere from DAO");
             response = generateErrorStatus();
         }
         return response;

@@ -43,7 +43,7 @@ public class MatiereDaoMockImpl implements MatiereDao {
             maListeTest.add(maMatiere2);
             return maListeTest;
         } else
-            return null;
+            return new ArrayList<Matiere>();
     }
 
     private ResultatSondage getResultatSondage(List<ResultatSondage> resultats,
