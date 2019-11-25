@@ -35,10 +35,24 @@ public class GestionMatiereServiceTest extends Mockito {
 	}
 	
 	@Test
-	public void getMatiereSondageEnseignant() throws IOException, ServletException {
+	public void getMatiereSondageEnseignantCaractereVide() throws IOException, ServletException {
 		StringWriter sw = new StringWriter();
 		PrintWriter out = new PrintWriter(sw);
 		when(req.getPathInfo()).thenReturn("");
+		when(req.getAttribute("ensId")).thenReturn("test@test.com");
+		when(resp.getWriter()).thenReturn(out);	
+		
+		service.doGet(req, resp);
+		String response = sw.getBuffer().toString().trim();
+		
+		assert(response.contains("\"statut\":\"ok\""));
+	}
+
+	@Test
+	public void getMatiereSondageEnseignantAvecSlash() throws IOException, ServletException {
+		StringWriter sw = new StringWriter();
+		PrintWriter out = new PrintWriter(sw);
+		when(req.getPathInfo()).thenReturn("/");
 		when(req.getAttribute("ensId")).thenReturn("test@test.com");
 		when(resp.getWriter()).thenReturn(out);	
 		
