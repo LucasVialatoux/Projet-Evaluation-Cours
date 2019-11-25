@@ -284,6 +284,7 @@ function deletePoll(idPoll) {
  */
 $(function () {
     // console.log(discipline);
+    $("#nav_title").text(discipline);
     //On lance le service de sondage
     pollsService();
 

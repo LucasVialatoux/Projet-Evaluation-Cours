@@ -16,7 +16,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "geckodriver": "^1.19.1",
     "mocha": "^6.2.2",
+    "selenium-webdriver": "^4.0.0-alpha.5",
     "sonarqube-scanner": "^2.5.0"
   }
 }
