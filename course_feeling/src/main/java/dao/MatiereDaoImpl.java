@@ -117,11 +117,14 @@ public class MatiereDaoImpl implements MatiereDao {
 
                     List<Sondage> mat = matMap.get(matNom);
 
-                    Sondage sondage = new Sondage();
-                    sondage.setId(set.getInt("idsondage"));
-                    sondage.setDate(set.getLong("datesondage"));
-
-                    mat.add(sondage);
+                    Integer id = set.getInt("idsondage");
+                    if(id != null) {
+                        Sondage sondage = new Sondage();
+                        sondage.setId(id);
+                        sondage.setDate(set.getLong("datesondage"));
+    
+                        mat.add(sondage);
+                    }
                 }
             } catch (SQLException e) {
                 throw new MatiereDaoException("ERROR SQL : ", e);
