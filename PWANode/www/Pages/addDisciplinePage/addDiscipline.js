@@ -13,7 +13,6 @@ $(_=>{
             data: {
                 subject: $("#disciplineInput").val()
             },
-            dataType: "json",
             success: (data) => {
                 let response = JSON.parse(data); 
                 if (response.statut == "ok") {

@@ -73,7 +73,6 @@ function loadDiscipline() {
     $.ajax({
         type: "GET",
         url: URL_SUBJECT,
-        dataType: "dataType",
         success: function (data) {
             let response = JSON.parse(data);
             if (response.statut != undefined && response.statut == "ok") {

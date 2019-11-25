@@ -175,7 +175,6 @@ function refreshPolls(charts) {
         data: {
             subject: $("#disciplineInput").val()
         },
-        dataType: "JSON",
         success: (data) => {
             let response = JSON.parse(data);
             if (response.statut == "ok") {
@@ -239,7 +238,6 @@ function addPoll() {
         data: {
             id: discipline
         },
-        dataType: "JSON",
         success: data => {
             $("#add_discipline").html('<img src="../../ressources/add_circle_outline-24px.svg" alt="">AJOUTER');
             let response = JSON.parse(data);
