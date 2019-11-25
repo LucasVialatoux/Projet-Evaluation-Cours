@@ -33,7 +33,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             sqlCodeProp = new Properties();
 
             if (input == null) {
-                System.out.println("Sorry, unable to find file");
+                logger.log("Sorry, unable to find file");
                 return;
             }
 
