@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 import javax.sql.DataSource;
 
@@ -45,7 +47,7 @@ public class MatiereDaoImpl implements MatiereDao {
             sqlCodeProp = new Properties();
 
             if (input == null) {
-                logger.log("Sorry, unable to find file");
+                logger.log(Level.INFO, "Sorry, unable to find file");
                 return;
             }
             // load a properties file from class path, inside static method

@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
@@ -33,7 +34,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             sqlCodeProp = new Properties();
 
             if (input == null) {
-                logger.log("Sorry, unable to find file");
+                logger.log(Level.INFO, "Sorry, unable to find file");
                 return;
             }
 

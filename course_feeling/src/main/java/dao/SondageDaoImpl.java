@@ -182,7 +182,6 @@ public class SondageDaoImpl implements SondageDao {
         } catch (SQLException e) {
             throw new SondageDaoException("ERROR SQL : ", e);
         }
-
         return code;
     }
 
