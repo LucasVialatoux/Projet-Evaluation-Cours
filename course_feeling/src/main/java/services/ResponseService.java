@@ -13,6 +13,9 @@ import business.Ressenti;
 import dao.SondageDao;
 import dao.SondageDaoException;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 public class ResponseService extends HttpServlet {
 
     /**
@@ -21,6 +24,9 @@ public class ResponseService extends HttpServlet {
     private static final long serialVersionUID = 6012769876508579988L;
 
     private static SondageDao sondageDao;
+
+    static final Logger logger = Logger
+        .getLogger(ResponseService.class.getName());
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -37,8 +43,7 @@ public class ResponseService extends HttpServlet {
                 resp.setStatus(200);
                 jsonResponse.addProperty("statut", "ok");
             } catch (NumberFormatException | SondageDaoException e) {
-                logger.log("context", e);
-                //e.printStackTrace();
+                logger.log(Level.WARNING, "errreur", e);
                 jsonResponse.addProperty("statut", "erreur");
             }
         } else {
