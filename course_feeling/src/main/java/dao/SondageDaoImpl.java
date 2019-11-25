@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -194,7 +193,7 @@ public class SondageDaoImpl implements SondageDao {
         resultatSondage.setIdSondage(idSondage);
 
         String getResultatString = sqlCodeProp.getProperty("getResultat");
-        Map<Ressenti, Integer> resultat = new EnumMap<>();
+        Map<Ressenti, Integer> resultat = new HashMap<>();
 
         // Init resultat
         for (Ressenti res : Ressenti.values()) {
