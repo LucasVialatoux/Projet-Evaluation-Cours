@@ -61,9 +61,7 @@ public class GestionMatiereService extends AbstractServlet {
         }
 
         // Écriture de la réponse
-        resp.setStatus(200);
-        PrintWriter out = resp.getWriter();
-        out.print(jsonResponse.toString());
+        writeResponse(resp, jsonResponse);
     }
 
     /**
@@ -85,9 +83,7 @@ public class GestionMatiereService extends AbstractServlet {
         }
 
         // Écriture de la réponse
-        PrintWriter out = resp.getWriter();
-        resp.setStatus(200);
-        out.print(jsonResponse.toString());
+        writeResponse(resp, jsonResponse);
     }
 
     /**
@@ -110,9 +106,7 @@ public class GestionMatiereService extends AbstractServlet {
         }
 
         // Écriture de la réponse
-        PrintWriter out = resp.getWriter();
-        resp.setStatus(200);
-        out.print(jsonResponse.toString());
+        writeResponse(resp, jsonResponse);
     }
 
     /**

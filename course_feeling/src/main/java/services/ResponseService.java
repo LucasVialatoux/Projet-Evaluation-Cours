@@ -26,7 +26,7 @@ public class ResponseService extends HttpServlet {
     private static SondageDao sondageDao;
 
     static final Logger logger = Logger
-        .getLogger(ResponseService.class.getName());
+            .getLogger(ResponseService.class.getName());
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -76,9 +76,9 @@ public class ResponseService extends HttpServlet {
     }
 
     private void setResponseHeaders(HttpServletResponse resp) {
-        //resp.addHeader("Access-Control-Allow-Origin", "*");
-        resp.addHeader("Access-Control-Allow-Methods",
-                "GET, PUT, POST, DELETE, OPTIONS");
+        // resp.addHeader("Access-Control-Allow-Origin", "*");
+        // resp.addHeader("Access-Control-Allow-Methods",
+        // "GET, PUT, POST, DELETE, OPTIONS");
         resp.setContentType("text/plain");
     }
 

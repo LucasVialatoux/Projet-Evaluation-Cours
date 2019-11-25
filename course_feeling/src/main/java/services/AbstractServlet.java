@@ -43,8 +43,6 @@ public abstract class AbstractServlet extends HttpServlet {
     }
 
     private void setResponseHeaders(HttpServletResponse response) {
-        response.addHeader("Access-Control-Allow-Methods",
-                "GET, PUT, POST, DELETE, OPTIONS");
         response.setContentType("text/plain");
     }
 }

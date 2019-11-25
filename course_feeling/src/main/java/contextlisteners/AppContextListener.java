@@ -1,5 +1,6 @@
 package contextlisteners;
 
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -15,6 +16,7 @@ import dao.SondageDao;
 import dao.SondageDaoImpl;
 import dao.UtilisateurDao;
 import dao.UtilisateurDaoImpl;
+import filters.AuthenticationFilter;
 import services.AuthenticationService;
 import services.GestionMatiereService;
 import services.GestionSondageService;
@@ -33,6 +35,8 @@ public class AppContextListener implements ServletContextListener {
     MatiereDao matiereDao;
     UtilisateurDao utilisateurDao;
 
+    AuthenticationFilter authenticationFilter;
+
     AuthenticationService authenticationService;
     ResponseService responseService;
     GestionSondageService gestionSondageService;
@@ -43,7 +47,56 @@ public class AppContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContextListener.super.contextInitialized(sce);
         setupDatasource();
-        setupServicesAndDaos();
+        setupDaos();
+        setupFilters();
+        setupServices();
+        setupRegistrations(sce);
+    }
+
+    private void setupDaos() {
+        SondageDaoImpl sondageDaoImpl = new SondageDaoImpl();
+        sondageDaoImpl.setDatasource(ds);
+        sondageDao = sondageDaoImpl;
+
+        UtilisateurDaoImpl utilisateurDaoImpl = new UtilisateurDaoImpl();
+        utilisateurDaoImpl.setDatasource(ds);
+        utilisateurDao = utilisateurDaoImpl;
+
+        MatiereDaoImpl matiereDaoImpl = new MatiereDaoImpl();
+        matiereDaoImpl.setDatasource(ds);
+        matiereDao = matiereDaoImpl;
+    }
+
+    private void setupServices() {
+        responseService = new ResponseService();
+        responseService.setSondageDao(sondageDao);
+
+        gestionSondageService = new GestionSondageService();
+        gestionSondageService.setSondageDao(sondageDao);
+
+        gestionMatiereService = new GestionMatiereService();
+        gestionMatiereService.setMatiereDao(matiereDao);
+
+        authenticationService = new AuthenticationService();
+        authenticationService.setUtilisateurDao(utilisateurDao);
+
+    }
+
+    private void setupFilters() {
+        authenticationFilter = new AuthenticationFilter();
+        authenticationFilter.setUtilisateurDao(utilisateurDao);
+    }
+
+    private void setupDatasource() {
+        PGSimpleDataSource datasource = new PGSimpleDataSource();
+        datasource.setServerName("localhost");
+        datasource.setDatabaseName("course_feeling");
+        datasource.setUser("course_feeling");
+        datasource.setPassword("");
+        ds = datasource;
+    }
+
+    private void setupRegistrations(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
 
         ServletRegistration registResponseService = ctx.addServlet("Response",
@@ -63,41 +116,9 @@ public class AppContextListener implements ServletContextListener {
         registAuthenticationService.addMapping("/signup");
         registAuthenticationService.addMapping("/signin");
         registAuthenticationService.addMapping("/signout");
-    }
 
-    private void setupServicesAndDaos() {
-        SondageDaoImpl sondageDaoImpl = new SondageDaoImpl();
-        sondageDaoImpl.setDatasource(ds);
-        sondageDao = sondageDaoImpl;
-
-        UtilisateurDaoImpl utilisateurDaoImpl = new UtilisateurDaoImpl();
-        utilisateurDaoImpl.setDatasource(ds);
-        utilisateurDao = utilisateurDaoImpl;
-
-        MatiereDaoImpl matiereDaoImpl = new MatiereDaoImpl();
-        matiereDaoImpl.setDatasource(ds);
-        matiereDao = matiereDaoImpl;
-
-        responseService = new ResponseService();
-        responseService.setSondageDao(sondageDao);
-
-        gestionSondageService = new GestionSondageService();
-        gestionSondageService.setSondageDao(sondageDao);
-
-        gestionMatiereService = new GestionMatiereService();
-        gestionMatiereService.setMatiereDao(matiereDao);
-
-        authenticationService = new AuthenticationService();
-        authenticationService.setUtilisateurDao(utilisateurDao);
-
-    }
-
-    private void setupDatasource() {
-        PGSimpleDataSource datasource = new PGSimpleDataSource();
-        datasource.setServerName("localhost");
-        datasource.setDatabaseName("course_feeling");
-        datasource.setUser("course_feeling");
-        datasource.setPassword("");
-        ds = datasource;
+        FilterRegistration registAuthenticationFilter = ctx
+                .addFilter("AuthenticationFilter", authenticationFilter);
+        registAuthenticationFilter.addMappingForUrlPatterns(null, false, new String[] {"/ens"});
     }
 }

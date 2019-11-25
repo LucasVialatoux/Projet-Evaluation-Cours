@@ -9,7 +9,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +17,6 @@ import com.google.gson.JsonObject;
 import dao.UtilisateurDao;
 import dao.UtilisateurDaoException;
 
-@WebFilter(filterName = "AuthenticationFilter", urlPatterns = "/ens/*")
 public class AuthenticationFilter implements Filter {
 
     private static UtilisateurDao utilisateurDao;
@@ -47,7 +45,7 @@ public class AuthenticationFilter implements Filter {
 
     }
 
-    public static void setUtilisateurDao(UtilisateurDao utilisateurDao) {
+    public void setUtilisateurDao(UtilisateurDao utilisateurDao) {
         AuthenticationFilter.utilisateurDao = utilisateurDao;
     }
 
