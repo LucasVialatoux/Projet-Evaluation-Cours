@@ -38,6 +38,7 @@ public class AuthenticationService extends AbstractServlet {
      * 
      * @return Un JSON contenant le statut
      */
+    @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
 
@@ -71,6 +72,7 @@ public class AuthenticationService extends AbstractServlet {
      * 
      * @return Un JSON contenant le statut
      */
+    @Override
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         String[] path = request.getRequestURI().split("/");
