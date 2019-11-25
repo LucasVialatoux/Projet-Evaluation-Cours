@@ -11,14 +11,6 @@ import business.MatiereResultat;
 import business.Sondage;
 import business.Matiere;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
-import java.util.logging.Logger;
-
 public class MatiereDaoMockImpl implements MatiereDao {
 
     @Override

@@ -3,7 +3,6 @@ package business;
 import org.junit.Test;
 
 import business.Matiere;
-import business.Ressenti;
 import business.Sondage;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +16,6 @@ public class MatiereTest {
     Matiere matiereTest1;
 
     public MatiereTest(){
-        int idMatiere1 = 1;
         String nameMatiere1 = "UE-Test1";
         matiereTest1 = new Matiere();
         
@@ -37,7 +35,7 @@ public class MatiereTest {
 
     @Test
     public void MatiereTestGetSondageEtSetSondage() {
-        List<Sondage> listeDeSondageTest = new ArrayList();
+        List<Sondage> listeDeSondageTest = new ArrayList<Sondage>();
 
         Sondage s = new Sondage();
         s.setId(154);

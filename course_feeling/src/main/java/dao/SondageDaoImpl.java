@@ -8,10 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
@@ -37,7 +39,7 @@ public class SondageDaoImpl implements SondageDao {
             sqlCodeProp = new Properties();
 
             if (input == null) {
-                loger.log("Sorry, unable to find file");
+                logger.log(Level.INFO, "Sorry, unable to find file");
                 return;
             }
 

@@ -1,7 +1,5 @@
 package business;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import business.MatiereResultat;
@@ -26,7 +24,7 @@ public class MatiereResultatTest {
         monSondage.put(Ressenti.Accessible, 134);
         //ResSond.setResultats(monSondage);
 
-        List<ResultatSondage> listeDeSondageTest = new ArrayList();
+        List<ResultatSondage> listeDeSondageTest = new ArrayList<ResultatSondage>();
         ResultatSondage RS = new ResultatSondage();
         RS.setIdSondage(2424);
         RS.setDateSondage(23112019);
