@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,8 @@ public class GestionMatiereService extends AbstractServlet {
 
     private static MatiereDao matiereDao;
 
+    private static final Logger logger = Logger.getLogger(GestionMatiereService.class.getName());
+    
     public void setMatiereDao(MatiereDao matiereDao) {
         GestionMatiereService.matiereDao = matiereDao;
     }
@@ -94,7 +97,12 @@ public class GestionMatiereService extends AbstractServlet {
             throws ServletException, IOException {
         // Récupération des paramètres nécessaires dans l'URI
         String[] parametres = req.getPathInfo().split("/");
-        String matiere = parametres[1];
+        String matiere = null;
+        try {
+            matiere = parametres[1];
+        } catch(ArrayIndexOutOfBoundsException e) {
+            logger.severe("MalformedURL on doDelete call");
+        }
         String idProf = getIdProf(req);
 
         // Traitement de la requête
