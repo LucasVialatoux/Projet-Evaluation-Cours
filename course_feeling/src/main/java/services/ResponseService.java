@@ -37,7 +37,8 @@ public class ResponseService extends HttpServlet {
                 resp.setStatus(200);
                 jsonResponse.addProperty("statut", "ok");
             } catch (NumberFormatException | SondageDaoException e) {
-                e.printStackTrace();
+                logger.log("context", e);
+                //e.printStackTrace();
                 jsonResponse.addProperty("statut", "erreur");
             }
         } else {

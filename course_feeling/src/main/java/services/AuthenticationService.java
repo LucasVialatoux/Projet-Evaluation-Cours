@@ -17,9 +17,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 public class AuthenticationService extends AbstractServlet {
 
-    private UtilisateurDao utilisateurDao;
+    private static UtilisateurDao utilisateurDao;
 
-    private TokenProvider tokenProvider;
+    private static TokenProvider tokenProvider;
 
     private static final Logger logger = Logger
             .getLogger(AuthenticationService.class.getName());
