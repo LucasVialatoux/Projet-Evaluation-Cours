@@ -37,7 +37,7 @@ public class SondageDaoImpl implements SondageDao {
             sqlCodeProp = new Properties();
 
             if (input == null) {
-                System.out.println("Sorry, unable to find file");
+                loger.log("Sorry, unable to find file");
                 return;
             }
 
@@ -192,7 +192,7 @@ public class SondageDaoImpl implements SondageDao {
         resultatSondage.setIdSondage(idSondage);
 
         String getResultatString = sqlCodeProp.getProperty("getResultat");
-        Map<Ressenti, Integer> resultat = new HashMap<>();
+        Map<Ressenti, Integer> resultat = new EnumMap<>();
 
         // Init resultat
         for (Ressenti res : Ressenti.values()) {
