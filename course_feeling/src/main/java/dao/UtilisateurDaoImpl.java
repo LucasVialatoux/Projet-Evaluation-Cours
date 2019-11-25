@@ -15,14 +15,13 @@ import javax.sql.DataSource;
 public class UtilisateurDaoImpl implements UtilisateurDao {
     private DataSource ds;
     private Properties sqlCodeProp;
-    static final Logger logger = 
-            Logger.getLogger(MatiereDaoImpl.class.getName());
+    static final Logger logger = Logger
+            .getLogger(MatiereDaoImpl.class.getName());
 
     public void setDatasource(DataSource ds) {
         this.ds = ds;
     }
 
-    
     /**
      * Charge le code SQL depuis un fichier.
      */
@@ -80,10 +79,12 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
                     token = set.getString("token");
                 }
             } catch (SQLException e) {
-                throw new UtilisateurDaoException("ERROR SQL : ", e);
+                throw new UtilisateurDaoException(
+                        "ERROR SQL : " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new UtilisateurDaoException("ERROR SQL : ", e);
+            throw new UtilisateurDaoException("ERROR SQL : " + e.getMessage(),
+                    e);
         }
         return token;
     }
@@ -134,13 +135,15 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             stat.setString(1, token);
             try (ResultSet set = stat.executeQuery()) {
                 if (set.next()) {
-                    email = set.getString("token");
+                    email = set.getString("email");
                 }
             } catch (SQLException e) {
-                throw new UtilisateurDaoException("ERROR SQL : ", e);
+                throw new UtilisateurDaoException(
+                        "ERROR SQL : " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new UtilisateurDaoException("ERROR SQL : ", e);
+            throw new UtilisateurDaoException("ERROR SQL : " + e.getMessage(),
+                    e);
         }
         return email;
     }

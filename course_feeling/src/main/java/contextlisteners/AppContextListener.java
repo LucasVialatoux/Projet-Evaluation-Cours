@@ -1,5 +1,8 @@
 package contextlisteners;
 
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -119,6 +122,8 @@ public class AppContextListener implements ServletContextListener {
 
         FilterRegistration registAuthenticationFilter = ctx
                 .addFilter("AuthenticationFilter", authenticationFilter);
-        registAuthenticationFilter.addMappingForUrlPatterns(null, false, new String[] {"/ens"});
+        registAuthenticationFilter.addMappingForUrlPatterns(
+                EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD),
+                true, "/ens/*");
     }
 }

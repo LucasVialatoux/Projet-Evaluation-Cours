@@ -21,8 +21,9 @@ public class AuthenticationFilter implements Filter {
 
     private static UtilisateurDao utilisateurDao;
 
-    private static final Logger logger = Logger.getLogger(AuthenticationFilter.class.getName());
-    
+    private static final Logger logger = Logger
+            .getLogger(AuthenticationFilter.class.getName());
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
@@ -32,10 +33,16 @@ public class AuthenticationFilter implements Filter {
         if (token != null) {
             try {
                 String idProf = utilisateurDao.getEmail(token);
-                req.setAttribute("ensId", idProf);
-                chain.doFilter(request, response);
+                if (idProf != null && !idProf.equals("")) {
+                    req.setAttribute("ensId", idProf);
+                    chain.doFilter(request, response);
+                } else {
+                    logger.severe(
+                            "Authentication failed : null or empty email");
+                }
             } catch (UtilisateurDaoException e) {
-                logger.severe("Authentication failed : error in UtilisateurDAO");
+                logger.severe(
+                        "Authentication failed : error in UtilisateurDAO" + e.getMessage());
                 sendError(resp);
             }
         } else {
