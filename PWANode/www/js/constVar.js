@@ -15,7 +15,7 @@ const URL_DECO = URL_SERVEUR + "signout";
 
 const URL_SONDAGE = URL_SERVEUR + "sondage/";
 const URL_SUBJECT = URL_SERVEUR + "ens/subjects/";
-const URL_POLL = "ens/poll/";
+const URL_POLL = URL_SERVEUR + "ens/poll/";
 
 /* PAGE POUR INDEX*/
 const URL_ABS_PAGE_FEELING = "Pages/feelingPage/feeling.html";

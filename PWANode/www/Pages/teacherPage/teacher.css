@@ -69,6 +69,9 @@
 #list_discipline .item_discipline:last-child{
     border-radius: 0px 0px 25px 25px;
 }
+#lis_discipline .item_discipline:only-child{
+    border-radius: 25px 25px 25px 25px;
+}
 #list_discipline img{
     top: .5rem;
 }
