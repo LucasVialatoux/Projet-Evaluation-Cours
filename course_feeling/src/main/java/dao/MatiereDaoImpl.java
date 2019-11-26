@@ -84,7 +84,6 @@ public class MatiereDaoImpl implements MatiereDao {
                         .prepareStatement(supprimerMatiereString);) {
             stat.setString(1, idProf);
             stat.setString(2, nomMat);
-            stat.setLong(3, System.currentTimeMillis());
             stat.executeUpdate();
 
         } catch (SQLException e) {
