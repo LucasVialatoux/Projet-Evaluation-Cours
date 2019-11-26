@@ -79,7 +79,6 @@ public class GestionMatiereService extends AbstractServlet {
         // Récupération des paramètres nécessaires dans l'URI
         String matiere = req.getParameter("subject");
         String idProf = getIdProf(req);
-        logger.info(idProf);
         // Traitement de la requête
         JsonObject jsonResponse = null;
         if (matiere != null && !matiere.equals("")) {
@@ -136,7 +135,8 @@ public class GestionMatiereService extends AbstractServlet {
             response = generateSuccessStatus();
             response.addProperty("id", matiere);
         } catch (MatiereDaoException e) {
-            logger.severe("Error on deleteMatiere from DAO");
+            logger.severe(
+                    "Error on deleteMatiere from DAO : " + e.getMessage());
             response = generateErrorStatus();
         }
         return response;
@@ -191,7 +191,8 @@ public class GestionMatiereService extends AbstractServlet {
             response = generateSuccessStatus();
             response.add("subject", subject);
         } catch (MatiereDaoException e) {
-            logger.severe("Error on getResultsMatiere from DAO");
+            logger.severe(
+                    "Error on getResultsMatiere from DAO : " + e.getMessage());
             response = generateErrorStatus();
         }
         return response;
@@ -209,6 +210,7 @@ public class GestionMatiereService extends AbstractServlet {
             List<Matiere> matieres = matiereDao.getMatieres(idProf);
             JsonArray subjects = new JsonArray();
             for (Matiere m : matieres) {
+                logger.info(m.getName());
                 JsonObject jsonMatiere = new JsonObject();
                 jsonMatiere.addProperty("id", m.getName());
                 jsonMatiere.addProperty("name", m.getName());
