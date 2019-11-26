@@ -188,9 +188,14 @@ public class MatiereDaoImpl implements MatiereDao {
 
                         matRes.getResultatsSondage().add(res);
                     }
-                    res.getResultats().put(
-                            Ressenti.valueOf(set.getString("ress")),
-                            (Integer) set.getInt("count"));
+                    String ressentiString = set.getString("ress");
+                    Integer count = (Integer) set.getInt("count");
+                    
+                    if (ressentiString != null && count != null) {
+                        res.getResultats().put(
+                                Ressenti.valueOf(ressentiString),
+                                count);
+                    }
                 }
             } catch (SQLException e) {
                 throw new MatiereDaoException("ERROR SQL : " + e.getMessage(), e);
