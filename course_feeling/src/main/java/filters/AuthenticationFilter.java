@@ -41,9 +41,11 @@ public class AuthenticationFilter implements Filter {
                     chain.doFilter(request, response);
                 } else if (idProf == null || idProf.equals("")) {
                     logger.severe("Null or empty email");
+                    sendError(resp);
                 } else {
                     utilisateurDao.supprimerToken(idProf);
                     logger.severe("Expired token");
+                    sendError(resp);
                 }
             } catch (UtilisateurDaoException e) {
                 logger.severe("Authentication failed : error in UtilisateurDAO"
