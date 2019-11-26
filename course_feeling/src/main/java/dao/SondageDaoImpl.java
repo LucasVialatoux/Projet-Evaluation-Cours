@@ -154,7 +154,7 @@ public class SondageDaoImpl implements SondageDao {
     public String addCode(String idProf, int idSondage)
             throws SondageDaoException {
         String code = getCode(idProf, idSondage);
-        if (!code.equals("") && code != null) {
+        if (code != null && !code.equals("")) {
             return code;
         }
         List<String> codes = getExistingCode();
