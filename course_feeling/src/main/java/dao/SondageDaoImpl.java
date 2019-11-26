@@ -65,10 +65,10 @@ public class SondageDaoImpl implements SondageDao {
                     matiere = set.getString("nomMatiere");
                 }
             } catch (SQLException e) {
-                throw new SondageDaoException("ERROR SQL : ", e);
+                throw new SondageDaoException("ERROR SQL : " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new SondageDaoException("ERROR SQL : ", e);
+            throw new SondageDaoException("ERROR SQL : " + e.getMessage(), e);
         }
         return matiere;
     }
@@ -89,7 +89,7 @@ public class SondageDaoImpl implements SondageDao {
             stat.executeUpdate();
 
         } catch (SQLException e) {
-            throw new SondageDaoException("ERROR SQL : ", e);
+            throw new SondageDaoException("ERROR SQL : "  + e.getMessage(), e);
         }
     }
 
@@ -106,7 +106,7 @@ public class SondageDaoImpl implements SondageDao {
             stat.executeUpdate();
 
         } catch (SQLException e) {
-            throw new SondageDaoException("ERROR SQL : ", e);
+            throw new SondageDaoException("ERROR SQL : " + e.getMessage(), e);
         }
     }
 
@@ -124,10 +124,10 @@ public class SondageDaoImpl implements SondageDao {
                     code = set.getString("code");
                 }
             } catch (SQLException e) {
-                throw new SondageDaoException("ERROR SQL : ", e);
+                throw new SondageDaoException("ERROR SQL : " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new SondageDaoException("ERROR SQL : ", e);
+            throw new SondageDaoException("ERROR SQL : " + e.getMessage(), e);
         }
         return code;
     }
@@ -144,7 +144,7 @@ public class SondageDaoImpl implements SondageDao {
                 codes.add(set.getString("code"));
             }
         } catch (SQLException e) {
-            throw new SondageDaoException("ERROR SQL : ", e);
+            throw new SondageDaoException("ERROR SQL : " + e.getMessage(), e);
         }
 
         return codes;
@@ -180,7 +180,7 @@ public class SondageDaoImpl implements SondageDao {
             stat.executeUpdate();
 
         } catch (SQLException e) {
-            throw new SondageDaoException("ERROR SQL : ", e);
+            throw new SondageDaoException("ERROR SQL : " + e.getMessage(), e);
         }
         return code;
     }
@@ -213,10 +213,10 @@ public class SondageDaoImpl implements SondageDao {
                     resultatSondage.setDateSondage(set.getLong("datesondage"));
                 }
             } catch (SQLException e) {
-                throw new SondageDaoException("ERROR SQL : ", e);
+                throw new SondageDaoException("ERROR SQL : " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new SondageDaoException("ERROR SQL : ", e);
+            throw new SondageDaoException("ERROR SQL : " + e.getMessage(), e);
         }
 
         resultatSondage.setResultats(resultat);
@@ -238,7 +238,7 @@ public class SondageDaoImpl implements SondageDao {
             stat.executeUpdate();
 
         } catch (SQLException e) {
-            throw new SondageDaoException("ERROR SQL : ", e);
+            throw new SondageDaoException("ERROR SQL : " + e.getMessage(), e);
         }
 
     }

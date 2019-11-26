@@ -69,7 +69,7 @@ public class MatiereDaoImpl implements MatiereDao {
             stat.executeUpdate();
 
         } catch (SQLException e) {
-            throw new MatiereDaoException("ERROR SQL : ", e);
+            throw new MatiereDaoException("ERROR SQL : " + e.getMessage(), e);
         }
 
     }
@@ -88,7 +88,7 @@ public class MatiereDaoImpl implements MatiereDao {
             stat.executeUpdate();
 
         } catch (SQLException e) {
-            throw new MatiereDaoException("ERROR SQL : ", e);
+            throw new MatiereDaoException("ERROR SQL : " + e.getMessage(), e);
         }
 
     }
@@ -125,10 +125,10 @@ public class MatiereDaoImpl implements MatiereDao {
                     }
                 }
             } catch (SQLException e) {
-                throw new MatiereDaoException("ERROR SQL : ", e);
+                throw new MatiereDaoException("ERROR SQL : " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new MatiereDaoException("ERROR SQL : ", e);
+            throw new MatiereDaoException("ERROR SQL : " + e.getMessage(), e);
         }
 
         List<Matiere> matieres = new ArrayList<>();
@@ -137,6 +137,8 @@ public class MatiereDaoImpl implements MatiereDao {
             Matiere mat = new Matiere();
             mat.setName(it.getKey());
             mat.setSondages(it.getValue());
+            
+            matieres.add(mat);
         }
 
         return matieres;
@@ -191,10 +193,10 @@ public class MatiereDaoImpl implements MatiereDao {
                             (Integer) set.getInt("count"));
                 }
             } catch (SQLException e) {
-                throw new MatiereDaoException("ERROR SQL : ", e);
+                throw new MatiereDaoException("ERROR SQL : " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new MatiereDaoException("ERROR SQL : ", e);
+            throw new MatiereDaoException("ERROR SQL : " + e.getMessage(), e);
         }
 
         return matRes;

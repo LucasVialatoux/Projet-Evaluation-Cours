@@ -58,10 +58,10 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
                     mdpHash = set.getString("mdphash");
                 }
             } catch (SQLException e) {
-                throw new UtilisateurDaoException("ERROR SQL : ", e);
+                throw new UtilisateurDaoException("ERROR SQL : " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new UtilisateurDaoException("ERROR SQL : ", e);
+            throw new UtilisateurDaoException("ERROR SQL : " + e.getMessage(), e);
         }
         return mdpHash;
     }
@@ -102,7 +102,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             stat.executeUpdate();
 
         } catch (SQLException e) {
-            throw new UtilisateurDaoException("ERROR SQL : ", e);
+            throw new UtilisateurDaoException("ERROR SQL : " + e.getMessage(), e);
         }
 
     }
@@ -121,7 +121,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
             stat.executeUpdate();
 
         } catch (SQLException e) {
-            throw new UtilisateurDaoException("ERROR SQL : ", e);
+            throw new UtilisateurDaoException("ERROR SQL : " + e.getMessage(), e);
         }
     }
 
@@ -161,10 +161,10 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
                     emailSql = set.getString("email");
                 }
             } catch (SQLException e) {
-                throw new UtilisateurDaoException("ERROR SQL : ", e);
+                throw new UtilisateurDaoException("ERROR SQL : " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            throw new UtilisateurDaoException("ERROR SQL : ", e);
+            throw new UtilisateurDaoException("ERROR SQL : " + e.getMessage(), e);
         }
         return emailSql != null;
     }
