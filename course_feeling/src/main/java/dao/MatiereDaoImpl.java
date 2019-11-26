@@ -107,7 +107,7 @@ public class MatiereDaoImpl implements MatiereDao {
 
             try (ResultSet set = stat.executeQuery()) {
                 while (set.next()) {
-                    String matNom = set.getString("idmatiere");
+                    String matNom = set.getString("nommatiere");
 
                     if (matMap.get(matNom) == null) {
                         matMap.put(matNom, new ArrayList<>());
