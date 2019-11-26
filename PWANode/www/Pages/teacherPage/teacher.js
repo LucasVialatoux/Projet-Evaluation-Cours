@@ -12,6 +12,9 @@ if (MAIL == null) {
  * @returns {Poll} sondage le plus récent
  */
 function recentPoll(polls) {
+    if (polls.length == 0){
+        return {date:999999999999999};
+    }
     polls.sort((a, b) => Number(a.date) - Number(b.date));
     return polls[polls.length - 1]
 }
@@ -24,19 +27,9 @@ function displaySubject(subject) {
     // console.log(subject);
     let latePoll = recentPoll(subject.polls)
     // temps entre maintenant et la création du dernier sondage
-    let time = moment(Number(latePoll.date)).locale("fr").fromNow();
-    $("#list_discipline").append(
-        '<div class="list-group-item list-group-item-action item_discipline"> '
-        + '<a href="' + URL_PAGE_DISCIPLINE + "?discipline=" + subject.id + '" class="container link_discipline">'
-        + '<div class="row">'
-        + '<p class="col">' + subject.name + '</p>'
-        + '<img class="col-auto" src="../../ressources/arrow_forward_ios-24px_white.svg" alt="">'
-        + '</div>'
-        + '<small class="row col">Dernier sondage : ' + time + '</small>'
-        + '</a>'
-        + '<div class="row code_manager">'
-        + '<h5 class="col-md-auto">Code du dernier sondage : <span id="code_' + latePoll.id + '" class="badge badge-dark"></span></h5>'
-        + '<a id="getCode" href="' + URL_PAGE_CODESONDAGE + '?id=' + latePoll.id + '" class="btn btn-primary col-md-auto btn_action">'
+    let code_manager = '<div class="row code_manager">'
+    + '<h5 class="col-md-auto">Code du dernier sondage : <span id="code_' + latePoll.id + '" class="badge badge-dark"></span></h5>'
+    + '<a id="getCode" href="' + URL_PAGE_CODESONDAGE + '?id=' + latePoll.id + '" class="btn btn-primary col-md-auto btn_action">'
         + '<img src="../../ressources/fullscreen-24px.svg" alt="">Plein écran'
         + '</a>'
         + '<button type="button" class="btn btn-primary col-auto mr-auto btn_action" onclick="generateCode(\'' + latePoll.id + '\')">'
@@ -45,9 +38,32 @@ function displaySubject(subject) {
         + '<button type="button" class="btn btn-danger col-auto btn_remove" onclick="deletDiscipline(\'' + subject.id + '\')">'
         + '<img src="../../ressources/delete-24px.svg" alt="">Supprimer'
         + '</button>'
+        + '</div>';
+    
+    let time;
+    if (latePoll.date == 999999999999999) {
+        time = 'Pas de sondage';
+        code_manager = '<div class="row code_manager">'
+            + '<button type="button" class="btn btn-danger col-auto btn_remove" onclick="deletDiscipline(\'' + subject.id + '\')">'
+            + '<img src="../../ressources/delete-24px.svg" alt="">Supprimer'
+            + '</button>'
+            + '</div>';
+    }else{
+        time = 'Dernier sondage : ' + moment(Number(latePoll.date)).locale("fr").fromNow();
+    }
+    $("#list_discipline").append(
+        '<div class="list-group-item list-group-item-action item_discipline"> '
+        + '<a href="' + URL_PAGE_DISCIPLINE + "?discipline=" + subject.id + '" class="container link_discipline">'
+        + '<div class="row">'
+        + '<p class="col">' + subject.name + '</p>'
+        + '<img class="col-auto" src="../../ressources/arrow_forward_ios-24px_white.svg" alt="">'
         + '</div>'
+        + '<small class="row col">' + time + '</small>'
+        + '</a>'
+        + code_manager
         + '</div>'
     );
+
     //Lancement de l'actualisation des codes de sondages
     // codeUpdater(latePoll.id)
 }
