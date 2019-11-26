@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 
 import dao.UtilisateurDao;
 import dao.UtilisateurDaoException;
+import services.TokenProvider;
 
 public class AuthenticationFilter implements Filter {
 
@@ -30,21 +31,26 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         String token = req.getHeader("Authorization");
+        TokenProvider tp = new TokenProvider();
         if (token != null) {
             try {
                 String idProf = utilisateurDao.getEmail(token);
-                if (idProf != null && !idProf.equals("")) {
+                if (idProf != null && !idProf.equals("")
+                        && !tp.expiredToken(token)) {
                     req.setAttribute("ensId", idProf);
                     chain.doFilter(request, response);
+                } else if (idProf == null || idProf.equals("")) {
+                    logger.severe("Null or empty email");
                 } else {
-                    logger.severe(
-                            "Authentication failed : null or empty email");
+                    utilisateurDao.supprimerToken(idProf);
+                    logger.severe("Expired token");
                 }
             } catch (UtilisateurDaoException e) {
-                logger.severe(
-                        "Authentication failed : error in UtilisateurDAO" + e.getMessage());
+                logger.severe("Authentication failed : error in UtilisateurDAO"
+                        + e.getMessage());
                 sendError(resp);
             }
+
         } else {
             logger.severe("Authentication failed : no token found");
             sendError(resp);
