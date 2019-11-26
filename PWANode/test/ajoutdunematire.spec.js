@@ -12,7 +12,6 @@ describe('Ajout d\'une matière', function() {
   })
   it('Ajout d\'une matière', async function() {
     await driver.get("http://192.168.74.217/")
-    await driver.setRect(1255, 900)
     await driver.findElement(By.id("connect_button_code")).click()
     await driver.findElement(By.id("inputID")).click()
     await driver.findElement(By.id("inputID")).sendKeys("a@a.a")
