@@ -210,7 +210,6 @@ public class GestionMatiereService extends AbstractServlet {
             List<Matiere> matieres = matiereDao.getMatieres(idProf);
             JsonArray subjects = new JsonArray();
             for (Matiere m : matieres) {
-                logger.info(m.getName());
                 JsonObject jsonMatiere = new JsonObject();
                 jsonMatiere.addProperty("id", m.getName());
                 jsonMatiere.addProperty("name", m.getName());

@@ -69,17 +69,20 @@ public class GestionSondageService extends AbstractServlet {
 
         // Vérification de l'URI afin de différencier les cas
         String idSondageString = null;
-        if (req.getPathInfo() != null) {
+        if (req.getPathInfo() != null
+                && req.getPathInfo().split("/").length == 2) {
             idSondageString = req.getPathInfo().split("/")[1];
         }
         if (idSondageString != null) { // To create a code
-            try {
-                int idSondage = Integer.parseInt(idSondageString);
-                jsonResponse = createCodeSondage(idProf, idSondage);
-            } catch (NullPointerException e) {
-                logger.severe("NullPointerException in doPost");
-                jsonResponse = generateErrorStatus();
-            }
+            /*
+             * try { int idSondage = Integer.parseInt(idSondageString);
+             * jsonResponse = createCodeSondage(idProf, idSondage); } catch
+             * (NullPointerException e) {
+             * logger.severe("NullPointerException in doPost"); jsonResponse =
+             * generateErrorStatus(); }
+             */
+            int idSondage = Integer.parseInt(idSondageString);
+            jsonResponse = createCodeSondage(idProf, idSondage);
         } else if (matiere != null && !matiere.equals("")) { // Add a new form
             jsonResponse = addSondage(idProf, matiere);
         } else {
@@ -195,8 +198,8 @@ public class GestionSondageService extends AbstractServlet {
                 response = generateErrorStatus();
             }
         } catch (SondageDaoException e) {
-            logger.severe("Exception in getCodeSondage from DAO : "
-                    + e.getMessage());
+            logger.severe(
+                    "Exception in getCodeSondage from DAO : " + e.getMessage());
             response = generateErrorStatus();
         }
         return response;
@@ -215,8 +218,8 @@ public class GestionSondageService extends AbstractServlet {
             sondageDao.supprimerSondage(idProf, idSondage);
             response = generateSuccessStatus();
         } catch (SondageDaoException e) {
-            logger.severe("Exception in deleteSondage from DAO : "
-                    + e.getMessage());
+            logger.severe(
+                    "Exception in deleteSondage from DAO : " + e.getMessage());
             response = generateErrorStatus();
         }
         return response;
@@ -262,8 +265,8 @@ public class GestionSondageService extends AbstractServlet {
             sondageDao.ajouterSondage(idProf, matiere);
             jsonResponse = generateSuccessStatus();
         } catch (SondageDaoException e) {
-            logger.severe("Exception in addSondage from DAO : "
-                    + e.getMessage());
+            logger.severe(
+                    "Exception in addSondage from DAO : " + e.getMessage());
             jsonResponse = generateErrorStatus();
         }
         return jsonResponse;

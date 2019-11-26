@@ -52,7 +52,7 @@ public class TokenProvider {
                 .parseClaimsJws(token);
         Instant now = Instant.now();
         long expireTime = jws.getBody().getExpiration().getTime();
-        return now.getEpochSecond() <= expireTime;
+        return expireTime <= now.getEpochSecond();
     }
 
     /**

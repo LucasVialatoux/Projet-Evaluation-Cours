@@ -168,7 +168,7 @@ public class SondageDaoImpl implements SondageDao {
                 ccode[i] = codeChars[cid];
             }
             code = String.valueOf(ccode);
-        } while (!codes.contains(code));
+        } while (codes.contains(code));
 
         // Adding code to database
         String addCodeString = sqlCodeProp.getProperty("addCode");
