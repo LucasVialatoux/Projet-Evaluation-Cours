@@ -63,7 +63,7 @@ function getCode(idPoll) {
                 displayCode(idPoll, response.code);
             }
             else {
-                displayCode(idPoll, "ERREUR");
+                displayCode(idPoll, "AUCUN");
             }
             $("#infoErreur").hide();
         },
