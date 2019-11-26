@@ -157,7 +157,7 @@ public class MatiereDaoImpl implements MatiereDao {
     @Override
     public MatiereResultat getResultat(String idProf, String nomMat)
             throws MatiereDaoException {
-        String getResultatString = sqlCodeProp.getProperty("getMatieres");
+        String getResultatString = sqlCodeProp.getProperty("getResultats");
 
         MatiereResultat matRes = new MatiereResultat();
         matRes.setNom(nomMat);
