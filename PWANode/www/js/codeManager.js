@@ -34,7 +34,7 @@ function generateCode(idPoll) {
                 displayCode(idPoll, response.code);
             }
             else {
-                displayCode(idPoll, "ERREUR");
+                displayCode(idPoll, "AUCUN");
             }
         },
         error: error => {

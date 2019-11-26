@@ -1,5 +1,11 @@
 // const JSON_POLLS = '{"statut":"ok","subject":{"name":"Conception web","polls":[{"id":"unid1poll1","date":"1572338690503","results":[{"num":"0","result":"20"},{"num":"1","result":"50"},{"num":"2","result":"12"},{"num":"3","result":"5"},{"num":"4","result":"15"},{"num":"5","result":"30"}]},{"id":"unid1poll2","date":"1572438690503","results":[{"num":"0","result":"50"},{"num":"1","result":"20"},{"num":"2","result":"50"},{"num":"3","result":"0"},{"num":"4","result":"5"},{"num":"5","result":"62"}]},{"id":"unid1poll3","date":"1572538690503","results":[{"num":"0","result":"85"},{"num":"1","result":"2"},{"num":"2","result":"45"},{"num":"3","result":"20"},{"num":"4","result":"15"},{"num":"5","result":"42"}]}]}}';
 const EMOTIONS = ['Intéressant', 'Accessible', 'Compliqué', 'Monotone', 'Confus', 'Effrayé'];
+const COLORS = ['rgba(255, 99, 132, 1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)'];
 const params = new URL(location.href).searchParams;
 const discipline = params.get('discipline');
 let ISADDING = false;
@@ -83,7 +89,7 @@ function createPoll(poll, charts) {
     $("#poll_container").prepend(
         '<div id="poll_' + poll.id + '"class="container poll">'
         + '<div class="module">'
-        +'<br/>'
+        + '<br/>'
         + '<div class="row">'
         + '<h4 class="col"> Sondage du : ' + moment(Number(poll.date)).locale("fr").format('L') + '  '
         + '<span class="badge badge-secondary">Participants '
@@ -100,7 +106,7 @@ function createPoll(poll, charts) {
         + '<img src="../../ressources/fullscreen-24px.svg" alt="">Plein écran'
         + '</a>'
         + '<button type="button" class="btn btn-primary col-auto mr-auto btn_action" onclick="generateCode(\'' + poll.id + '\')">'
-        + '<img src="../../ressources/refresh-24px.svg" alt="">Regénérer'
+        + '<img src="../../ressources/refresh-24px.svg" alt="">Générer'
         + '</button>'
         + '<button type="button" class="btn btn-danger col-auto btn_remove" onclick="deletePoll(\'' + poll.id + '\')">'
         + '<img src="../../ressources/delete-24px.svg" alt="">Supprimer'
@@ -149,6 +155,100 @@ function updatePoll(poll, charts) {
         createPoll(poll, charts);
     }
 }
+
+/**
+ * Créée la vu de résumé des sondages
+ * @param {String[]} dates liste des dates
+ * @param {*} data Les données de résumé à affiché
+ * @return le graphe de la vu
+ */
+function createSummuryPolls(dates,data) {
+    $("#summuryTitle").text("Évolution des ressentis de "+ discipline);
+    let ctx = document.getElementById("summury").getContext('2d');
+    return new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: data
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontStyle: 'bold',
+                    fontSize: 14,
+                    fontColor: "white"
+                }
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        color: "rgba(255, 255, 255, 0.3)"
+                    },
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 18
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        color: "rgba(255, 255, 255, 0.3)"
+                    },
+                    ticks: {
+                        fontColor: "white"
+                    }
+                }]
+            }
+        }
+    });
+}
+
+/**
+ * Actualise la vu résumé des sondages
+ * @param {Map<string,Chart>} charts Map des charts
+ * @param {Poll[]} polls Liste des résultats sondages
+ */
+function updateSummuryPolls(charts, polls) {
+    let tabDate = [];
+    for (let idPoll in polls) {
+        tabDate[idPoll] = moment(Number(polls[idPoll].date)).locale("fr").format('L');
+    }
+    let resultEmotion = [];
+    for (let i = 0; i < EMOTIONS.length; ++i) {
+        let values = [];
+        for (let poll of polls) {
+            let total = 0;
+            for (data of poll.results) {
+                total += Number(data.result);
+            }
+            let result = (Number(poll.results[i].result) / total)*100;
+            values.push(result);
+        }
+        resultEmotion.push({ label: EMOTIONS[i], data: values, borderColor: COLORS[i], backgroundColor: 'rgba(0, 0, 0, 0)' });
+    }
+    if (charts.get("summuryPoll") != undefined) {    
+        let chart = charts.get("summuryPoll");
+        let oldDataSet = chart.data.datasets;
+        let diff = false;
+        if (oldDataSet.length < resultEmotion.length ){
+            diff = true;
+        }
+        for(let id in resultEmotion){
+            if (JSON.stringify(oldDataSet[id].data) != JSON.stringify(resultEmotion[id].data)){
+                diff = true;
+                break;
+            }
+        }
+        if(diff){
+            chart.data.datasets = resultEmotion;
+            chart.update();
+        }
+    } else { // On créé la vue
+        charts.set("summuryPoll", createSummuryPolls(tabDate, resultEmotion));
+    }
+    
+
+}
+
 // function debug(charts) {
 //     let response = JSON.parse(JSON_POLLS);
 //     if (response.statut == "ok") {
@@ -156,7 +256,8 @@ function updatePoll(poll, charts) {
 //             $("#discipline_title").text(response.subject.name);
 //         }
 //         let polls = response.subject.polls;
-//         polls.sort((a, b) => Number(a.date) - Number(b.date))
+//         polls.sort((a, b) => Number(a.date) - Number(b.date));
+//         updateSummuryPolls(charts,polls);
 //         for (let poll of polls) {
 //             updatePoll(poll, charts);
 //         }
@@ -182,12 +283,13 @@ function refreshPolls(charts) {
                     $("#discipline_title").text(response.subject.name);
                 }
                 let polls = response.subject.polls;
-                polls.sort((a, b) => Number(a.date) - Number(b.date))
+                polls.sort((a, b) => Number(a.date) - Number(b.date));
+                updateSummuryPolls(charts,polls);
                 for (let poll of polls) {
                     updatePoll(poll, charts);
                 }
             } else {
-               // console.error(data);
+                // console.error(data);
                 window.location = URL_PAGE_TEACHER;
             }
         },
@@ -217,7 +319,7 @@ async function pollsService() {
     while (counter > 0) {
         counter--;
         refreshPolls(chartMap);
-        await sleep(1000);
+        await sleep(4000);
     }
 }
 
