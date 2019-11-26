@@ -234,7 +234,6 @@ public class SondageDaoImpl implements SondageDao {
                         .prepareStatement(supprimerSondageString);) {
             stat.setInt(1, idSondage);
             stat.setString(2, idProf);
-            stat.setLong(3, System.currentTimeMillis());
             stat.executeUpdate();
 
         } catch (SQLException e) {
