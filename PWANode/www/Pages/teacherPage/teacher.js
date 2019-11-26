@@ -12,7 +12,7 @@ if (MAIL == null) {
  * @returns {Poll} sondage le plus récent
  */
 function recentPoll(polls) {
-    if (polls.length == 1 && polls.id == 0 && polls.date == 0){
+    if (polls.length == 1 && polls[0].id == 0 && polls[0].date == 0){
         return {date:999999999999999};
     }
     polls.sort((a, b) => Number(a.date) - Number(b.date));
