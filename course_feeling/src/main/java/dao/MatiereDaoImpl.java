@@ -181,6 +181,7 @@ public class MatiereDaoImpl implements MatiereDao {
                         res = new ResultatSondage();
                         res.setIdSondage(idSondage);
                         res.setDateSondage(dateSondage);
+                        res.setResultats(new HashMap<Ressenti, Integer>());
                         for (Ressenti ress : Ressenti.values()) {
                             res.getResultats().put(ress, 0);
                         }
